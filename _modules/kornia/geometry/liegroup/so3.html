@@ -538,6 +538,23 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">Quaternion</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">))</span></div>
 
+<div class="viewcode-block" id="So3.from_wxyz"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.So3.from_wxyz">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_wxyz</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">So3</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create So3 from a tensor representing a quaternion.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wxyz: the quaternion to convert of shape :math:`(B,4)`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; q = torch.tensor([1., 0., 0., 0.])</span>
+<span class="sd">            &gt;&gt;&gt; s = So3.from_wxyz(q)</span>
+<span class="sd">            &gt;&gt;&gt; s</span>
+<span class="sd">            Parameter containing:</span>
+<span class="sd">            tensor([1., 0., 0., 0.], requires_grad=True)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># KORNIA_CHECK_SHAPE(wxyz, [&quot;B&quot;, &quot;4&quot;])  # FIXME: resolve shape bugs. @edgarriba</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">Quaternion</span><span class="p">(</span><span class="n">wxyz</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="So3.identity"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.So3.identity">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">So3</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a So3 group representing an identity rotation.</span>
