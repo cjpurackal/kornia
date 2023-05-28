@@ -338,8 +338,9 @@
 <span class="k">def</span> <span class="nf">_kernel_distance</span><span class="p">(</span><span class="n">squared_distances</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the TPS kernel distance function: :math:`r^2 log(r)`, where `r` is the euclidean distance.</span>
 
-<span class="sd">    Since :math:`\log(r) = 1/2 \log(r^2)`, this function takes the squared distance matrix and calculates</span>
-<span class="sd">    :math:`0.5 r^2 log(r^2)`.</span>
+<span class="sd">    Since</span>
+<span class="sd">    :math: `\log(r) = 1/2 \log(r^2)`, this function takes the squared distance matrix and calculates</span>
+<span class="sd">    :math: `0.5 r^2 log(r^2)`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># r^2 * log(r) = 1/2 * r^2 * log(r^2)</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">squared_distances</span> <span class="o">*</span> <span class="n">squared_distances</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>

@@ -511,7 +511,7 @@
                 <span class="c1"># Hack, because PyTorch does not allow to pad more than original size.</span>
                 <span class="c1"># But for the huge sigmas, one needs huge kernel and padding...</span>
 
-                <span class="n">ksize</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ksize</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">cur_level</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">cur_level</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+                <span class="n">ksize</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ksize</span><span class="p">,</span> <span class="n">cur_level</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">cur_level</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">ksize</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">ksize</span> <span class="o">+=</span> <span class="mi">1</span>
 

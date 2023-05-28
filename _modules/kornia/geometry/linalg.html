@@ -388,8 +388,9 @@
 
 
 <div class="viewcode-block" id="inverse_transformation"><a class="viewcode-back" href="../../../geometry.linalg.html#kornia.geometry.linalg.inverse_transformation">[docs]</a><span class="k">def</span> <span class="nf">inverse_transformation</span><span class="p">(</span><span class="n">trans_12</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that inverts a 4x4 homogeneous transformation</span>
-<span class="sd">    :math:`T_1^{2} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that inverts a 4x4 homogeneous transformation.</span>
+
+<span class="sd">     :math:`T_1^{2} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}`</span>
 
 <span class="sd">    The inverse transformation is computed as follows:</span>
 
@@ -429,9 +430,9 @@
 
 
 <div class="viewcode-block" id="relative_transformation"><a class="viewcode-back" href="../../../geometry.linalg.html#kornia.geometry.linalg.relative_transformation">[docs]</a><span class="k">def</span> <span class="nf">relative_transformation</span><span class="p">(</span><span class="n">trans_01</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">trans_02</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that computes the relative homogeneous transformation from a</span>
-<span class="sd">    reference transformation :math:`T_1^{0} = \begin{bmatrix} R_1 &amp; t_1 \\</span>
-<span class="sd">    \mathbf{0} &amp; 1 \end{bmatrix}` to destination :math:`T_2^{0} =</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that computes the relative homogeneous transformation from a reference transformation.</span>
+
+<span class="sd">    :math:`T_1^{0} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}` to destination :math:`T_2^{0} =</span>
 <span class="sd">    \begin{bmatrix} R_2 &amp; t_2 \\ \mathbf{0} &amp; 1 \end{bmatrix}`.</span>
 
 <span class="sd">    The relative transformation is computed as follows:</span>

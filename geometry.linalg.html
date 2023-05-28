@@ -316,9 +316,8 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.geometry.linalg.relative_transformation">
 <span class="sig-prename descclassname"><span class="pre">kornia.geometry.linalg.</span></span><span class="sig-name descname"><span class="pre">relative_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans_02</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/linalg.html#relative_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.linalg.relative_transformation" title="Permalink to this definition">#</a></dt>
-<dd><p>Function that computes the relative homogeneous transformation from a
-reference transformation <span class="math notranslate nohighlight">\(T_1^{0} = \begin{bmatrix} R_1 &amp; t_1 \\
-\mathbf{0} &amp; 1 \end{bmatrix}\)</span> to destination <span class="math notranslate nohighlight">\(T_2^{0} =
+<dd><p>Function that computes the relative homogeneous transformation from a reference transformation.</p>
+<p><span class="math notranslate nohighlight">\(T_1^{0} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}\)</span> to destination <span class="math notranslate nohighlight">\(T_2^{0} =
 \begin{bmatrix} R_2 &amp; t_2 \\ \mathbf{0} &amp; 1 \end{bmatrix}\)</span>.</p>
 <p>The relative transformation is computed as follows:</p>
 <div class="math-wrapper docutils container">
@@ -389,8 +388,10 @@ shape of <span class="math notranslate nohighlight">\((N, 4, 4)\)</span> or <spa
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.geometry.linalg.inverse_transformation">
 <span class="sig-prename descclassname"><span class="pre">kornia.geometry.linalg.</span></span><span class="sig-name descname"><span class="pre">inverse_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/linalg.html#inverse_transformation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.linalg.inverse_transformation" title="Permalink to this definition">#</a></dt>
-<dd><p>Function that inverts a 4x4 homogeneous transformation
-<span class="math notranslate nohighlight">\(T_1^{2} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}\)</span></p>
+<dd><p>Function that inverts a 4x4 homogeneous transformation.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(T_1^{2} = \begin{bmatrix} R_1 &amp; t_1 \\ \mathbf{0} &amp; 1 \end{bmatrix}\)</span></p>
+</div></blockquote>
 <p>The inverse transformation is computed as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
