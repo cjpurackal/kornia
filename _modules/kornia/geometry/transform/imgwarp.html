@@ -546,7 +546,7 @@
     <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">grid_sample</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="n">align_corners</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">padding_mode</span><span class="o">=</span><span class="s2">&quot;zeros&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">inv_color_mask</span>
 
 
-<span class="k">def</span> <span class="nf">warp_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="warp_grid"><a class="viewcode-back" href="../../../../geometry.transform.html#kornia.geometry.transform.warp_grid">[docs]</a><span class="k">def</span> <span class="nf">warp_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the grid to warp the coordinates grid by the homography/ies.</span>
 
 <span class="sd">    Args:</span>
@@ -567,10 +567,10 @@
     <span class="c1"># perform the actual grid transformation,</span>
     <span class="c1"># the grid is copied to input device and casted to the same type</span>
     <span class="n">flow</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">transform_points</span><span class="p">(</span><span class="n">src_homo_dst</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">src_homo_dst</span><span class="p">))</span>  <span class="c1"># NxHxWx2</span>
-    <span class="k">return</span> <span class="n">flow</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># NxHxWx2</span>
+    <span class="k">return</span> <span class="n">flow</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># NxHxWx2</span></div>
 
 
-<span class="k">def</span> <span class="nf">warp_grid3d</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="warp_grid3d"><a class="viewcode-back" href="../../../../geometry.transform.html#kornia.geometry.transform.warp_grid3d">[docs]</a><span class="k">def</span> <span class="nf">warp_grid3d</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the grid to warp the coordinates grid by the homography/ies.</span>
 
 <span class="sd">    Args:</span>
@@ -591,7 +591,7 @@
     <span class="c1"># perform the actual grid transformation,</span>
     <span class="c1"># the grid is copied to input device and casted to the same type</span>
     <span class="n">flow</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">transform_points</span><span class="p">(</span><span class="n">src_homo_dst</span><span class="p">,</span> <span class="n">grid</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">src_homo_dst</span><span class="p">))</span>  <span class="c1"># NxDxHxWx3</span>
-    <span class="k">return</span> <span class="n">flow</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># NxDxHxWx3</span>
+    <span class="k">return</span> <span class="n">flow</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># NxDxHxWx3</span></div>
 
 
 <span class="c1"># TODO: move to kornia.geometry.projective</span>

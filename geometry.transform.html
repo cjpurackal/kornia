@@ -582,6 +582,50 @@ weights for the x-transform and tensor[…, 1] the weights for the y-transform.<
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="kornia.geometry.transform.warp_grid">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.transform.</span></span><span class="sig-name descname"><span class="pre">warp_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_homo_dst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/transform/imgwarp.html#warp_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.transform.warp_grid" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the grid to warp the coordinates grid by the homography/ies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Unwrapped grid of the shape <span class="math notranslate nohighlight">\((1, N, W, 2)\)</span>.</p></li>
+<li><p><strong>src_homo_dst</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Homography or homographies (stacked) to
+transform all points in the grid. Shape of the homography
+has to be <span class="math notranslate nohighlight">\((1, 3, 3)\)</span> or <span class="math notranslate nohighlight">\((N, 1, 3, 3)\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the transformed grid of shape <span class="math notranslate nohighlight">\((N, H, W, 2)\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kornia.geometry.transform.warp_grid3d">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.transform.</span></span><span class="sig-name descname"><span class="pre">warp_grid3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_homo_dst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/transform/imgwarp.html#warp_grid3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.transform.warp_grid3d" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the grid to warp the coordinates grid by the homography/ies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>grid</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Unwrapped grid of the shape <span class="math notranslate nohighlight">\((1, D, H, W, 3)\)</span>.</p></li>
+<li><p><strong>src_homo_dst</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Homography or homographies (stacked) to
+transform all points in the grid. Shape of the homography
+has to be <span class="math notranslate nohighlight">\((1, 4, 4)\)</span> or <span class="math notranslate nohighlight">\((N, 1, 4, 4)\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the transformed grid of shape <span class="math notranslate nohighlight">\((N, H, W, 3)\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="kornia.geometry.transform.remap">
 <span class="sig-prename descclassname"><span class="pre">kornia.geometry.transform.</span></span><span class="sig-name descname"><span class="pre">remap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bilinear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zeros'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_corners</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized_coordinates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/transform/imgwarp.html#remap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.transform.remap" title="Permalink to this definition">#</a></dt>
 <dd><p>Apply a generic geometrical transformation to an image tensor.</p>
@@ -2664,6 +2708,8 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">True
 <li><a class="reference internal" href="#kornia.geometry.transform.warp_affine3d"><code class="docutils literal notranslate"><span class="pre">warp_affine3d()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.transform.warp_image_tps"><code class="docutils literal notranslate"><span class="pre">warp_image_tps()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.transform.warp_points_tps"><code class="docutils literal notranslate"><span class="pre">warp_points_tps()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.transform.warp_grid"><code class="docutils literal notranslate"><span class="pre">warp_grid()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.transform.warp_grid3d"><code class="docutils literal notranslate"><span class="pre">warp_grid3d()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.transform.remap"><code class="docutils literal notranslate"><span class="pre">remap()</span></code></a></li>
 </ul>
 </li>

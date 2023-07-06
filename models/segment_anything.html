@@ -399,11 +399,11 @@ to query the image masks from the SAM model.</p>
 <span class="kn">from</span> <span class="nn">kornia.io</span> <span class="kn">import</span> <span class="n">load_image</span><span class="p">,</span> <span class="n">ImageLoadType</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.keypoints</span> <span class="kn">import</span> <span class="n">Keypoints</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.boxes</span> <span class="kn">import</span> <span class="n">Boxes</span>
-<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_device_if_available</span>
+<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_or_mps_device_if_available</span>
 
 <span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;vit_h&#39;</span>
 <span class="n">checkpoint</span> <span class="o">=</span> <span class="s1">&#39;./https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth&#39;</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_device_if_available</span><span class="p">()</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_or_mps_device_if_available</span>
 
 <span class="c1"># Load image</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s1">&#39;./example.jpg&#39;</span><span class="p">,</span> <span class="n">ImageLoadType</span><span class="o">.</span><span class="n">RGB32</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
@@ -478,7 +478,7 @@ to query the image masks from the SAM model.</p>
 <code class="code docutils literal notranslate"><span class="pre">from_config</span></code> method will first try to build the model based on the model type, otherwise will try from the specified
 parameters. If a checkpoint URL or path for a file is seted, the method will automatically load it.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kornia.contrib.models.sam</span> <span class="kn">import</span> <span class="n">Sam</span><span class="p">,</span> <span class="n">SamConfig</span>
-<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_device_if_available</span>
+<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_or_mps_device_if_available</span>
 
 <span class="c1"># model_type can be:</span>
 <span class="c1">#   0, &#39;vit_h&#39; or `kornia.contrib.models.sam.SamModelType.vit_h`</span>
@@ -488,7 +488,7 @@ parameters. If a checkpoint URL or path for a file is seted, the method will aut
 
 <span class="c1"># The checkpoint can be a filepath or a url</span>
 <span class="n">checkpoint</span> <span class="o">=</span> <span class="s1">&#39;./path_for_the_model_checkpoint.pth&#39;</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_device_if_available</span><span class="p">()</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_or_mps_device_if_available</span><span class="p">()</span>
 
 <span class="c1"># Load config</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">SamConfig</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">)</span>
@@ -512,13 +512,13 @@ parameters. If a checkpoint URL or path for a file is seted, the method will aut
 <p>If a URL is passed the model will automatically download and cache the weights using
 <code class="code docutils literal notranslate"><span class="pre">torch.hub.load_state_dict_from_url</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kornia.contrib.models.sam</span> <span class="kn">import</span> <span class="n">Sam</span><span class="p">,</span> <span class="n">SamConfig</span>
-<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_device_if_available</span>
+<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_or_mps_device_if_available</span>
 
 <span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;vit_b&#39;</span>
 
 <span class="c1"># The checkpoint can be a filepath or a url</span>
 <span class="n">checkpoint</span> <span class="o">=</span> <span class="s1">&#39;./path_for_the_model_checkpoint.pth&#39;</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_device_if_available</span><span class="p">()</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_or_mps_device_if_available</span><span class="p">()</span>
 
 <span class="c1"># Load/build the model</span>
 <span class="n">sam_model</span> <span class="o">=</span> <span class="n">Sam</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">SamConfig</span><span class="p">(</span><span class="n">model_type</span><span class="p">))</span>
@@ -535,13 +535,13 @@ parameters. If a checkpoint URL or path for a file is seted, the method will aut
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kornia.contrib.models.sam</span> <span class="kn">import</span> <span class="n">Sam</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models</span> <span class="kn">import</span> <span class="n">SegmentationResults</span>
 <span class="kn">from</span> <span class="nn">kornia.io</span> <span class="kn">import</span> <span class="n">load_image</span><span class="p">,</span> <span class="n">ImageLoadType</span>
-<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_device_if_available</span>
+<span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">get_cuda_or_mps_device_if_available</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry</span> <span class="kn">import</span> <span class="n">resize</span>
 <span class="kn">from</span> <span class="nn">kornia.enhance</span> <span class="kn">import</span> <span class="n">normalize</span>
 
 <span class="n">model_type</span> <span class="o">=</span> <span class="s1">&#39;vit_b&#39;</span> <span class="c1"># or can be a number `2` or the enum sam.SamModelType.vit_b</span>
 <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s1">&#39;./path_for_the_model_checkpoint.pth&#39;</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_device_if_available</span><span class="p">()</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">get_cuda_or_mps_device_if_available</span><span class="p">()</span>
 
 <span class="c1"># Load the model</span>
 <span class="n">sam_model</span> <span class="o">=</span> <span class="n">Sam</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
