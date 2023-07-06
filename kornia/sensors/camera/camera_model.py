@@ -244,8 +244,8 @@ class BrownConradyModel(CameraModelBase):
 
         Args:
             image_size: Image size
-            params: Camera parameters of shape :math:`(B, 12)` of the form :math:`(fx, fy, cx, cy, kb0, kb1, kb2, kb3,
-                    k1, k2, k3, k4)`.
+            params: Camera parameters of shape :math:`(B, 12)` of the form :math:`(fx, fy, cx, cy, k1, k2, p1, p2,
+                    k3, k4, k5, k6)`.
         """
         if params.shape[-1] != 12 or len(params.shape) > 2:
             raise ValueError("params must be of shape (B, 12) for BROWN_CONRADY Camera")
