@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -405,16 +406,16 @@
         <span class="c1"># Since PyTorch does not support ragged tensor. So cropping function happens batch-wisely.</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">same_on_batch</span><span class="o">=</span><span class="n">same_on_batch</span><span class="p">,</span> <span class="n">p_batch</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="n">keepdim</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_param_generator</span> <span class="o">=</span> <span class="n">rg</span><span class="o">.</span><span class="n">CropGenerator</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
-            <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span>
-            <span class="n">pad_if_needed</span><span class="o">=</span><span class="n">pad_if_needed</span><span class="p">,</span>
-            <span class="n">fill</span><span class="o">=</span><span class="n">fill</span><span class="p">,</span>
-            <span class="n">padding_mode</span><span class="o">=</span><span class="n">padding_mode</span><span class="p">,</span>
-            <span class="n">resample</span><span class="o">=</span><span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span>
-            <span class="n">align_corners</span><span class="o">=</span><span class="n">align_corners</span><span class="p">,</span>
-            <span class="n">cropping_mode</span><span class="o">=</span><span class="n">cropping_mode</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+            <span class="s2">&quot;padding&quot;</span><span class="p">:</span> <span class="n">padding</span><span class="p">,</span>
+            <span class="s2">&quot;pad_if_needed&quot;</span><span class="p">:</span> <span class="n">pad_if_needed</span><span class="p">,</span>
+            <span class="s2">&quot;fill&quot;</span><span class="p">:</span> <span class="n">fill</span><span class="p">,</span>
+            <span class="s2">&quot;padding_mode&quot;</span><span class="p">:</span> <span class="n">padding_mode</span><span class="p">,</span>
+            <span class="s2">&quot;resample&quot;</span><span class="p">:</span> <span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span>
+            <span class="s2">&quot;align_corners&quot;</span><span class="p">:</span> <span class="n">align_corners</span><span class="p">,</span>
+            <span class="s2">&quot;cropping_mode&quot;</span><span class="p">:</span> <span class="n">cropping_mode</span><span class="p">,</span>
+        <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">compute_padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="k">if</span> <span class="n">flags</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">flags</span>

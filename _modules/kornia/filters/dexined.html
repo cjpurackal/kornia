@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -321,8 +322,8 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">concatenate</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span>

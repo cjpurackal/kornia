@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -318,9 +319,8 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">optim</span>
 
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.conversions</span> <span class="kn">import</span> <span class="n">angle_to_rotation_matrix</span><span class="p">,</span> <span class="n">convert_affinematrix_to_homography</span>
@@ -453,7 +453,6 @@
 <span class="sd">        &gt;&gt;&gt; registrator = ImageRegistrator(&#39;similarity&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; homo = registrator.register(img_src, img_dst)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">known_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;homography&#39;</span><span class="p">,</span> <span class="s1">&#39;similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;translation&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="s1">&#39;rotation&#39;</span><span class="p">]</span>
 
     <span class="c1"># TODO: resolve better type, potentially using factory.</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -468,6 +467,7 @@
         <span class="n">warper</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseWarper</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;homography&#39;</span><span class="p">,</span> <span class="s1">&#39;similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;translation&#39;</span><span class="p">,</span> <span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="s1">&#39;rotation&#39;</span><span class="p">]</span>
         <span class="c1"># We provide pre-defined combinations or allow user to supply model</span>
         <span class="c1"># together with warper</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -475,24 +475,23 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must supply warper together with custom model&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">warper</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_type</span>
+        <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;homography&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Homography</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;similarity&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;translation&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;rotation&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;homography&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Homography</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;similarity&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;translation&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;rotation&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">model_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">warper</span> <span class="o">=</span> <span class="n">HomographyWarper</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_type</span><span class="si">}</span><span class="s2"> is not supported. Try </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">known_models</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_type</span><span class="si">}</span><span class="s2"> is not supported. Try </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">known_models</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pyramid_levels</span> <span class="o">=</span> <span class="n">pyramid_levels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>

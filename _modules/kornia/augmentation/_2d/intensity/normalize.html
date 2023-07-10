@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -375,7 +376,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
             <span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">std</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">apply_transform</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">transform</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>

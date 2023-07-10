@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -614,11 +615,10 @@
 <span class="sd">        th: threshold on distance ratio, or other quality measure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">known_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nn&#39;</span><span class="p">,</span> <span class="s1">&#39;mnn&#39;</span><span class="p">,</span> <span class="s1">&#39;snn&#39;</span><span class="p">,</span> <span class="s1">&#39;smnn&#39;</span><span class="p">]</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;snn&#39;</span><span class="p">,</span> <span class="n">th</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">_match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">match_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nn&#39;</span><span class="p">,</span> <span class="s1">&#39;mnn&#39;</span><span class="p">,</span> <span class="s1">&#39;snn&#39;</span><span class="p">,</span> <span class="s1">&#39;smnn&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">_match_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">match_mode</span><span class="si">}</span><span class="s2"> is not supported. Try one of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">match_mode</span> <span class="o">=</span> <span class="n">_match_mode</span>
@@ -661,11 +661,10 @@
 <span class="sd">        th: threshold on distance ratio, or other quality measure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">known_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="s2">&quot;adalam&quot;</span><span class="p">]</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">_match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">match_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="s2">&quot;adalam&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">_match_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">match_mode</span><span class="si">}</span><span class="s2"> is not supported. Try one of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">match_mode</span> <span class="o">=</span> <span class="n">_match_mode</span>

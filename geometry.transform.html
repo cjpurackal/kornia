@@ -254,6 +254,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -1643,7 +1644,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <span class="sig-prename descclassname"><span class="pre">kornia.geometry.transform.</span></span><span class="sig-name descname"><span class="pre">invert_affine_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/transform/imgwarp.html#invert_affine_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.transform.invert_affine_transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Invert an affine transformation.</p>
 <p>The function computes an inverse affine transformation represented by
-2×3 matrix:</p>
+2x3 matrix:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{bmatrix}
@@ -1651,7 +1652,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
     a_{21} &amp; a_{22} &amp; b_{2} \\
 \end{bmatrix}\end{split}\]</div>
 </div>
-<p>The result is also a 2×3 matrix of the same type as M.</p>
+<p>The result is also a 2x3 matrix of the same type as M.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>matrix</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – original affine transform. The tensor must be

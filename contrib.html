@@ -254,6 +254,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -863,6 +864,287 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">750<
 <section id="interactive-demo">
 <h3>Interactive Demo<a class="headerlink" href="#interactive-demo" title="Permalink to this heading">#</a></h3>
 <gradio-app space="kornia/Face-Detection"></gradio-app><p>Visit the <a class="reference external" href="https://huggingface.co/spaces/kornia/Face-Detection">Kornia face detection demo on the Hugging Face Spaces</a>.</p>
+</section>
+</section>
+<section id="object-detection">
+<h2>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.ObjectDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">ObjectDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_processor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_processor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/object_detection.html#ObjectDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.ObjectDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>This class wraps an object detection model and performs pre-processing and post-processing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.ObjectDetector.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_processor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_processor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/object_detection.html#ObjectDetector.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.ObjectDetector.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Construct an Object Detector object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>) – an object detection model.</p></li>
+<li><p><strong>pre_processor</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>) – a pre-processing module</p></li>
+<li><p><strong>post_processor</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>) – a post-processing module.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.ObjectDetector.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullgraph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dynamic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inductor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/object_detection.html#ObjectDetector.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.ObjectDetector.compile" title="Permalink to this definition">#</a></dt>
+<dd><p>Compile the internal object detection model with <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.compile.html#torch.compile" title="(in PyTorch v2.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.compile()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.ObjectDetector.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/object_detection.html#ObjectDetector.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.ObjectDetector.predict" title="Permalink to this definition">#</a></dt>
+<dd><p>Detect objects in a given list of images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>imgs</strong> – list of RGB images. Each image is a Tensor with shape <span class="math notranslate nohighlight">\((3, H, W)\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of detections found in each image. For item in a batch, shape is <span class="math notranslate nohighlight">\((D, 6)\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the
+number of detections in the given image, <span class="math notranslate nohighlight">\(6\)</span> represents class id, score, and <cite>xywh</cite> bounding box.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="real-time-detection-transformer-rt-detr">
+<h3>Real-Time Detection Transformer (RT-DETR)<a class="headerlink" href="#real-time-detection-transformer-rt-detr" title="Permalink to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.rt_detr.</span></span><span class="sig-name descname"><span class="pre">RTDETRModelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETRModelType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType" title="Permalink to this definition">#</a></dt>
+<dd><p>Enum class that maps RT-DETR model type.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d">
+<span class="sig-name descname"><span class="pre">resnet18d</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d">
+<span class="sig-name descname"><span class="pre">resnet34d</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d">
+<span class="sig-name descname"><span class="pre">resnet50d</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d">
+<span class="sig-name descname"><span class="pre">resnet101d</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l">
+<span class="sig-name descname"><span class="pre">hgnetv2_l</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x">
+<span class="sig-name descname"><span class="pre">hgnetv2_x</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.rt_detr.</span></span><span class="sig-name descname"><span class="pre">RTDETRConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neck_hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neck_dim_feedforward</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neck_expansion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_num_queries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_num_decoder_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETRConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig" title="Permalink to this definition">#</a></dt>
+<dd><p>Configuration to construct RT-DETR model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_type</strong> (<a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType" title="kornia.contrib.models.rt_detr.RTDETRModelType"><em>RTDETRModelType</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – <p>model variant. Available models are</p>
+<ul>
+<li><p>ResNetD-18: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">'resnet18d'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d" title="kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.resnet18d</span></code></a></p></li>
+<li><p>ResNetD-34: <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">'resnet34d'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d" title="kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.resnet34d</span></code></a></p></li>
+<li><p>ResNetD-50: <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">'resnet50d'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d" title="kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.resnet50d</span></code></a></p></li>
+<li><p>ResNetD-101: <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">'resnet101d'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d" title="kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.resnet101d</span></code></a></p></li>
+<li><p>HGNetV2-L: <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">'hgnetv2_l'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l" title="kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.hgnetv2_l</span></code></a></p></li>
+<li><p>HGNetV2-X: <code class="docutils literal notranslate"><span class="pre">5</span></code>, <code class="docutils literal notranslate"><span class="pre">'hgnetv2_x'</span></code> or <a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x" title="kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RTDETRModelType.hgnetv2_x</span></code></a></p></li>
+</ul>
+</p></li>
+<li><p><strong>num_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – number of classes.</p></li>
+<li><p><strong>checkpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – URL or local path of model weights.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>neck_hidden_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – hidden dim for neck.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>neck_dim_feedforward</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – feed-forward network dim for neck.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>neck_expansion</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – expansion ratio for neck.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>head_hidden_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – hidden dim for head.
+Default:  <code class="code docutils literal notranslate"><span class="pre">256</span></code></p></li>
+<li><p><strong>head_num_queries</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – number of queries for Deformable DETR transformer decoder.
+Default:  <code class="code docutils literal notranslate"><span class="pre">300</span></code></p></li>
+<li><p><strong>head_num_decoder_layers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – number of decoder layers for Deformable DETR transformer decoder.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.checkpoint">
+<span class="sig-name descname"><span class="pre">checkpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.checkpoint" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.confidence_threshold">
+<span class="sig-name descname"><span class="pre">confidence_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.confidence_threshold" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.head_hidden_dim">
+<span class="sig-name descname"><span class="pre">head_hidden_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_hidden_dim" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.head_num_decoder_layers">
+<span class="sig-name descname"><span class="pre">head_num_decoder_layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_decoder_layers" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.head_num_queries">
+<span class="sig-name descname"><span class="pre">head_num_queries</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_queries" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.model_type">
+<span class="sig-name descname"><span class="pre">model_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RTDETRModelType</span> <span class="pre">|</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">int</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.model_type" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.neck_dim_feedforward">
+<span class="sig-name descname"><span class="pre">neck_dim_feedforward</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_dim_feedforward" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.neck_expansion">
+<span class="sig-name descname"><span class="pre">neck_expansion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_expansion" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.neck_hidden_dim">
+<span class="sig-name descname"><span class="pre">neck_hidden_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_hidden_dim" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETRConfig.num_classes">
+<span class="sig-name descname"><span class="pre">num_classes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETRConfig.num_classes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.rt_detr.</span></span><span class="sig-name descname"><span class="pre">RTDETR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETR" title="Permalink to this definition">#</a></dt>
+<dd><p>RT-DETR Object Detection model, as described in <a class="reference external" href="https://arxiv.org/abs/2304.08069">https://arxiv.org/abs/2304.08069</a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETR.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETR.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETR.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Construct RT-DETR Object Detection model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backbone</strong> (<em>ResNetD</em><em> | </em><em>PPHGNetV2</em>) – backbone network for feature extraction.</p></li>
+<li><p><strong>neck</strong> (<em>HybridEncoder</em>) – neck network for feature fusion.</p></li>
+<li><p><strong>head</strong> (<em>RTDETRHead</em>) – head network to decode features into detection results.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETR.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETR.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETR.forward" title="Permalink to this definition">#</a></dt>
+<dd><p>Detect objects in an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>images</strong> – images to be detected. Shape <span class="math notranslate nohighlight">\((N, C, H, W)\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with keys <code class="docutils literal notranslate"><span class="pre">logits</span></code> and <code class="docutils literal notranslate"><span class="pre">boxes</span></code>. <code class="docutils literal notranslate"><span class="pre">logits</span></code> has shape <span class="math notranslate nohighlight">\((N, Q, K)\)</span> and <code class="docutils literal notranslate"><span class="pre">boxes</span></code> has
+shape <span class="math notranslate nohighlight">\((N, Q, 4)\)</span>, where <span class="math notranslate nohighlight">\(Q\)</span> is the number of queries, <span class="math notranslate nohighlight">\(K\)</span> is the number of classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETR.from_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/model.html#RTDETR.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETR.from_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Construct RT-DETR Object Detection model from a config object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig" title="kornia.contrib.models.rt_detr.model.RTDETRConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">RTDETRConfig</span></code></a>) – configuration object for RT-DETR.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR" title="kornia.contrib.models.rt_detr.model.RTDETR"><code class="xref py py-class docutils literal notranslate"><span class="pre">RTDETR</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">config.neck_hidden_dim</span></code>, <code class="docutils literal notranslate"><span class="pre">config.neck_dim_feedforward</span></code>, <code class="docutils literal notranslate"><span class="pre">config.neck_expansion</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">config.head_num_decoder_layers</span></code>, if they are <code class="docutils literal notranslate"><span class="pre">None</span></code>, their values will be replaced with the
+default values depending on the <code class="docutils literal notranslate"><span class="pre">config.model_type</span></code>. See the source code for the default values.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.RTDETR.load_checkpoint">
+<span class="sig-name descname"><span class="pre">load_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kornia.contrib.models.rt_detr.RTDETR.load_checkpoint" title="Permalink to this definition">#</a></dt>
+<dd><p>Load checkpoint from a given url or file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The url or filepath for the respective checkpoint</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.0)"><em>torch.device</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – The desired device to load the weights and move the model
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.DETRPostProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.rt_detr.</span></span><span class="sig-name descname"><span class="pre">DETRPostProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">confidence_threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/post_processor.html#DETRPostProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.DETRPostProcessor" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.DETRPostProcessor.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/rt_detr/post_processor.html#DETRPostProcessor.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.rt_detr.DETRPostProcessor.forward" title="Permalink to this definition">#</a></dt>
+<dd><p>Post-process outputs from DETR.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – dictionary with keys <code class="docutils literal notranslate"><span class="pre">logits</span></code> and <code class="docutils literal notranslate"><span class="pre">boxes</span></code>. <code class="docutils literal notranslate"><span class="pre">logits</span></code> has shape <span class="math notranslate nohighlight">\((N, Q, K)\)</span> and
+<code class="docutils literal notranslate"><span class="pre">boxes</span></code> has shape <span class="math notranslate nohighlight">\((N, Q, 4)\)</span>, where <span class="math notranslate nohighlight">\(Q\)</span> is the number of queries, <span class="math notranslate nohighlight">\(K\)</span>
+is the number of classes.</p></li>
+<li><p><strong>meta</strong> – dictionary containing meta information. It must have key <code class="docutils literal notranslate"><span class="pre">original_size</span></code>, which is the
+original image size of input images. Each tuple represent (img_height, img_width).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Processed detections. For each image, the detections have shape (D, 6), where D is the number of detections
+in that image, 6 represent (class_id, confidence_score, x, y, w, h).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.rt_detr.DETRPostProcessor.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></em><a class="headerlink" href="#kornia.contrib.models.rt_detr.DETRPostProcessor.training" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 <section id="image-segmentation">
@@ -1746,6 +2028,52 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
 </ul>
 </li>
 <li><a class="reference internal" href="#interactive-demo">Interactive Demo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#object-detection">Object Detection</a><ul>
+<li><a class="reference internal" href="#kornia.contrib.ObjectDetector"><code class="docutils literal notranslate"><span class="pre">ObjectDetector</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.ObjectDetector.__init__"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.ObjectDetector.compile"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.compile()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.ObjectDetector.predict"><code class="docutils literal notranslate"><span class="pre">ObjectDetector.predict()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#real-time-detection-transformer-rt-detr">Real-Time Detection Transformer (RT-DETR)</a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.resnet18d</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.resnet34d</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.resnet50d</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.resnet101d</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.hgnetv2_l</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x"><code class="docutils literal notranslate"><span class="pre">RTDETRModelType.hgnetv2_x</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.checkpoint"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.checkpoint</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.confidence_threshold"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.confidence_threshold</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_hidden_dim"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.head_hidden_dim</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_decoder_layers"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.head_num_decoder_layers</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_queries"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.head_num_queries</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.model_type"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.model_type</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_dim_feedforward"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.neck_dim_feedforward</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_expansion"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.neck_expansion</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.neck_hidden_dim"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.neck_hidden_dim</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETRConfig.num_classes"><code class="docutils literal notranslate"><span class="pre">RTDETRConfig.num_classes</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR"><code class="docutils literal notranslate"><span class="pre">RTDETR</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR.__init__"><code class="docutils literal notranslate"><span class="pre">RTDETR.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR.forward"><code class="docutils literal notranslate"><span class="pre">RTDETR.forward()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR.from_config"><code class="docutils literal notranslate"><span class="pre">RTDETR.from_config()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.RTDETR.load_checkpoint"><code class="docutils literal notranslate"><span class="pre">RTDETR.load_checkpoint()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.DETRPostProcessor"><code class="docutils literal notranslate"><span class="pre">DETRPostProcessor</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.DETRPostProcessor.forward"><code class="docutils literal notranslate"><span class="pre">DETRPostProcessor.forward()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.rt_detr.DETRPostProcessor.training"><code class="docutils literal notranslate"><span class="pre">DETRPostProcessor.training</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#image-segmentation">Image Segmentation</a><ul>

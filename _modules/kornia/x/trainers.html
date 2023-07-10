@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -343,7 +344,7 @@
             <span class="k">raise</span> <span class="ne">AssertionError</span>
         <span class="n">out</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">args</span>
         <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">top1</span><span class="o">=</span><span class="n">acc1</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">top5</span><span class="o">=</span><span class="n">acc5</span><span class="o">.</span><span class="n">item</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;top1&quot;</span><span class="p">:</span> <span class="n">acc1</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="s2">&quot;top5&quot;</span><span class="p">:</span> <span class="n">acc5</span><span class="o">.</span><span class="n">item</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="SemanticSegmentationTrainer"><a class="viewcode-back" href="../../../x.html#kornia.x.SemanticSegmentationTrainer">[docs]</a><span class="k">class</span> <span class="nc">SemanticSegmentationTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>
@@ -362,7 +363,7 @@
             <span class="k">raise</span> <span class="ne">AssertionError</span>
         <span class="n">out</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">args</span>
         <span class="n">iou</span> <span class="o">=</span> <span class="n">mean_iou</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">target</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">iou</span><span class="o">=</span><span class="n">iou</span><span class="o">.</span><span class="n">item</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;iou&quot;</span><span class="p">:</span> <span class="n">iou</span><span class="o">.</span><span class="n">item</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="ObjectDetectionTrainer"><a class="viewcode-back" href="../../../x.html#kornia.x.ObjectDetectionTrainer">[docs]</a><span class="k">class</span> <span class="nc">ObjectDetectionTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>

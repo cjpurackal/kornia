@@ -252,6 +252,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -323,9 +324,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion.__add__">__add__() (kornia.geometry.quaternion.Quaternion method)</a>
 </li>
-        <li><a href="contrib.html#kornia.contrib.models.sam.Sam.__init__">__init__() (kornia.contrib.models.sam.Sam method)</a>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETR.__init__">__init__() (kornia.contrib.models.rt_detr.RTDETR method)</a>
 
         <ul>
+          <li><a href="contrib.html#kornia.contrib.models.sam.Sam.__init__">(kornia.contrib.models.sam.Sam method)</a>
+</li>
+          <li><a href="contrib.html#kornia.contrib.ObjectDetector.__init__">(kornia.contrib.ObjectDetector method)</a>
+</li>
           <li><a href="geometry.camera.stereo.html#kornia.geometry.camera.stereo.StereoCamera.__init__">(kornia.geometry.camera.stereo.StereoCamera method)</a>
 </li>
           <li><a href="geometry.liegroup.html#kornia.geometry.liegroup.Se2.__init__">(kornia.geometry.liegroup.Se2 method)</a>
@@ -341,6 +346,8 @@
           <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion.__init__">(kornia.geometry.quaternion.Quaternion method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="geometry.liegroup.html#kornia.geometry.liegroup.Se2.__mul__">__mul__() (kornia.geometry.liegroup.Se2 method)</a>
 
         <ul>
@@ -351,8 +358,6 @@
           <li><a href="geometry.liegroup.html#kornia.geometry.liegroup.So3.__mul__">(kornia.geometry.liegroup.So3 method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion.__neg__">__neg__() (kornia.geometry.quaternion.Quaternion method)</a>
 </li>
         <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion.__pow__">__pow__() (kornia.geometry.quaternion.Quaternion method)</a>
@@ -611,8 +616,12 @@
 </li>
         <li><a href="losses.html#kornia.losses.CharbonnierLoss">CharbonnierLoss (class in kornia.losses)</a>
 </li>
-        <li><a href="contrib.html#kornia.contrib.models.sam.SamConfig.checkpoint">checkpoint (kornia.contrib.models.sam.SamConfig attribute)</a>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.checkpoint">checkpoint (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+
+        <ul>
+          <li><a href="contrib.html#kornia.contrib.models.sam.SamConfig.checkpoint">(kornia.contrib.models.sam.SamConfig attribute)</a>
 </li>
+        </ul></li>
         <li><a href="contrib.html#kornia.contrib.ClassificationHead">ClassificationHead (class in kornia.contrib)</a>
 </li>
         <li><a href="geometry.camera.pinhole.html#kornia.geometry.camera.pinhole.PinholeCamera.clone">clone() (kornia.geometry.camera.pinhole.PinholeCamera method)</a>
@@ -640,6 +649,8 @@
         <li><a href="contrib.html#kornia.contrib.models.base.ModelBase.compile">compile() (kornia.contrib.models.base.ModelBase method)</a>
 
         <ul>
+          <li><a href="contrib.html#kornia.contrib.ObjectDetector.compile">(kornia.contrib.ObjectDetector method)</a>
+</li>
           <li><a href="contrib.html#kornia.contrib.visual_prompter.VisualPrompter.compile">(kornia.contrib.visual_prompter.VisualPrompter method)</a>
 </li>
         </ul></li>
@@ -656,6 +667,8 @@
         <li><a href="contrib.html#kornia.contrib.compute_padding">compute_padding() (in module kornia.contrib)</a>
 </li>
         <li><a href="augmentation.base.html#kornia.augmentation.GeometricAugmentationBase2D.compute_transformation">compute_transformation() (kornia.augmentation.GeometricAugmentationBase2D method)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.confidence_threshold">confidence_threshold (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
 </li>
         <li><a href="metrics.html#kornia.metrics.confusion_matrix">confusion_matrix() (in module kornia.metrics)</a>
 </li>
@@ -764,6 +777,8 @@
         <li><a href="geometry.depth.html#kornia.geometry.depth.depth_to_normals">depth_to_normals() (in module kornia.geometry.depth)</a>
 </li>
         <li><a href="feature.html#kornia.feature.DescriptorMatcher">DescriptorMatcher (class in kornia.feature)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.DETRPostProcessor">DETRPostProcessor (class in kornia.contrib.models.rt_detr)</a>
 </li>
         <li><a href="geometry.boxes.html#kornia.geometry.boxes.Boxes.device">device (kornia.geometry.boxes.Boxes property)</a>
 
@@ -946,6 +961,10 @@
 </li>
           <li><a href="augmentation.container.html#kornia.augmentation.container.VideoSequential.forward">(kornia.augmentation.container.VideoSequential method)</a>
 </li>
+          <li><a href="contrib.html#kornia.contrib.models.rt_detr.DETRPostProcessor.forward">(kornia.contrib.models.rt_detr.DETRPostProcessor method)</a>
+</li>
+          <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETR.forward">(kornia.contrib.models.rt_detr.RTDETR method)</a>
+</li>
           <li><a href="contrib.html#kornia.contrib.models.sam.Sam.forward">(kornia.contrib.models.sam.Sam method)</a>
 </li>
           <li><a href="enhance.html#kornia.enhance.ZCAWhitening.forward">(kornia.enhance.ZCAWhitening method)</a>
@@ -1034,6 +1053,8 @@
         <li><a href="contrib.html#kornia.contrib.models.base.ModelBase.from_config">from_config() (kornia.contrib.models.base.ModelBase static method)</a>
 
         <ul>
+          <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETR.from_config">(kornia.contrib.models.rt_detr.RTDETR static method)</a>
+</li>
           <li><a href="contrib.html#kornia.contrib.models.sam.Sam.from_config">(kornia.contrib.models.sam.Sam static method)</a>
 </li>
         </ul></li>
@@ -1225,6 +1246,12 @@
 </li>
         <li><a href="losses.html#kornia.losses.HausdorffERLoss3D">HausdorffERLoss3D (class in kornia.losses)</a>
 </li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.head_hidden_dim">head_hidden_dim (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_decoder_layers">head_num_decoder_layers (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.head_num_queries">head_num_queries (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
         <li><a href="feature.html#kornia.feature.DISK.heatmap_and_dense_descriptors">heatmap_and_dense_descriptors() (kornia.feature.DISK method)</a>
 </li>
         <li><a href="contrib.html#kornia.contrib.FaceDetectorResult.height">height (kornia.contrib.FaceDetectorResult property)</a>
@@ -1233,13 +1260,17 @@
           <li><a href="sensors.camera.html#kornia.sensors.camera.CameraModelBase.height">(kornia.sensors.camera.CameraModelBase property)</a>
 </li>
         </ul></li>
-        <li><a href="feature.html#kornia.feature.hessian_response">hessian_response() (in module kornia.feature)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="feature.html#kornia.feature.hessian_response">hessian_response() (in module kornia.feature)</a>
+</li>
         <li><a href="geometry.transform.html#kornia.geometry.transform.Hflip">Hflip (class in kornia.geometry.transform)</a>
 </li>
         <li><a href="geometry.transform.html#kornia.geometry.transform.hflip">hflip() (in module kornia.geometry.transform)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_l">hgnetv2_l (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.hgnetv2_x">hgnetv2_x (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
 </li>
         <li><a href="enhance.html#kornia.enhance.histogram">histogram() (in module kornia.enhance)</a>
 </li>
@@ -1288,6 +1319,8 @@
         <li><a href="utils.html#kornia.utils.image_list_to_tensor">image_list_to_tensor() (in module kornia.utils)</a>
 </li>
         <li><a href="sensors.camera.html#kornia.sensors.camera.CameraModelBase.image_size">image_size (kornia.sensors.camera.CameraModelBase property)</a>
+</li>
+        <li><a href="utils.html#kornia.utils.image_to_string">image_to_string() (in module kornia.utils)</a>
 </li>
         <li><a href="utils.html#kornia.utils.image_to_tensor">image_to_tensor() (in module kornia.utils)</a>
 </li>
@@ -1491,6 +1524,8 @@
         <li><a href="contrib.html#kornia.contrib.models.base.ModelBase.load_checkpoint">load_checkpoint() (kornia.contrib.models.base.ModelBase method)</a>
 
         <ul>
+          <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETR.load_checkpoint">(kornia.contrib.models.rt_detr.RTDETR method)</a>
+</li>
           <li><a href="contrib.html#kornia.contrib.models.sam.Sam.load_checkpoint">(kornia.contrib.models.sam.Sam method)</a>
 </li>
         </ul></li>
@@ -1604,8 +1639,12 @@
 </li>
         <li><a href="contrib.html#kornia.contrib.MobileViT">MobileViT (class in kornia.contrib)</a>
 </li>
-        <li><a href="contrib.html#kornia.contrib.models.sam.SamConfig.model_type">model_type (kornia.contrib.models.sam.SamConfig attribute)</a>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.model_type">model_type (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+
+        <ul>
+          <li><a href="contrib.html#kornia.contrib.models.sam.SamConfig.model_type">(kornia.contrib.models.sam.SamConfig attribute)</a>
 </li>
+        </ul></li>
         <li><a href="contrib.html#kornia.contrib.models.base.ModelBase">ModelBase (class in kornia.contrib.models.base)</a>
 </li>
         <li><a href="x.html#kornia.x.ModelCheckpoint">ModelCheckpoint (class in kornia.x)</a>
@@ -1649,6 +1688,12 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.neck_dim_feedforward">neck_dim_feedforward (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.neck_expansion">neck_expansion (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.neck_hidden_dim">neck_hidden_dim (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
         <li><a href="geometry.bbox.html#kornia.geometry.bbox.nms">nms() (in module kornia.geometry.bbox)</a>
 </li>
         <li><a href="geometry.subpix.html#kornia.geometry.subpix.nms2d">nms2d() (in module kornia.geometry.subpix)</a>
@@ -1667,10 +1712,10 @@
         </ul></li>
         <li><a href="enhance.html#kornia.enhance.normalize">normalize() (in module kornia.enhance)</a>
 </li>
-        <li><a href="geometry.conversions.html#kornia.geometry.conversions.normalize_homography">normalize_homography() (in module kornia.geometry.conversions)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="geometry.conversions.html#kornia.geometry.conversions.normalize_homography">normalize_homography() (in module kornia.geometry.conversions)</a>
+</li>
         <li><a href="geometry.conversions.html#kornia.geometry.conversions.normalize_homography3d">normalize_homography3d() (in module kornia.geometry.conversions)</a>
 </li>
         <li><a href="feature.html#kornia.feature.normalize_laf">normalize_laf() (in module kornia.feature)</a>
@@ -1691,6 +1736,8 @@
 </li>
         <li><a href="contrib.html#kornia.contrib.FaceKeypoint.NOSE">NOSE (kornia.contrib.FaceKeypoint attribute)</a>
 </li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig.num_classes">num_classes (kornia.contrib.models.rt_detr.RTDETRConfig attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -1700,6 +1747,8 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="x.html#kornia.x.ObjectDetectionTrainer">ObjectDetectionTrainer (class in kornia.x)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.ObjectDetector">ObjectDetector (class in kornia.contrib)</a>
 </li>
         <li><a href="utils.html#kornia.utils.one_hot">one_hot() (in module kornia.utils)</a>
 </li>
@@ -1763,15 +1812,21 @@
 </li>
         <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion.polar_angle">polar_angle (kornia.geometry.quaternion.Quaternion property)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="enhance.html#kornia.enhance.posterize">posterize() (in module kornia.enhance)</a>
 </li>
-        <li><a href="contrib.html#kornia.contrib.visual_prompter.VisualPrompter.predict">predict() (kornia.contrib.visual_prompter.VisualPrompter method)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="contrib.html#kornia.contrib.ObjectDetector.predict">predict() (kornia.contrib.ObjectDetector method)</a>
+
+        <ul>
+          <li><a href="contrib.html#kornia.contrib.visual_prompter.VisualPrompter.predict">(kornia.contrib.visual_prompter.VisualPrompter method)</a>
 </li>
+        </ul></li>
         <li><a href="contrib.html#kornia.contrib.visual_prompter.VisualPrompter.preprocess_image">preprocess_image() (kornia.contrib.visual_prompter.VisualPrompter method)</a>
 </li>
         <li><a href="contrib.html#kornia.contrib.visual_prompter.VisualPrompter.preprocess_prompts">preprocess_prompts() (kornia.contrib.visual_prompter.VisualPrompter method)</a>
+</li>
+        <li><a href="utils.html#kornia.utils.print_image">print_image() (in module kornia.utils)</a>
 </li>
         <li><a href="geometry.camera.pinhole.html#kornia.geometry.camera.pinhole.PinholeCamera.project">project() (kornia.geometry.camera.pinhole.PinholeCamera method)</a>
 
@@ -1822,6 +1877,8 @@
 </li>
         </ul></li>
         <li><a href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion">Quaternion (class in kornia.geometry.quaternion)</a>
+</li>
+        <li><a href="geometry.liegroup.html#kornia.geometry.liegroup.Se3.quaternion">quaternion (kornia.geometry.liegroup.Se3 property)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -1979,8 +2036,6 @@
 </li>
         <li><a href="feature.html#kornia.feature.MultiResolutionDetector.remove_borders">remove_borders() (kornia.feature.MultiResolutionDetector method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="geometry.subpix.html#kornia.geometry.subpix.render_gaussian2d">render_gaussian2d() (in module kornia.geometry.subpix)</a>
 </li>
         <li><a href="geometry.camera.stereo.html#kornia.geometry.camera.stereo.reproject_disparity_to_3D">reproject_disparity_to_3D() (in module kornia.geometry.camera.stereo)</a>
@@ -1991,6 +2046,8 @@
         </ul></li>
         <li><a href="geometry.transform.html#kornia.geometry.transform.Rescale">Rescale (class in kornia.geometry.transform)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="geometry.transform.html#kornia.geometry.transform.rescale">rescale() (in module kornia.geometry.transform)</a>
 </li>
         <li><a href="geometry.transform.html#kornia.geometry.transform.image_registrator.Homography.reset_model">reset_model() (kornia.geometry.transform.image_registrator.Homography method)</a>
@@ -2008,6 +2065,14 @@
 </li>
         </ul></li>
         <li><a href="geometry.transform.html#kornia.geometry.transform.resize">resize() (in module kornia.geometry.transform)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.resnet101d">resnet101d (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.resnet18d">resnet18d (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.resnet34d">resnet34d (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType.resnet50d">resnet50d (kornia.contrib.models.rt_detr.RTDETRModelType attribute)</a>
 </li>
         <li><a href="color.html#kornia.color.CFA.RG">RG (kornia.color.CFA attribute)</a>
 </li>
@@ -2128,6 +2193,12 @@
         <li><a href="geometry.camera.pinhole.html#kornia.geometry.camera.pinhole.PinholeCamera.rt_matrix">rt_matrix (kornia.geometry.camera.pinhole.PinholeCamera property)</a>
 </li>
         <li><a href="geometry.conversions.html#kornia.geometry.conversions.Rt_to_matrix4x4">Rt_to_matrix4x4() (in module kornia.geometry.conversions)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETR">RTDETR (class in kornia.contrib.models.rt_detr)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRConfig">RTDETRConfig (class in kornia.contrib.models.rt_detr)</a>
+</li>
+        <li><a href="contrib.html#kornia.contrib.models.rt_detr.RTDETRModelType">RTDETRModelType (class in kornia.contrib.models.rt_detr)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -2352,7 +2423,11 @@
         <li><a href="x.html#kornia.x.Trainer">Trainer (class in kornia.x)</a>
 </li>
         <li><a href="contrib.html#kornia.contrib.models.base.ModelBase.training">training (kornia.contrib.models.base.ModelBase attribute)</a>
+
+        <ul>
+          <li><a href="contrib.html#kornia.contrib.models.rt_detr.DETRPostProcessor.training">(kornia.contrib.models.rt_detr.DETRPostProcessor attribute)</a>
 </li>
+        </ul></li>
         <li><a href="geometry.liegroup.html#kornia.geometry.liegroup.Se2.trans">trans() (kornia.geometry.liegroup.Se2 class method)</a>
 
         <ul>

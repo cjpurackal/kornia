@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -319,6 +320,7 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">cast</span>
 
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">float16</span><span class="p">,</span> <span class="n">float32</span><span class="p">,</span> <span class="n">float64</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypeGuard</span>
 
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span>
@@ -334,6 +336,7 @@
     <span class="s2">&quot;KORNIA_CHECK_SAME_DEVICES&quot;</span><span class="p">,</span>
     <span class="s2">&quot;KORNIA_CHECK_IS_COLOR&quot;</span><span class="p">,</span>
     <span class="s2">&quot;KORNIA_CHECK_IS_GRAY&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KORNIA_CHECK_IS_IMAGE&quot;</span><span class="p">,</span>
     <span class="s2">&quot;KORNIA_CHECK_DM_DESC&quot;</span><span class="p">,</span>
     <span class="s2">&quot;KORNIA_CHECK_LAF&quot;</span><span class="p">,</span>
 <span class="p">]</span>
@@ -650,6 +653,45 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">raises</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not a color or gray tensor. Got: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span> <span class="nf">KORNIA_CHECK_IS_IMAGE</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raises</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">bits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether an image tensor is ranged properly [0, 1] for float or [0, 2 ** bits] for int.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: image tensor to evaluate.</span>
+<span class="sd">        msg: message to show in the exception.</span>
+<span class="sd">        raises: bool indicating whether an exception should be raised upon failure.</span>
+<span class="sd">        bits: the image bits. The default checks if given integer input image is an</span>
+<span class="sd">            8-bit image (0-255) or not.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeException: if all the input tensor has not 1) a shape :math:`(3,H,W)`,</span>
+<span class="sd">        2) [0, 1] for float or [0, 255] for int, 3) and raises is True.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; img = torch.rand(2, 3, 4, 4)</span>
+<span class="sd">        &gt;&gt;&gt; KORNIA_CHECK_IS_IMAGE(img, &quot;It is not an image&quot;)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">KORNIA_CHECK_IS_COLOR_OR_GRAY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">raises</span><span class="o">=</span><span class="n">raises</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">raises</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Invalid image value range. Expect [0, 1] but got [</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">].&quot;</span>
+    <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">err_msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="n">float16</span><span class="p">,</span> <span class="n">float32</span><span class="p">,</span> <span class="n">float64</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">raises</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="n">bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">raises</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="kc">True</span>
 

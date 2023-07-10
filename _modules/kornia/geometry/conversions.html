@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -316,9 +317,6 @@
           <h1>Source code for kornia.geometry.conversions</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">enum</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 
@@ -369,11 +367,6 @@
     <span class="s2">&quot;camtoworld_vision_to_graphics_Rt&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ARKitQTVecs_to_ColmapQTVecs&quot;</span><span class="p">,</span>
 <span class="p">]</span>
-
-
-<span class="k">class</span> <span class="nc">QuaternionCoeffOrder</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">XYZW</span> <span class="o">=</span> <span class="s1">&#39;xyzw&#39;</span>
-    <span class="n">WXYZ</span> <span class="o">=</span> <span class="s1">&#39;wxyz&#39;</span>
 
 
 <div class="viewcode-block" id="rad2deg"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rad2deg">[docs]</a><span class="k">def</span> <span class="nf">rad2deg</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -685,24 +678,18 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">rotation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input size must be a (*, 3, 3) tensor. Got </span><span class="si">{</span><span class="n">rotation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">WXYZ</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">WXYZ</span><span class="p">)</span></div>
+    <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rotation_matrix_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">rotation_matrix_to_quaternion</span><span class="p">(</span>
-    <span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="rotation_matrix_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert 3x3 rotation matrix to 4d quaternion vector.</span>
 
-<span class="sd">    The quaternion vector has components in (w, x, y, z) or (x, y, z, w) format.</span>
-
-<span class="sd">    .. note::</span>
-<span class="sd">        The (x, y, z, w) order is going to be deprecated in favor of efficiency.</span>
+<span class="sd">    The quaternion vector has components in (w, x, y, z) format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        rotation_matrix: the rotation matrix to convert with shape :math:`(*, 3, 3)`.</span>
 <span class="sd">        eps: small value to avoid zero division.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        the rotation in quaternion with shape :math:`(*, 4)`.</span>
@@ -711,8 +698,7 @@
 <span class="sd">        &gt;&gt;&gt; input = tensor([[1., 0., 0.],</span>
 <span class="sd">        ...                       [0., 1., 0.],</span>
 <span class="sd">        ...                       [0., 0., 1.]])</span>
-<span class="sd">        &gt;&gt;&gt; rotation_matrix_to_quaternion(input, eps=torch.finfo(input.dtype).eps,</span>
-<span class="sd">        ...                               order=QuaternionCoeffOrder.WXYZ)</span>
+<span class="sd">        &gt;&gt;&gt; rotation_matrix_to_quaternion(input, eps=torch.finfo(input.dtype).eps)</span>
 <span class="sd">        tensor([1., 0., 0., 0.])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -720,16 +706,6 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">rotation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input size must be a (*, 3, 3) tensor. Got </span><span class="si">{</span><span class="n">rotation_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">safe_zero_division</span><span class="p">(</span><span class="n">numerator</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">denominator</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
         <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">numerator</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">tiny</span>
@@ -747,8 +723,6 @@
         <span class="n">qx</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m21</span> <span class="o">-</span> <span class="n">m12</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qy</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m02</span> <span class="o">-</span> <span class="n">m20</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qz</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m10</span> <span class="o">-</span> <span class="n">m01</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qw</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">cond_1</span><span class="p">():</span>
@@ -757,8 +731,6 @@
         <span class="n">qx</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">sq</span>
         <span class="n">qy</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m01</span> <span class="o">+</span> <span class="n">m10</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qz</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m02</span> <span class="o">+</span> <span class="n">m20</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qw</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">cond_2</span><span class="p">():</span>
@@ -767,8 +739,6 @@
         <span class="n">qx</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m01</span> <span class="o">+</span> <span class="n">m10</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qy</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">sq</span>
         <span class="n">qz</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m12</span> <span class="o">+</span> <span class="n">m21</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qw</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">cond_3</span><span class="p">():</span>
@@ -777,8 +747,6 @@
         <span class="n">qx</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m02</span> <span class="o">+</span> <span class="n">m20</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qy</span> <span class="o">=</span> <span class="n">safe_zero_division</span><span class="p">(</span><span class="n">m12</span> <span class="o">+</span> <span class="n">m21</span><span class="p">,</span> <span class="n">sq</span><span class="p">)</span>
         <span class="n">qz</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">sq</span>
-        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">,</span> <span class="n">qw</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">where_2</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">m11</span> <span class="o">&gt;</span> <span class="n">m22</span><span class="p">,</span> <span class="n">cond_2</span><span class="p">(),</span> <span class="n">cond_3</span><span class="p">())</span>
@@ -819,24 +787,21 @@
 <span class="c1"># https://github.com/tensorflow/graphics/blob/master/tensorflow_graphics/geometry/transformation/rotation_matrix_3d.py#L247</span>
 
 
-<div class="viewcode-block" id="quaternion_to_rotation_matrix"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_rotation_matrix</span><span class="p">(</span>
-    <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_to_rotation_matrix"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_rotation_matrix</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert a quaternion to a rotation matrix.</span>
 
-<span class="sd">    The quaternion should be in (x, y, z, w) or (w, x, y, z) format.</span>
+<span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        quaternion: a tensor containing a quaternion to be converted.</span>
 <span class="sd">          The tensor can be of shape :math:`(*, 4)`.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        the rotation matrix of shape :math:`(*, 3, 3)`.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; quaternion = tensor((0., 0., 0., 1.))</span>
-<span class="sd">        &gt;&gt;&gt; quaternion_to_rotation_matrix(quaternion, order=QuaternionCoeffOrder.WXYZ)</span>
+<span class="sd">        &gt;&gt;&gt; quaternion_to_rotation_matrix(quaternion)</span>
 <span class="sd">        tensor([[-1.,  0.,  0.],</span>
 <span class="sd">                [ 0., -1.,  0.],</span>
 <span class="sd">                [ 0.,  0.,  1.]])</span>
@@ -847,24 +812,14 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a tensor of shape (*, 4). Got </span><span class="si">{</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
-
     <span class="c1"># normalize the input quaternion</span>
     <span class="n">quaternion_norm</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">normalize_quaternion</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span>
 
     <span class="c1"># unpack the normalized quaternion components</span>
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">quaternion_norm</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">quaternion_norm</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">quaternion_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">quaternion_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">quaternion_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">quaternion_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
     <span class="c1"># compute the actual conversion</span>
     <span class="n">tx</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">x</span>
@@ -897,22 +852,21 @@
     <span class="p">)</span>
 
     <span class="c1"># this slightly awkward construction of the output shape is to satisfy torchscript</span>
-    <span class="n">output_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">output_shape</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">matrix</span></div>
 
 
-<div class="viewcode-block" id="quaternion_to_angle_axis"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_angle_axis">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_to_angle_axis"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_angle_axis">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert quaternion vector to angle axis of rotation in radians.</span>
 
-<span class="sd">    The quaternion should be in (x, y, z, w) or (w, x, y, z) format.</span>
+<span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
 
 <span class="sd">    Adapted from ceres C++ library: ceres-solver/include/ceres/rotation.h</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        quaternion: tensor with quaternions.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        tensor with angle axis of rotation.</span>
@@ -924,7 +878,7 @@
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; quaternion = tensor((1., 0., 0., 0.))</span>
 <span class="sd">        &gt;&gt;&gt; quaternion_to_angle_axis(quaternion)</span>
-<span class="sd">        tensor([3.1416, 0.0000, 0.0000])</span>
+<span class="sd">        tensor([0., 0., 0.])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">quaternion</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input type is not a Tensor. Got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -932,31 +886,16 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a tensor of shape Nx4 or 4. Got </span><span class="si">{</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
     <span class="c1"># unpack input and compute conversion</span>
     <span class="n">q1</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
     <span class="n">q2</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
     <span class="n">q3</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
     <span class="n">cos_theta</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
 
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">q1</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">q2</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">q3</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-        <span class="n">q1</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="n">q2</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-        <span class="n">q3</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">q3</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
     <span class="n">sin_squared_theta</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">q1</span> <span class="o">*</span> <span class="n">q1</span> <span class="o">+</span> <span class="n">q2</span> <span class="o">*</span> <span class="n">q2</span> <span class="o">+</span> <span class="n">q3</span> <span class="o">*</span> <span class="n">q3</span>
 
@@ -976,26 +915,22 @@
     <span class="k">return</span> <span class="n">angle_axis</span></div>
 
 
-<div class="viewcode-block" id="quaternion_log_to_exp"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_log_to_exp">[docs]</a><span class="k">def</span> <span class="nf">quaternion_log_to_exp</span><span class="p">(</span>
-    <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_log_to_exp"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_log_to_exp">[docs]</a><span class="k">def</span> <span class="nf">quaternion_log_to_exp</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Apply exponential map to log quaternion.</span>
 
-<span class="sd">    The quaternion should be in (x, y, z, w) or (w, x, y, z) format.</span>
+<span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        quaternion: a tensor containing a quaternion to be converted.</span>
 <span class="sd">          The tensor can be of shape :math:`(*, 3)`.</span>
 <span class="sd">        eps: a small number for clamping.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        the quaternion exponential map of shape :math:`(*, 4)`.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; quaternion = tensor((0., 0., 0.))</span>
-<span class="sd">        &gt;&gt;&gt; quaternion_log_to_exp(quaternion, eps=torch.finfo(quaternion.dtype).eps,</span>
-<span class="sd">        ...                       order=QuaternionCoeffOrder.WXYZ)</span>
+<span class="sd">        &gt;&gt;&gt; quaternion_log_to_exp(quaternion, eps=torch.finfo(quaternion.dtype).eps)</span>
 <span class="sd">        tensor([1., 0., 0., 0.])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">quaternion</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -1003,16 +938,6 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a tensor of shape (*, 3). Got </span><span class="si">{</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
 
     <span class="c1"># compute quaternion norm</span>
     <span class="n">norm_q</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">quaternion</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
@@ -1023,34 +948,27 @@
 
     <span class="c1"># compose quaternion and return</span>
     <span class="n">quaternion_exp</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">quaternion_exp</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">quaternion_vector</span><span class="p">,</span> <span class="n">quaternion_scalar</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">quaternion_exp</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">quaternion_scalar</span><span class="p">,</span> <span class="n">quaternion_vector</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">quaternion_exp</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">((</span><span class="n">quaternion_scalar</span><span class="p">,</span> <span class="n">quaternion_vector</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">quaternion_exp</span></div>
 
 
-<div class="viewcode-block" id="quaternion_exp_to_log"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_exp_to_log">[docs]</a><span class="k">def</span> <span class="nf">quaternion_exp_to_log</span><span class="p">(</span>
-    <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_exp_to_log"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_exp_to_log">[docs]</a><span class="k">def</span> <span class="nf">quaternion_exp_to_log</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Apply the log map to a quaternion.</span>
 
-<span class="sd">    The quaternion should be in (x, y, z, w) format.</span>
+<span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        quaternion: a tensor containing a quaternion to be converted.</span>
 <span class="sd">          The tensor can be of shape :math:`(*, 4)`.</span>
 <span class="sd">        eps: a small number for clamping.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        the quaternion log map of shape :math:`(*, 3)`.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; quaternion = tensor((1., 0., 0., 0.))</span>
-<span class="sd">        &gt;&gt;&gt; quaternion_exp_to_log(quaternion, eps=torch.finfo(quaternion.dtype).eps,</span>
-<span class="sd">        ...                       order=QuaternionCoeffOrder.WXYZ)</span>
+<span class="sd">        &gt;&gt;&gt; quaternion_exp_to_log(quaternion, eps=torch.finfo(quaternion.dtype).eps)</span>
 <span class="sd">        tensor([0., 0., 0.])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">quaternion</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -1059,26 +977,12 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a tensor of shape (*, 4). Got </span><span class="si">{</span><span class="n">quaternion</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
-
     <span class="c1"># unpack quaternion vector and scalar</span>
     <span class="n">quaternion_vector</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
     <span class="n">quaternion_scalar</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([])</span>
 
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">quaternion_vector</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-        <span class="n">quaternion_scalar</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">quaternion_scalar</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">quaternion_vector</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">quaternion_scalar</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">quaternion_vector</span> <span class="o">=</span> <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
 
     <span class="c1"># compute quaternion norm</span>
     <span class="n">norm_q</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">quaternion_vector</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span>
@@ -1093,16 +997,15 @@
 <span class="c1"># https://github.com/facebookresearch/QuaterNet/blob/master/common/quaternion.py#L138</span>
 
 
-<div class="viewcode-block" id="angle_axis_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.angle_axis_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">angle_axis_to_quaternion</span><span class="p">(</span><span class="n">angle_axis</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">QuaternionCoeffOrder</span> <span class="o">=</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="angle_axis_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.angle_axis_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">angle_axis_to_quaternion</span><span class="p">(</span><span class="n">angle_axis</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert an angle axis to a quaternion.</span>
 
-<span class="sd">    The quaternion vector has components in (x, y, z, w) or (w, x, y, z) format.</span>
+<span class="sd">    The quaternion vector has components in (w, x, y, z) format.</span>
 
 <span class="sd">    Adapted from ceres C++ library: ceres-solver/include/ceres/rotation.h</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        angle_axis: tensor with angle axis in radians.</span>
-<span class="sd">        order: quaternion coefficient order. Note: &#39;xyzw&#39; will be deprecated in favor of &#39;wxyz&#39;.</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        tensor with quaternion.</span>
@@ -1113,7 +1016,7 @@
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; angle_axis = tensor((0., 1., 0.))</span>
-<span class="sd">        &gt;&gt;&gt; angle_axis_to_quaternion(angle_axis, order=QuaternionCoeffOrder.WXYZ)</span>
+<span class="sd">        &gt;&gt;&gt; angle_axis_to_quaternion(angle_axis)</span>
 <span class="sd">        tensor([0.8776, 0.0000, 0.4794, 0.0000])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">is_tensor</span><span class="p">(</span><span class="n">angle_axis</span><span class="p">):</span>
@@ -1121,16 +1024,6 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">angle_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a tensor of shape Nx3 or 3. Got </span><span class="si">{</span><span class="n">angle_axis</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;order must be one of </span><span class="si">{</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;`XYZW` quaternion coefficient order is deprecated and&quot;</span>
-            <span class="s2">&quot; will be removed after &gt; 0.6. &quot;</span>
-            <span class="s2">&quot;Please use `QuaternionCoeffOrder.WXYZ` instead.&quot;</span>
-        <span class="p">)</span>
 
     <span class="c1"># unpack input and compute conversion</span>
     <span class="n">a0</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">angle_axis</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
@@ -1150,16 +1043,10 @@
     <span class="n">w</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">half_theta</span><span class="p">),</span> <span class="n">ones</span><span class="p">)</span>
 
     <span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">angle_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">angle_axis</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">angle_axis</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">XYZW</span><span class="p">:</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">k</span>
-        <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a0</span> <span class="o">*</span> <span class="n">k</span>
+    <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span> <span class="o">*</span> <span class="n">k</span>
+    <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">*</span> <span class="n">k</span>
+    <span class="n">quaternion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
     <span class="k">return</span> <span class="n">quaternion</span></div>
 
 
@@ -1877,11 +1764,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># ToDo:  integrate QuaterniaonAPI</span>
 
-    <span class="n">Rcg</span> <span class="o">=</span> <span class="n">quaternion_to_rotation_matrix</span><span class="p">(</span><span class="n">qvec</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">WXYZ</span><span class="p">)</span>
+    <span class="n">Rcg</span> <span class="o">=</span> <span class="n">quaternion_to_rotation_matrix</span><span class="p">(</span><span class="n">qvec</span><span class="p">)</span>
     <span class="n">Rcv</span><span class="p">,</span> <span class="n">Tcv</span> <span class="o">=</span> <span class="n">camtoworld_graphics_to_vision_Rt</span><span class="p">(</span><span class="n">Rcg</span><span class="p">,</span> <span class="n">tvec</span><span class="p">)</span>
     <span class="n">R_colmap</span><span class="p">,</span> <span class="n">t_colmap</span> <span class="o">=</span> <span class="n">camtoworld_to_worldtocam_Rt</span><span class="p">(</span><span class="n">Rcv</span><span class="p">,</span> <span class="n">Tcv</span><span class="p">)</span>
     <span class="n">t_colmap</span> <span class="o">=</span> <span class="n">t_colmap</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">q_colmap</span> <span class="o">=</span> <span class="n">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">R_colmap</span><span class="o">.</span><span class="n">contiguous</span><span class="p">(),</span> <span class="n">order</span><span class="o">=</span><span class="n">QuaternionCoeffOrder</span><span class="o">.</span><span class="n">WXYZ</span><span class="p">)</span>
+    <span class="n">q_colmap</span> <span class="o">=</span> <span class="n">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">R_colmap</span><span class="o">.</span><span class="n">contiguous</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">q_colmap</span><span class="p">,</span> <span class="n">t_colmap</span></div>
 </pre></div>
         </article>

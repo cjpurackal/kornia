@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -337,14 +338,10 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        torch.device</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
-            <span class="n">dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cuda:</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># noqa: F841</span>
-        <span class="n">dev</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dev</span></div>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cuda:</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_mps_device_if_available"><a class="viewcode-back" href="../../../utils.html#kornia.utils.get_mps_device_if_available">[docs]</a><span class="k">def</span> <span class="nf">get_mps_device_if_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
@@ -521,12 +518,11 @@
     <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
         <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.10</span>
         <span class="n">out</span><span class="p">:</span> <span class="n">Tensor</span>
+    <span class="k">elif</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svdvals</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svdvals</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.10</span>
-            <span class="n">_</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.10</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 
@@ -565,12 +561,11 @@
         <span class="n">A_LU</span><span class="p">:</span> <span class="n">Tensor</span>
         <span class="n">pivots</span><span class="p">:</span> <span class="n">Tensor</span>
         <span class="n">info</span><span class="p">:</span> <span class="n">Tensor</span>
+    <span class="k">elif</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+        <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_factor_ex</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
-            <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_factor_ex</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.13</span>
-            <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">get_infos</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.13</span>
+        <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">get_infos</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">valid_mask</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">info</span> <span class="o">==</span> <span class="mi">0</span>
     <span class="n">n_dim_B</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -581,12 +576,11 @@
     <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
         <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.13</span>
         <span class="n">X</span><span class="p">:</span> <span class="n">Tensor</span>
+    <span class="k">elif</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_solve</span><span class="p">(</span><span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">torch_version_ge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lu_solve</span><span class="p">(</span><span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.13</span>
-            <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu_solve</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">),</span> <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">)</span>
+        <span class="c1"># TODO: remove this branch when kornia relies on torch &gt;= 1.13</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu_solve</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="p">),</span> <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">A_LU</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">valid_mask</span>
 

@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -332,6 +333,10 @@
 <span class="kn">from</span> <span class="nn">.video</span> <span class="kn">import</span> <span class="n">VideoSequential</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AugmentationSequential&quot;</span><span class="p">]</span>
+
+<span class="n">_BOXES_OPTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX_XYXY</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX_XYWH</span><span class="p">}</span>
+<span class="n">_KEYPOINTS_OPTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">KEYPOINTS</span><span class="p">}</span>
+<span class="n">_IMG_MSK_OPTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">}</span>
 
 
 <div class="viewcode-block" id="AugmentationSequential"><a class="viewcode-back" href="../../../../augmentation.container.html#kornia.augmentation.container.AugmentationSequential">[docs]</a><span class="k">class</span> <span class="nc">AugmentationSequential</span><span class="p">(</span><span class="n">ImageSequential</span><span class="p">):</span>
@@ -459,13 +464,6 @@
 <span class="sd">        [torch.Size([1, 2, 3, 5, 6]), torch.Size([1, 2, 3, 5, 6]), ...([1, 2, 1, 4, 2]), torch.Size([1, 2, 1, 2])]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_transform_matrix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
-    <span class="n">_transform_matrices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="n">_boxes_options</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX_XYXY</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">BBOX_XYWH</span><span class="p">}</span>
-    <span class="n">_keypoints_options</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">KEYPOINTS</span><span class="p">}</span>
-    <span class="n">_img_msk_options</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">}</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">_AugmentationBase</span><span class="p">,</span> <span class="n">ImageSequential</span><span class="p">],</span>
@@ -475,8 +473,13 @@
         <span class="n">random_apply</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">random_apply_weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">transformation_matrix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;silence&quot;</span><span class="p">,</span>
-        <span class="n">extra_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">resample</span><span class="o">=</span><span class="n">Resample</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">,</span> <span class="n">align_corners</span><span class="o">=</span><span class="kc">None</span><span class="p">)},</span>
+        <span class="n">extra_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;resample&quot;</span><span class="p">:</span> <span class="n">Resample</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">,</span> <span class="s2">&quot;align_corners&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="p">},</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
             <span class="n">same_on_batch</span><span class="o">=</span><span class="n">same_on_batch</span><span class="p">,</span>
@@ -513,7 +516,7 @@
             <span class="c1"># NOTE: only for images are supported for 3D.</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">AugmentationBase3D</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">contains_3d_augmentation</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extra_args</span> <span class="o">=</span> <span class="n">extra_args</span>
 
     <span class="k">def</span> <span class="nf">clear_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -610,11 +613,11 @@
     <span class="k">def</span> <span class="nf">_arguments_preproc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">data_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DataKey</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DataType</span><span class="p">]:</span>
         <span class="n">inp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DataType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">arg</span><span class="p">,</span> <span class="n">dcate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">data_keys</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_msk_options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_IMG_MSK_OPTIONS</span><span class="p">:</span>
                 <span class="n">inp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keypoints_options</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_KEYPOINTS_OPTIONS</span><span class="p">:</span>
                 <span class="n">inp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preproc_keypoints</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">dcate</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boxes_options</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_BOXES_OPTIONS</span><span class="p">:</span>
                 <span class="n">inp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preproc_boxes</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">dcate</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input type of </span><span class="si">{</span><span class="n">dcate</span><span class="si">}</span><span class="s2"> is not implemented.&quot;</span><span class="p">)</span>
@@ -625,12 +628,12 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DataType</span><span class="p">]:</span>
         <span class="n">out</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DataType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">in_arg</span><span class="p">,</span> <span class="n">out_arg</span><span class="p">,</span> <span class="n">dcate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">in_args</span><span class="p">,</span> <span class="n">out_args</span><span class="p">,</span> <span class="n">data_keys</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img_msk_options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_IMG_MSK_OPTIONS</span><span class="p">:</span>
                 <span class="c1"># It is tensor type already.</span>
                 <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_arg</span><span class="p">)</span>
                 <span class="c1"># TODO: may add the float to integer (for masks), etc.</span>
 
-            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keypoints_options</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_KEYPOINTS_OPTIONS</span><span class="p">:</span>
                 <span class="n">_out_k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postproc_keypoint</span><span class="p">(</span><span class="n">in_arg</span><span class="p">,</span> <span class="n">cast</span><span class="p">(</span><span class="n">Keypoints</span><span class="p">,</span> <span class="n">out_arg</span><span class="p">),</span> <span class="n">dcate</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">is_autocast_enabled</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_arg</span><span class="p">,</span> <span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Keypoints</span><span class="p">)):</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_out_k</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -639,7 +642,7 @@
                         <span class="n">_out_k</span> <span class="o">=</span> <span class="n">_out_k</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">in_arg</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                 <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_out_k</span><span class="p">)</span>
 
-            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boxes_options</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dcate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_BOXES_OPTIONS</span><span class="p">:</span>
                 <span class="n">_out_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_postproc_boxes</span><span class="p">(</span><span class="n">in_arg</span><span class="p">,</span> <span class="n">cast</span><span class="p">(</span><span class="n">Boxes</span><span class="p">,</span> <span class="n">out_arg</span><span class="p">),</span> <span class="n">dcate</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">is_autocast_enabled</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_arg</span><span class="p">,</span> <span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Boxes</span><span class="p">)):</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_out_b</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>

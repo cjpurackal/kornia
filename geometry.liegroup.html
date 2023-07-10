@@ -254,6 +254,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -683,9 +684,8 @@ c &amp; 0 &amp; -a \\
 space <span class="math notranslate nohighlight">\(R^3\)</span> under the operation of composition.
 See more: <a class="reference external" href="https://ingmec.ual.es/~jlblanco/papers/jlblanco2010geometry3D_techrep.pdf">https://ingmec.ual.es/~jlblanco/papers/jlblanco2010geometry3D_techrep.pdf</a></p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kornia.geometry.quaternion</span> <span class="kn">import</span> <span class="n">Quaternion</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se3</span><span class="p">(</span><span class="n">So3</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se3</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">r</span>
 <span class="go">Parameter containing:</span>
 <span class="go">tensor([1., 0., 0., 0.], requires_grad=True)</span>
@@ -702,7 +702,7 @@ See more: <a class="reference external" href="https://ingmec.ual.es/~jlblanco/pa
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rotation</strong> (<a class="reference internal" href="#kornia.geometry.liegroup.So3" title="kornia.geometry.liegroup.So3"><em>So3</em></a>) – So3 group encompassing a rotation.</p></li>
+<li><p><strong>rotation</strong> (<a class="reference internal" href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion" title="kornia.geometry.quaternion.Quaternion"><em>Quaternion</em></a><em> | </em><a class="reference internal" href="#kornia.geometry.liegroup.So3" title="kornia.geometry.liegroup.So3"><em>So3</em></a>) – So3 group encompassing a rotation.</p></li>
 <li><p><strong>translation</strong> (<em>Vector3</em><em> | </em><em>Tensor</em>) – Vector3 or translation tensor with the shape of <span class="math notranslate nohighlight">\((B, 3)\)</span>.</p></li>
 </ul>
 </dd>
@@ -710,7 +710,7 @@ See more: <a class="reference external" href="https://ingmec.ual.es/~jlblanco/pa
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kornia.geometry.quaternion</span> <span class="kn">import</span> <span class="n">Quaternion</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se3</span><span class="p">(</span><span class="n">So3</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se3</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">r</span>
 <span class="go">Parameter containing:</span>
 <span class="go">tensor([[1., 0., 0., 0.]], requires_grad=True)</span>
@@ -909,7 +909,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kornia.geometry.quaternion</span> <span class="kn">import</span> <span class="n">Quaternion</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Se3</span><span class="p">(</span><span class="n">So3</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Se3</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
 <span class="go">tensor([0., 0., 0., 0., 0., 0.], grad_fn=&lt;CatBackward0&gt;)</span>
 </pre></div>
 </div>
@@ -933,6 +933,12 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <span class="go">        [0., 0., 0., 1.]], grad_fn=&lt;CopySlices&gt;)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="kornia.geometry.liegroup.Se3.quaternion">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">quaternion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geometry.quaternion.html#kornia.geometry.quaternion.Quaternion" title="kornia.geometry.quaternion.Quaternion"><span class="pre">Quaternion</span></a></em><a class="headerlink" href="#kornia.geometry.liegroup.Se3.quaternion" title="Permalink to this definition">#</a></dt>
+<dd><p>Return the underlying rotation(Quaternion).</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1810,6 +1816,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.inverse"><code class="docutils literal notranslate"><span class="pre">Se3.inverse()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.log"><code class="docutils literal notranslate"><span class="pre">Se3.log()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.matrix"><code class="docutils literal notranslate"><span class="pre">Se3.matrix()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.quaternion"><code class="docutils literal notranslate"><span class="pre">Se3.quaternion</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.r"><code class="docutils literal notranslate"><span class="pre">Se3.r</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.random"><code class="docutils literal notranslate"><span class="pre">Se3.random()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.rot_x"><code class="docutils literal notranslate"><span class="pre">Se3.rot_x()</span></code></a></li>

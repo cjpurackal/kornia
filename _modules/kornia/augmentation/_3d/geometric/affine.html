@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -437,7 +438,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">translate</span> <span class="o">=</span> <span class="n">translate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">resample</span><span class="o">=</span><span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span> <span class="n">align_corners</span><span class="o">=</span><span class="n">align_corners</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;resample&quot;</span><span class="p">:</span> <span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span> <span class="s2">&quot;align_corners&quot;</span><span class="p">:</span> <span class="n">align_corners</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_param_generator</span> <span class="o">=</span> <span class="n">rg</span><span class="o">.</span><span class="n">AffineGenerator3D</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">translate</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shears</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">compute_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>

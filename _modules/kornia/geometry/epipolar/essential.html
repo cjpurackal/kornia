@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -440,7 +441,7 @@
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get Motion (R&#39;s and t&#39;s ) from Essential matrix.</span>
 
 <span class="sd">    Computes and return four possible poses exist for the decomposition of the Essential</span>
-<span class="sd">    matrix. The possible solutions are :math:`[R1,t], [R1,−t], [R2,t], [R2,−t]`.</span>
+<span class="sd">    matrix. The possible solutions are :math:`[R1,t], [R1,-t], [R2,t], [R2,-t]`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        E_mat: The essential matrix in the form of :math:`(*, 3, 3)`.</span>
@@ -580,7 +581,7 @@
 
 <span class="sd">    Given the motion parameters of two cameras, computes the motion parameters of the second</span>
 <span class="sd">    one assuming the first one to be at the origin. If :math:`T1` and :math:`T2` are the camera motions,</span>
-<span class="sd">    the computed relative motion is :math:`T = T_{2}T^{−1}_{1}`.</span>
+<span class="sd">    the computed relative motion is :math:`T = T_{2}T^{-1}_{1}`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        R1: The first camera rotation matrix with shape :math:`(*, 3, 3)`.</span>

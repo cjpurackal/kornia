@@ -254,6 +254,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -528,6 +529,47 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">True
 <span class="gp">&gt;&gt;&gt; </span><span class="n">image_list_to_tensor</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">torch.Size([2, 1, 4, 4])</span>
 </pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kornia.utils.image_to_string">
+<span class="sig-prename descclassname"><span class="pre">kornia.utils.</span></span><span class="sig-name descname"><span class="pre">image_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/utils/image_print.html#image_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.utils.image_to_string" title="Permalink to this definition">#</a></dt>
+<dd><p>Obtain the closest xterm-256 approximation string from an image tensor.</p>
+<p>The tensor shall be either 0~1 float type or 0~255 long type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – an RGB image with shape <span class="math notranslate nohighlight">\(3HW\)</span>.</p></li>
+<li><p><strong>max_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – maximum width of the input image.
+Default:  <code class="code docutils literal notranslate"><span class="pre">256</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kornia.utils.print_image">
+<span class="sig-prename descclassname"><span class="pre">kornia.utils.</span></span><span class="sig-name descname"><span class="pre">print_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">96</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/utils/image_print.html#print_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.utils.print_image" title="Permalink to this definition">#</a></dt>
+<dd><p>Print an image to the terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]) – path to a valid image file or a tensor.</p></li>
+<li><p><strong>max_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <em>optional</em>) – maximum width to print to terminal.
+Default:  <code class="code docutils literal notranslate"><span class="pre">96</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Need to use <cite>print_image(…)</cite>.</p>
 </div>
 </dd></dl>
 
@@ -886,6 +928,8 @@ will always return False for a torch without support, otherwise will be: if both
 <li><a class="reference internal" href="#kornia.utils.tensor_to_image"><code class="docutils literal notranslate"><span class="pre">tensor_to_image()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.utils.image_to_tensor"><code class="docutils literal notranslate"><span class="pre">image_to_tensor()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.utils.image_list_to_tensor"><code class="docutils literal notranslate"><span class="pre">image_list_to_tensor()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.utils.image_to_string"><code class="docutils literal notranslate"><span class="pre">image_to_string()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.utils.print_image"><code class="docutils literal notranslate"><span class="pre">print_image()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#grid">Grid</a><ul>

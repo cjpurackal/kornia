@@ -254,6 +254,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
@@ -1140,8 +1141,9 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
 <h2>Semantic Segmentation<a class="headerlink" href="#semantic-segmentation" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.losses.binary_focal_loss_with_logits">
-<span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">binary_focal_loss_with_logits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#binary_focal_loss_with_logits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.binary_focal_loss_with_logits" title="Permalink to this definition">#</a></dt>
-<dd><p>Function that computes Binary Focal loss.</p>
+<span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">binary_focal_loss_with_logits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#binary_focal_loss_with_logits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.binary_focal_loss_with_logits" title="Permalink to this definition">#</a></dt>
+<dd><p>Criterion that computes Binary Focal loss.</p>
+<p>According to <span id="id1">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{FL}(p_t) = -\alpha_t (1 - p_t)^{\gamma} \, \text{log}(p_t)\]</div>
@@ -1155,9 +1157,10 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> (<em>Tensor</em>) – input data tensor of arbitrary shape.</p></li>
-<li><p><strong>target</strong> (<em>Tensor</em>) – the target tensor with shape matching input.</p></li>
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Weighting factor for the rare class <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.
+<li><p><strong>input</strong> (<em>Tensor</em>) – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, *)\)</span> where C = number of classes.</p></li>
+<li><p><strong>target</strong> (<em>Tensor</em>) – labels tensor with the same shape as input <span class="math notranslate nohighlight">\((N, C, *)\)</span>
+where each value is between 0 and 1.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">0.25</span></code></p></li>
 <li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Focusing parameter <span class="math notranslate nohighlight">\(\gamma &gt;= 0\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">2.0</span></code></p></li>
@@ -1167,11 +1170,10 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Deprecated: scalar for numerically stability when dividing. This is no longer used.
+<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+It is possible to trade off recall and precision by adding weights to positive examples.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
-<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples.
-It’s possible to trade off recall and precision by adding weights to positive examples.
-Must be a vector with length equal to the number of classes.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1183,20 +1185,21 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mf">6.325</span><span class="p">]],[[</span><span class="mf">5.26</span><span class="p">]],[[</span><span class="mf">87.49</span><span class="p">]]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mf">1.</span><span class="p">]],[[</span><span class="mf">1.</span><span class="p">]],[[</span><span class="mf">0.</span><span class="p">]]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_focal_loss_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="go">tensor(21.8725)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># num_classes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">binary_focal_loss_with_logits</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.losses.focal_loss">
-<span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">focal_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#focal_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.focal_loss" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">focal_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#focal_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.focal_loss" title="Permalink to this definition">#</a></dt>
 <dd><p>Criterion that computes Focal loss.</p>
-<p>According to <span id="id1">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
+<p>According to <span id="id2">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{FL}(p_t) = -\alpha_t (1 - p_t)^{\gamma} \, \text{log}(p_t)\]</div>
@@ -1211,8 +1214,9 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<em>Tensor</em>) – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, *)\)</span> where C = number of classes.</p></li>
-<li><p><strong>target</strong> (<em>Tensor</em>) – labels tensor with shape <span class="math notranslate nohighlight">\((N, *)\)</span> where each value is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
+<li><p><strong>target</strong> (<em>Tensor</em>) – labels tensor with shape <span class="math notranslate nohighlight">\((N, *)\)</span> where each value is an integer
+representing correct classification <span class="math notranslate nohighlight">\(target[i] \in [0, C)\)</span>.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
 <li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Focusing parameter <span class="math notranslate nohighlight">\(\gamma &gt;= 0\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">2.0</span></code></p></li>
 <li><p><strong>reduction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies the reduction to apply to the
@@ -1221,7 +1225,7 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Deprecated: scalar to enforce numerical stabiliy. This is no longer used.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1233,10 +1237,11 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># num_classes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span><span class="o">.</span><span class="n">random_</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">focal_loss</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># num_classes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">focal_loss</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1272,7 +1277,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes.</p></li>
 <li><p><strong>labels</strong> – labels tensor with shape <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value
-is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 <li><p><strong>average</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Reduction applied in multi-class scenario:
 - <code class="docutils literal notranslate"><span class="pre">'micro'</span></code> [default]: Calculate the loss across all classes.
 - <code class="docutils literal notranslate"><span class="pre">'macro'</span></code>: Calculate the loss for each class separately and average the metrics across classes.
@@ -1302,7 +1307,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dt class="sig sig-object py" id="kornia.losses.tversky_loss">
 <span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">tversky_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/tversky.html#tversky_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.tversky_loss" title="Permalink to this definition">#</a></dt>
 <dd><p>Criterion that computes Tversky Coefficient loss.</p>
-<p>According to <span id="id2">[<a class="reference internal" href="community/bibliography.html#id16" title="Seyed Sadegh Mohseni Salehi, Deniz Erdogmus, and Ali Gholipour. Tversky loss function for image segmentation using 3d fully convolutional deep networks. arXiv ePrint 1706.05721, 2017.">SEG17</a>]</span>, we compute the Tversky Coefficient as follows:</p>
+<p>According to <span id="id3">[<a class="reference internal" href="community/bibliography.html#id16" title="Seyed Sadegh Mohseni Salehi, Deniz Erdogmus, and Ali Gholipour. Tversky loss function for image segmentation using 3d fully convolutional deep networks. arXiv ePrint 1706.05721, 2017.">SEG17</a>]</span>, we compute the Tversky Coefficient as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{S}(P, G, \alpha; \beta) =
@@ -1330,7 +1335,7 @@ penalties for FPs and FNs, respectively.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes.</p></li>
 <li><p><strong>target</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – labels tensor with shape <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value
-is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 <li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the first coefficient in the denominator.</p></li>
 <li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the second coefficient in the denominator.</p></li>
 <li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <em>optional</em>) – scalar for numerical stability.
@@ -1442,7 +1447,7 @@ labels please use the Lovasz-Hinge loss.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pred</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes &gt; 1.</p></li>
 <li><p><strong>labels</strong> – labels tensor with shape <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value
-is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1464,9 +1469,9 @@ is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</sp
 
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.losses.BinaryFocalLossWithLogits">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">BinaryFocalLossWithLogits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#BinaryFocalLossWithLogits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.BinaryFocalLossWithLogits" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">BinaryFocalLossWithLogits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#BinaryFocalLossWithLogits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.BinaryFocalLossWithLogits" title="Permalink to this definition">#</a></dt>
 <dd><p>Criterion that computes Focal loss.</p>
-<p>According to <span id="id3">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
+<p>According to <span id="id4">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{FL}(p_t) = -\alpha_t (1 - p_t)^{\gamma} \, \text{log}(p_t)\]</div>
@@ -1480,7 +1485,7 @@ is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Weighting factor for the rare class <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
 <li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Focusing parameter <span class="math notranslate nohighlight">\(\gamma &gt;= 0\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">2.0</span></code></p></li>
 <li><p><strong>reduction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies the reduction to apply to the
@@ -1489,26 +1494,29 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples.
-It’s possible to trade off recall and precision by adding weights to positive examples.
-Must be a vector with length equal to the number of classes.
+<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+It is possible to trade off recall and precision by adding weights to positive examples.
+Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="simple">
 <dt>Shape:</dt><dd><ul class="simple">
-<li><p>Input: <span class="math notranslate nohighlight">\((N, *)\)</span>.</p></li>
-<li><p>Target: <span class="math notranslate nohighlight">\((N, *)\)</span>.</p></li>
+<li><p>Input: <span class="math notranslate nohighlight">\((N, C, *)\)</span> where C = number of classes.</p></li>
+<li><p>Target: the same shape as Input <span class="math notranslate nohighlight">\((N, C, *)\)</span>
+where each value is between 0 and 1.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">loss</span> <span class="o">=</span> <span class="n">BinaryFocalLossWithLogits</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span><span class="o">.</span><span class="n">random_</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># num_classes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">criterion</span> <span class="o">=</span> <span class="n">BinaryFocalLossWithLogits</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1555,7 +1563,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dt>Shape:</dt><dd><ul class="simple">
 <li><p>Input: <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes.</p></li>
 <li><p>Target: <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value is
-<span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+<span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1574,7 +1582,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dt class="sig sig-object py" id="kornia.losses.TverskyLoss">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">TverskyLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/tversky.html#TverskyLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.TverskyLoss" title="Permalink to this definition">#</a></dt>
 <dd><p>Criterion that computes Tversky Coefficient loss.</p>
-<p>According to <span id="id4">[<a class="reference internal" href="community/bibliography.html#id16" title="Seyed Sadegh Mohseni Salehi, Deniz Erdogmus, and Ali Gholipour. Tversky loss function for image segmentation using 3d fully convolutional deep networks. arXiv ePrint 1706.05721, 2017.">SEG17</a>]</span>, we compute the Tversky Coefficient as follows:</p>
+<p>According to <span id="id5">[<a class="reference internal" href="community/bibliography.html#id16" title="Seyed Sadegh Mohseni Salehi, Deniz Erdogmus, and Ali Gholipour. Tversky loss function for image segmentation using 3d fully convolutional deep networks. arXiv ePrint 1706.05721, 2017.">SEG17</a>]</span>, we compute the Tversky Coefficient as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{S}(P, G, \alpha; \beta) =
@@ -1611,7 +1619,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dt>Shape:</dt><dd><ul class="simple">
 <li><p>Input: <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes.</p></li>
 <li><p>Target: <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value is
-<span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+<span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1628,9 +1636,9 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.losses.FocalLoss">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">FocalLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#FocalLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.FocalLoss" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.losses.</span></span><span class="sig-name descname"><span class="pre">FocalLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/losses/focal.html#FocalLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.losses.FocalLoss" title="Permalink to this definition">#</a></dt>
 <dd><p>Criterion that computes Focal loss.</p>
-<p>According to <span id="id5">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
+<p>According to <span id="id6">[<a class="reference internal" href="community/bibliography.html#id15" title="Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. arXiv ePrint 1708.02002, 2018.">LGG+18</a>]</span>, the Focal loss is computed as follows:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\text{FL}(p_t) = -\alpha_t (1 - p_t)^{\gamma} \, \text{log}(p_t)\]</div>
@@ -1644,7 +1652,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em>) – Weighting factor <span class="math notranslate nohighlight">\(\alpha \in [0, 1]\)</span>.</p></li>
 <li><p><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – Focusing parameter <span class="math notranslate nohighlight">\(\gamma &gt;= 0\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">2.0</span></code></p></li>
 <li><p><strong>reduction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies the reduction to apply to the
@@ -1653,8 +1661,7 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Deprecated: scalar to enforce numerical stability. This is no longer
-used.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1662,17 +1669,17 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <dl class="simple">
 <dt>Shape:</dt><dd><ul class="simple">
 <li><p>Input: <span class="math notranslate nohighlight">\((N, C, *)\)</span> where C = number of classes.</p></li>
-<li><p>Target: <span class="math notranslate nohighlight">\((N, *)\)</span> where each value is
-<span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+<li><p>Target: <span class="math notranslate nohighlight">\((N, *)\)</span> where each value is an integer
+representing correct classification <span class="math notranslate nohighlight">\(target[i] \in [0, C)\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># num_classes</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># num_classes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;reduction&quot;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">criterion</span> <span class="o">=</span> <span class="n">FocalLoss</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span><span class="o">.</span><span class="n">random_</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </pre></div>
@@ -1765,7 +1772,7 @@ labels please use the Lovasz-Hinge loss.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pred</strong> – logits tensor with shape <span class="math notranslate nohighlight">\((N, C, H, W)\)</span> where C = number of classes &gt; 1.</p></li>
 <li><p><strong>labels</strong> – labels tensor with shape <span class="math notranslate nohighlight">\((N, H, W)\)</span> where each value
-is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C−1\)</span>.</p></li>
+is <span class="math notranslate nohighlight">\(0 ≤ targets[i] ≤ C-1\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1866,7 +1873,7 @@ the one-sided HD from X to Y is defined as:</p>
 \[HD(X,Y) = max(hd(X, Y), hd(Y, X))\]</div>
 </div>
 <p>This is an Hausdorff Distance (HD) Loss that based on morphological erosion, which provided
-a differentiable approximation of Hausdorff distance as stated in <span id="id6">[<a class="reference internal" href="community/bibliography.html#id20" title="Davood Karimi and Septimiu E Salcudean. Reducing the hausdorff distance in medical image segmentation with convolutional neural networks. IEEE Transactions on medical imaging, 39(2):499–513, 2019.">KS19</a>]</span>.
+a differentiable approximation of Hausdorff distance as stated in <span id="id7">[<a class="reference internal" href="community/bibliography.html#id20" title="Davood Karimi and Septimiu E Salcudean. Reducing the hausdorff distance in medical image segmentation with convolutional neural networks. IEEE Transactions on medical imaging, 39(2):499–513, 2019.">KS19</a>]</span>.
 The code is refactored on top of <a class="reference external" href="https://github.com/PatRyg99/HausdorffLoss/blob/master/hausdorff_loss.py">here</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1908,7 +1915,7 @@ the one-sided HD from X to Y is defined as:</p>
 \[HD(X,Y) = max(hd(X, Y), hd(Y, X))\]</div>
 </div>
 <p>This is a 3D Hausdorff Distance (HD) Loss that based on morphological erosion, which provided
-a differentiable approximation of Hausdorff distance as stated in <span id="id7">[<a class="reference internal" href="community/bibliography.html#id20" title="Davood Karimi and Septimiu E Salcudean. Reducing the hausdorff distance in medical image segmentation with convolutional neural networks. IEEE Transactions on medical imaging, 39(2):499–513, 2019.">KS19</a>]</span>.
+a differentiable approximation of Hausdorff distance as stated in <span id="id8">[<a class="reference internal" href="community/bibliography.html#id20" title="Davood Karimi and Septimiu E Salcudean. Reducing the hausdorff distance in medical image segmentation with convolutional neural networks. IEEE Transactions on medical imaging, 39(2):499–513, 2019.">KS19</a>]</span>.
 The code is refactored on top of <a class="reference external" href="https://github.com/PatRyg99/HausdorffLoss/blob/master/hausdorff_loss.py">here</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

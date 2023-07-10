@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -395,13 +396,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid size type. Expected (int, tuple(int, int). &quot;</span> <span class="sa">f</span><span class="s2">&quot;Got: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">resample</span><span class="o">=</span><span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span>
-            <span class="n">cropping_mode</span><span class="o">=</span><span class="n">cropping_mode</span><span class="p">,</span>
-            <span class="n">align_corners</span><span class="o">=</span><span class="n">align_corners</span><span class="p">,</span>
-            <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
-            <span class="n">padding_mode</span><span class="o">=</span><span class="s2">&quot;zeros&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;resample&quot;</span><span class="p">:</span> <span class="n">Resample</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resample</span><span class="p">),</span>
+            <span class="s2">&quot;cropping_mode&quot;</span><span class="p">:</span> <span class="n">cropping_mode</span><span class="p">,</span>
+            <span class="s2">&quot;align_corners&quot;</span><span class="p">:</span> <span class="n">align_corners</span><span class="p">,</span>
+            <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="s2">&quot;padding_mode&quot;</span><span class="p">:</span> <span class="s2">&quot;zeros&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">generate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">rg</span><span class="o">.</span><span class="n">center_crop_generator</span><span class="p">(</span><span class="n">batch_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">batch_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>

@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -355,7 +356,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">estimator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blending_method</span> <span class="o">=</span> <span class="n">blending_method</span>
         <span class="k">if</span> <span class="n">estimator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ransac&#39;</span><span class="p">,</span> <span class="s1">&#39;vanilla&#39;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported estimator </span><span class="si">{</span><span class="n">estimator</span><span class="si">}</span><span class="s2">. Use ‘ransac’ or ‘vanilla’ instead.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported estimator </span><span class="si">{</span><span class="n">estimator</span><span class="si">}</span><span class="s2">. Use `ransac` or `vanilla` instead.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">estimator</span> <span class="o">==</span> <span class="s2">&quot;ransac&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ransac</span> <span class="o">=</span> <span class="n">RANSAC</span><span class="p">(</span><span class="s1">&#39;homography&#39;</span><span class="p">)</span>
 
@@ -374,7 +375,7 @@
             <span class="n">homo</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ransac</span><span class="p">(</span><span class="n">keypoints2</span><span class="p">,</span> <span class="n">keypoints1</span><span class="p">)</span>
             <span class="n">homo</span> <span class="o">=</span> <span class="n">homo</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported estimator </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="si">}</span><span class="s2">. Use ‘ransac’ or ‘vanilla’ instead.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported estimator </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="si">}</span><span class="s2">. Use `ransac` or `vanilla` instead.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">homo</span>
 
     <span class="k">def</span> <span class="nf">estimate_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -393,7 +394,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blending_method</span> <span class="o">==</span> <span class="s2">&quot;naive&quot;</span><span class="p">:</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">src_img</span><span class="p">,</span> <span class="n">dst_img</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported blending method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">blending_method</span><span class="si">}</span><span class="s2">. Use ‘naive’.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported blending method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">blending_method</span><span class="si">}</span><span class="s2">. Use `naive`.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span>
 
     <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_1</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">image_2</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>

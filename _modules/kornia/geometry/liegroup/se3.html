@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -332,9 +333,10 @@
     <span class="n">where</span><span class="p">,</span>
     <span class="n">zeros_like</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SAME_DEVICES</span><span class="p">,</span> <span class="n">KORNIA_CHECK_TYPE</span>
+<span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SAME_DEVICES</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.liegroup.so3</span> <span class="kn">import</span> <span class="n">So3</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.linalg</span> <span class="kn">import</span> <span class="n">batched_dot_product</span>
+<span class="kn">from</span> <span class="nn">kornia.geometry.quaternion</span> <span class="kn">import</span> <span class="n">Quaternion</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.vector</span> <span class="kn">import</span> <span class="n">Vector3</span>
 
 
@@ -346,9 +348,8 @@
 <span class="sd">    See more: https://ingmec.ual.es/~jlblanco/papers/jlblanco2010geometry3D_techrep.pdf</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; from kornia.geometry.quaternion import Quaternion</span>
 <span class="sd">        &gt;&gt;&gt; q = Quaternion.identity()</span>
-<span class="sd">        &gt;&gt;&gt; s = Se3(So3(q), torch.ones(3))</span>
+<span class="sd">        &gt;&gt;&gt; s = Se3(q, torch.ones(3))</span>
 <span class="sd">        &gt;&gt;&gt; s.r</span>
 <span class="sd">        Parameter containing:</span>
 <span class="sd">        tensor([1., 0., 0., 0.], requires_grad=True)</span>
@@ -357,7 +358,7 @@
 <span class="sd">        tensor([1., 1., 1.], requires_grad=True)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Se3.__init__"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se3.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotation</span><span class="p">:</span> <span class="n">So3</span><span class="p">,</span> <span class="n">translation</span><span class="p">:</span> <span class="n">Vector3</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Se3.__init__"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se3.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotation</span><span class="p">:</span> <span class="n">Quaternion</span> <span class="o">|</span> <span class="n">So3</span><span class="p">,</span> <span class="n">translation</span><span class="p">:</span> <span class="n">Vector3</span> <span class="o">|</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor for the base class.</span>
 
 <span class="sd">        Internally represented by a unit quaternion `q` and a translation 3-vector.</span>
@@ -369,7 +370,7 @@
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; from kornia.geometry.quaternion import Quaternion</span>
 <span class="sd">            &gt;&gt;&gt; q = Quaternion.identity(batch_size=1)</span>
-<span class="sd">            &gt;&gt;&gt; s = Se3(So3(q), torch.ones((1, 3)))</span>
+<span class="sd">            &gt;&gt;&gt; s = Se3(q, torch.ones((1, 3)))</span>
 <span class="sd">            &gt;&gt;&gt; s.r</span>
 <span class="sd">            Parameter containing:</span>
 <span class="sd">            tensor([[1., 0., 0., 0.]], requires_grad=True)</span>
@@ -378,17 +379,23 @@
 <span class="sd">            tensor([[1., 1., 1.]], requires_grad=True)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="n">KORNIA_CHECK_TYPE</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">So3</span><span class="p">)</span>
+        <span class="c1"># KORNIA_CHECK_TYPE(rotation, (Quaternion, So3))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="p">(</span><span class="n">Quaternion</span><span class="p">,</span> <span class="n">So3</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rotation type is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># KORNIA_CHECK_TYPE(translation, (Vector3, Tensor))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">translation</span><span class="p">,</span> <span class="p">(</span><span class="n">Vector3</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;translation type is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">translation</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># KORNIA_CHECK_SHAPE(t, [&quot;B&quot;, &quot;3&quot;])  # FIXME: resolve shape bugs. @edgarriba</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span><span class="p">:</span> <span class="n">Vector3</span> <span class="o">|</span> <span class="n">Parameter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span><span class="p">:</span> <span class="n">So3</span> <span class="o">=</span> <span class="n">rotation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span><span class="p">:</span> <span class="n">So3</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">translation</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">translation</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="n">translation</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_translation</span> <span class="o">=</span> <span class="n">translation</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span> <span class="o">=</span> <span class="n">So3</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span> <span class="o">=</span> <span class="n">rotation</span></div>
 
 <div class="viewcode-block" id="Se3.__repr__"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se3.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;rotation: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="se">\n</span><span class="s2">translation: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span></div>
@@ -422,6 +429,11 @@
     <span class="k">def</span> <span class="nf">so3</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">So3</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying rotation(So3).&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">quaternion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Quaternion</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying rotation(Quaternion).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span><span class="o">.</span><span class="n">q</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">r</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">So3</span><span class="p">:</span>
@@ -481,7 +493,7 @@
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; from kornia.geometry.quaternion import Quaternion</span>
 <span class="sd">            &gt;&gt;&gt; q = Quaternion.identity()</span>
-<span class="sd">            &gt;&gt;&gt; Se3(So3(q), torch.zeros(3)).log()</span>
+<span class="sd">            &gt;&gt;&gt; Se3(q, torch.zeros(3)).log()</span>
 <span class="sd">            tensor([0., 0., 0., 0., 0., 0.], grad_fn=&lt;CatBackward0&gt;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">omega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>

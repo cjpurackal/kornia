@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -351,8 +352,6 @@
 <span class="sd">        max_local_iterations: number of local optimization (polishing) iterations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;homography&#39;</span><span class="p">,</span> <span class="s1">&#39;fundamental&#39;</span><span class="p">,</span> <span class="s1">&#39;homography_from_linesegments&#39;</span><span class="p">]</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;homography&#39;</span><span class="p">,</span>
@@ -363,6 +362,7 @@
         <span class="n">max_lo_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supported_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;homography&#39;</span><span class="p">,</span> <span class="s1">&#39;fundamental&#39;</span><span class="p">,</span> <span class="s1">&#39;homography_from_linesegments&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inl_th</span> <span class="o">=</span> <span class="n">inl_th</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>

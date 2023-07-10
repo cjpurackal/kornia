@@ -253,6 +253,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">KORNIA MODELS</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models/segment_anything.html">Segment Anything (SAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../models/vit.html">Vision Transformer (ViT)</a></li>
@@ -519,7 +520,20 @@
     <span class="n">x1</span> <span class="o">=</span> <span class="n">scene</span><span class="p">[</span><span class="s1">&#39;points2d&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">scene</span><span class="p">[</span><span class="s1">&#39;points2d&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">K1</span><span class="o">=</span><span class="n">K1</span><span class="p">,</span> <span class="n">K2</span><span class="o">=</span><span class="n">K2</span><span class="p">,</span> <span class="n">R1</span><span class="o">=</span><span class="n">R1</span><span class="p">,</span> <span class="n">R2</span><span class="o">=</span><span class="n">R2</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="n">t2</span><span class="p">,</span> <span class="n">P1</span><span class="o">=</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="o">=</span><span class="n">P2</span><span class="p">,</span> <span class="n">F</span><span class="o">=</span><span class="n">F_mat</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">x1</span><span class="o">=</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="o">=</span><span class="n">x2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;K1&quot;</span><span class="p">:</span> <span class="n">K1</span><span class="p">,</span>
+        <span class="s2">&quot;K2&quot;</span><span class="p">:</span> <span class="n">K2</span><span class="p">,</span>
+        <span class="s2">&quot;R1&quot;</span><span class="p">:</span> <span class="n">R1</span><span class="p">,</span>
+        <span class="s2">&quot;R2&quot;</span><span class="p">:</span> <span class="n">R2</span><span class="p">,</span>
+        <span class="s2">&quot;t1&quot;</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span>
+        <span class="s2">&quot;t2&quot;</span><span class="p">:</span> <span class="n">t2</span><span class="p">,</span>
+        <span class="s2">&quot;P1&quot;</span><span class="p">:</span> <span class="n">P1</span><span class="p">,</span>
+        <span class="s2">&quot;P2&quot;</span><span class="p">:</span> <span class="n">P2</span><span class="p">,</span>
+        <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="n">F_mat</span><span class="p">,</span>
+        <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+        <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">x1</span><span class="p">,</span>
+        <span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="n">x2</span><span class="p">,</span>
+    <span class="p">}</span>
 
 
 <span class="k">def</span> <span class="nf">cartesian_product_of_parameters</span><span class="p">(</span><span class="o">**</span><span class="n">possible_parameters</span><span class="p">):</span>
