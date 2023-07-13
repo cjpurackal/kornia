@@ -355,7 +355,7 @@
 <span class="sd">    It loads both, the handcrafted and learnable blocks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">hc_block</span> <span class="o">=</span> <span class="n">_HandcraftedBlock</span><span class="p">()</span>
@@ -370,7 +370,7 @@
 <span class="k">class</span> <span class="nc">_HandcraftedBlock</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper class for KeyNet, it defines the handcrafted filters within the Key.Net handcrafted block.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spatial_gradient</span> <span class="o">=</span> <span class="n">SpatialGradient</span><span class="p">(</span><span class="s1">&#39;sobel&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -395,7 +395,7 @@
 <span class="sd">    It defines the learnable blocks within the Key.Net</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">conv0</span> <span class="o">=</span> <span class="n">_KeyNetConvBlock</span><span class="p">(</span><span class="n">in_channels</span><span class="p">)</span>
@@ -445,7 +445,7 @@
 <span class="sd">        - Output: :math:`(B, 1, H, W)`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">keynet_conf</span><span class="p">:</span> <span class="n">KeyNet_conf</span> <span class="o">=</span> <span class="n">keynet_default_config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">keynet_conf</span><span class="p">:</span> <span class="n">KeyNet_conf</span> <span class="o">=</span> <span class="n">keynet_default_config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="n">num_filters</span> <span class="o">=</span> <span class="n">keynet_conf</span><span class="p">[</span><span class="s1">&#39;num_filters&#39;</span><span class="p">]</span>
@@ -507,7 +507,7 @@
         <span class="n">keynet_conf</span><span class="p">:</span> <span class="n">KeyNet_conf</span> <span class="o">=</span> <span class="n">keynet_default_config</span><span class="p">,</span>
         <span class="n">ori_module</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Module</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">aff_module</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Module</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">KeyNet</span><span class="p">(</span><span class="n">pretrained</span><span class="p">,</span> <span class="n">keynet_conf</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">num_features</span><span class="p">,</span> <span class="n">keynet_conf</span><span class="p">[</span><span class="s1">&#39;Detector_conf&#39;</span><span class="p">],</span> <span class="n">ori_module</span><span class="p">,</span> <span class="n">aff_module</span><span class="p">)</span></div>
 </pre></div>

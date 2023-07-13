@@ -337,6 +337,7 @@
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.image_encoder</span> <span class="kn">import</span> <span class="n">ImageEncoderViT</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.mask_decoder</span> <span class="kn">import</span> <span class="n">MaskDecoder</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.prompt_encoder</span> <span class="kn">import</span> <span class="n">PromptEncoder</span>
+<span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.tiny_vit</span> <span class="kn">import</span> <span class="n">TinyViT</span><span class="p">,</span> <span class="n">tiny_vit_5m</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.transformer</span> <span class="kn">import</span> <span class="n">TwoWayTransformer</span>
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SHAPE</span>
@@ -347,7 +348,8 @@
 
     <span class="n">vit_h</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">vit_l</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">vit_b</span> <span class="o">=</span> <span class="mi">2</span></div>
+    <span class="n">vit_b</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">mobile_sam</span> <span class="o">=</span> <span class="mi">3</span></div>
 
 
 <div class="viewcode-block" id="SamConfig"><a class="viewcode-back" href="../../../../../contrib.html#kornia.contrib.models.sam.SamConfig">[docs]</a><span class="nd">@dataclass</span>
@@ -381,7 +383,7 @@
     <span class="n">mask_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 
 <div class="viewcode-block" id="Sam.__init__"><a class="viewcode-back" href="../../../../../contrib.html#kornia.contrib.models.sam.Sam.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">image_encoder</span><span class="p">:</span> <span class="n">ImageEncoderViT</span><span class="p">,</span> <span class="n">prompt_encoder</span><span class="p">:</span> <span class="n">PromptEncoder</span><span class="p">,</span> <span class="n">mask_decoder</span><span class="p">:</span> <span class="n">MaskDecoder</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">image_encoder</span><span class="p">:</span> <span class="n">ImageEncoderViT</span> <span class="o">|</span> <span class="n">TinyViT</span><span class="p">,</span> <span class="n">prompt_encoder</span><span class="p">:</span> <span class="n">PromptEncoder</span><span class="p">,</span> <span class="n">mask_decoder</span><span class="p">:</span> <span class="n">MaskDecoder</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;SAM predicts object masks from an image and input prompts.</span>
 
@@ -416,7 +418,12 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="n">model_type</span> <span class="o">=</span> <span class="n">SamModelType</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">_map_sam_type</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;vit_h&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_h</span><span class="p">,</span> <span class="s1">&#39;vit_l&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_l</span><span class="p">,</span> <span class="s1">&#39;vit_b&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_b</span><span class="p">}</span>
+            <span class="n">_map_sam_type</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;vit_h&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_h</span><span class="p">,</span>
+                <span class="s1">&#39;vit_l&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_l</span><span class="p">,</span>
+                <span class="s1">&#39;vit_b&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_b</span><span class="p">,</span>
+                <span class="s1">&#39;mobile_sam&#39;</span><span class="p">:</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">mobile_sam</span><span class="p">,</span>
+            <span class="p">}</span>
             <span class="n">model_type</span> <span class="o">=</span> <span class="n">_map_sam_type</span><span class="p">[</span><span class="n">model_type</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">model_type</span> <span class="o">==</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_b</span><span class="p">:</span>
@@ -439,6 +446,33 @@
                 <span class="n">encoder_num_heads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
                 <span class="n">encoder_global_attn_indexes</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span>
             <span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">model_type</span> <span class="o">==</span> <span class="n">SamModelType</span><span class="o">.</span><span class="n">mobile_sam</span><span class="p">:</span>
+            <span class="c1"># TODO: merge this with _build_sam()</span>
+            <span class="n">prompt_embed_dim</span> <span class="o">=</span> <span class="mi">256</span>
+            <span class="n">image_size</span> <span class="o">=</span> <span class="mi">1024</span>
+            <span class="n">vit_patch_size</span> <span class="o">=</span> <span class="mi">16</span>
+            <span class="n">image_embedding_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="o">//</span> <span class="n">vit_patch_size</span>
+
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Sam</span><span class="p">(</span>
+                <span class="n">image_encoder</span><span class="o">=</span><span class="n">tiny_vit_5m</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mobile_sam</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="n">prompt_encoder</span><span class="o">=</span><span class="n">PromptEncoder</span><span class="p">(</span>
+                    <span class="n">embed_dim</span><span class="o">=</span><span class="n">prompt_embed_dim</span><span class="p">,</span>
+                    <span class="n">image_embedding_size</span><span class="o">=</span><span class="p">(</span><span class="n">image_embedding_size</span><span class="p">,</span> <span class="n">image_embedding_size</span><span class="p">),</span>
+                    <span class="n">input_image_size</span><span class="o">=</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span>
+                    <span class="n">mask_in_chans</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">mask_decoder</span><span class="o">=</span><span class="n">MaskDecoder</span><span class="p">(</span>
+                    <span class="n">num_multimask_outputs</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                    <span class="n">transformer</span><span class="o">=</span><span class="n">TwoWayTransformer</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="n">prompt_embed_dim</span><span class="p">,</span> <span class="n">mlp_dim</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">num_heads</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span>
+                    <span class="n">transformer_dim</span><span class="o">=</span><span class="n">prompt_embed_dim</span><span class="p">,</span>
+                    <span class="n">iou_head_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                    <span class="n">iou_head_hidden_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="c1">#     pixel_mean=[123.675, 116.28, 103.53],</span>
+                <span class="c1">#     pixel_std=[58.395, 57.12, 57.375],</span>
+            <span class="p">)</span>
+
         <span class="k">elif</span> <span class="p">(</span>
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">encoder_embed_dim</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
             <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">encoder_depth</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
@@ -451,6 +485,7 @@
                 <span class="n">encoder_num_heads</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span>
                 <span class="n">encoder_global_attn_indexes</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">encoder_global_attn_indexes</span><span class="p">,</span>
             <span class="p">)</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Unexpected config. The model_type should be provide or the encoder configs.&#39;</span><span class="p">)</span>
 

@@ -678,7 +678,7 @@ dtype. Shape <span class="math notranslate nohighlight">\((3, H, W)\)</span>.</p
 <dt class="sig sig-object py" id="kornia.contrib.EdgeDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">EdgeDetector</span></span><a class="reference internal" href="_modules/kornia/contrib/edge_detection.html#EdgeDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.EdgeDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Detect edges in a given image using a CNN.</p>
-<p>By default, it uses the method described in <span id="id1">[<a class="reference internal" href="community/bibliography.html#id24" title="X. Soria, E. Riba, and A. Sappa. Dense extreme inception network: towards a robust cnn model for edge detection. In 2020 IEEE Winter Conference on Applications of Computer Vision (WACV), volume, 1912-1921. Los Alamitos, CA, USA, mar 2020. IEEE Computer Society. URL: https://doi.ieeecomputersociety.org/10.1109/WACV45572.2020.9093290, doi:10.1109/WACV45572.2020.9093290.">SRS20</a>]</span>.</p>
+<p>By default, it uses the method described in <span id="id1">[<a class="reference internal" href="community/bibliography.html#id25" title="X. Soria, E. Riba, and A. Sappa. Dense extreme inception network: towards a robust cnn model for edge detection. In 2020 IEEE Winter Conference on Applications of Computer Vision (WACV), volume, 1912-1921. Los Alamitos, CA, USA, mar 2020. IEEE Computer Society. URL: https://doi.ieeecomputersociety.org/10.1109/WACV45572.2020.9093290, doi:10.1109/WACV45572.2020.9093290.">SRS20</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A tensor of shape <span class="math notranslate nohighlight">\((B,1,H,W)\)</span>.</p>
@@ -701,7 +701,7 @@ dtype. Shape <span class="math notranslate nohighlight">\((3, H, W)\)</span>.</p
 <dt class="sig sig-object py" id="kornia.contrib.FaceDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">FaceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nms_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">750</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/face_detection.html#FaceDetector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.FaceDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Detect faces in a given image using a CNN.</p>
-<p>By default, it uses the method described in <span id="id2">[<a class="reference internal" href="community/bibliography.html#id23" title="Yuantao Feng, Shiqi Yu, Hanyang Peng, Yan-ran Li, and Jianguo Zhang. Detect faces efficiently: a survey and evaluations. IEEE Transactions on Biometrics, Behavior, and Identity Science, 2021.">FYP+21</a>]</span>.</p>
+<p>By default, it uses the method described in <span id="id2">[<a class="reference internal" href="community/bibliography.html#id24" title="Yuantao Feng, Shiqi Yu, Hanyang Peng, Yan-ran Li, and Jianguo Zhang. Detect faces efficiently: a survey and evaluations. IEEE Transactions on Biometrics, Behavior, and Identity Science, 2021.">FYP+21</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1194,6 +1194,11 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">100<
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.sam.</span></span><span class="sig-name descname"><span class="pre">SamModelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/sam/model.html#SamModelType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType" title="Permalink to this definition">#</a></dt>
 <dd><p>Map the SAM model types.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.mobile_sam">
+<span class="sig-name descname"><span class="pre">mobile_sam</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.mobile_sam" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.vit_b">
 <span class="sig-name descname"><span class="pre">vit_b</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.vit_b" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1280,10 +1285,10 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image_encoder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ImageEncoderViT</span></code>) – The backbone used to encode the image into image embeddings that allow for efficient mask
+<li><p><strong>image_encoder</strong> (<em>ImageEncoderViT</em><em> | </em><em>TinyViT</em>) – The backbone used to encode the image into image embeddings that allow for efficient mask
 prediction.</p></li>
-<li><p><strong>prompt_encoder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PromptEncoder</span></code>) – Encodes various types of input prompts.</p></li>
-<li><p><strong>mask_decoder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">MaskDecoder</span></code>) – Predicts masks from the image embeddings and encoded prompts.</p></li>
+<li><p><strong>prompt_encoder</strong> (<em>PromptEncoder</em>) – Encodes various types of input prompts.</p></li>
+<li><p><strong>mask_decoder</strong> (<em>MaskDecoder</em>) – Predicts masks from the image embeddings and encoded prompts.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1818,7 +1823,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
 <span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.35</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/distance_transform.html#distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.distance_transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Approximates the Manhattan distance transform of images using cascaded convolution operations.</p>
 <p>The value at each pixel in the output represents the distance to the nearest non-zero pixel in the image image.
-It uses the method described in <span id="id4">[<a class="reference internal" href="community/bibliography.html#id27" title="Duc Duy Pham, Gurbandurdy Dovletov, and Josef Pauli. A differentiable convolutional distance transform layer for improved image segmentation. Pattern Recognition, 12544:432 - 444, 2020.">PDP20</a>]</span>.
+It uses the method described in <span id="id4">[<a class="reference internal" href="community/bibliography.html#id28" title="Duc Duy Pham, Gurbandurdy Dovletov, and Josef Pauli. A differentiable convolutional distance transform layer for improved image segmentation. Pattern Recognition, 12544:432 - 444, 2020.">PDP20</a>]</span>.
 The transformation is applied independently across the channel dimension of the images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2080,6 +2085,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
 <li><a class="reference internal" href="#kornia.contrib.connected_components"><code class="docutils literal notranslate"><span class="pre">connected_components()</span></code></a></li>
 <li><a class="reference internal" href="#segment-anything-sam">Segment Anything (SAM)</a><ul>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType"><code class="docutils literal notranslate"><span class="pre">SamModelType</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.mobile_sam"><code class="docutils literal notranslate"><span class="pre">SamModelType.mobile_sam</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_b"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_b</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_h"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_h</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_l"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_l</span></code></a></li>

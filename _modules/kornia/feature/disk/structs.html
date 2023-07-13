@@ -322,7 +322,7 @@
 
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 
-<span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Device</span><span class="p">,</span> <span class="n">Tensor</span>
 
 
 <div class="viewcode-block" id="DISKFeatures"><a class="viewcode-back" href="../../../../feature.html#kornia.feature.DISKFeatures">[docs]</a><span class="nd">@dataclass</span>
@@ -342,11 +342,11 @@
     <span class="n">detection_scores</span><span class="p">:</span> <span class="n">Tensor</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">n</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keypoints</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keypoints</span><span class="o">.</span><span class="n">device</span>
 
     <span class="nd">@property</span>

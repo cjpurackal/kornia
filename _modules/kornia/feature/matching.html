@@ -315,7 +315,7 @@
         </div>
         <article role="main">
           <h1>Source code for kornia.feature.matching</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -338,7 +338,7 @@
     <span class="k">return</span> <span class="n">dm</span>
 
 
-<span class="k">def</span> <span class="nf">_get_default_fginn_params</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">_get_default_fginn_params</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;th&quot;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="s2">&quot;mutual&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;spatial_th&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">}</span>
     <span class="k">return</span> <span class="n">config</span>
 
@@ -661,10 +661,11 @@
 <span class="sd">        th: threshold on distance ratio, or other quality measure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">known_modes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="s2">&quot;adalam&quot;</span><span class="p">]</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="n">_match_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">match_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fginn&#39;</span><span class="p">,</span> <span class="s2">&quot;adalam&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">_match_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">match_mode</span><span class="si">}</span><span class="s2"> is not supported. Try one of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">known_modes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">match_mode</span> <span class="o">=</span> <span class="n">_match_mode</span>
@@ -688,9 +689,9 @@
             <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">match_fginn</span><span class="p">(</span><span class="n">desc1</span><span class="p">,</span> <span class="n">desc2</span><span class="p">,</span> <span class="n">lafs1</span><span class="p">,</span> <span class="n">lafs2</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;th&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;spatial_th&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;mutual&#39;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_mode</span> <span class="o">==</span> <span class="s1">&#39;adalam&#39;</span><span class="p">:</span>
-            <span class="n">params</span> <span class="o">=</span> <span class="n">get_adalam_default_config</span><span class="p">()</span>
-            <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">match_adalam</span><span class="p">(</span><span class="n">desc1</span><span class="p">,</span> <span class="n">desc2</span><span class="p">,</span> <span class="n">lafs1</span><span class="p">,</span> <span class="n">lafs2</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">_params</span> <span class="o">=</span> <span class="n">get_adalam_default_config</span><span class="p">()</span>
+            <span class="n">_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>  <span class="c1"># type: ignore[typeddict-item]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">match_adalam</span><span class="p">(</span><span class="n">desc1</span><span class="p">,</span> <span class="n">desc2</span><span class="p">,</span> <span class="n">lafs1</span><span class="p">,</span> <span class="n">lafs2</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">_params</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="k">return</span> <span class="n">out</span></div></div>

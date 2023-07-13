@@ -361,10 +361,13 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/3D_r
 <dd><p>Compose two So3 transformations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>right</strong> – the other So3 transformation.</p>
+<dd class="field-odd"><p><strong>right</strong> (<a class="reference internal" href="#kornia.geometry.liegroup.So3" title="kornia.geometry.liegroup.so3.So3"><code class="xref py py-class docutils literal notranslate"><span class="pre">So3</span></code></a>) – the other So3 transformation.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting So3 transformation.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.geometry.liegroup.So3" title="kornia.geometry.liegroup.so3.So3"><code class="xref py py-class docutils literal notranslate"><span class="pre">So3</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting So3 transformation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1023,7 +1026,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kornia.geometry.liegroup.Se3.t">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Vector3</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Parameter</span></em><a class="headerlink" href="#kornia.geometry.liegroup.Se3.t" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Vector3</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></em><a class="headerlink" href="#kornia.geometry.liegroup.Se3.t" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the underlying translation vector of shape <span class="math notranslate nohighlight">\((B,3)\)</span>.</p>
 </dd></dl>
 
@@ -1089,7 +1092,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kornia.geometry.liegroup.Se3.translation">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">translation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Vector3</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Parameter</span></em><a class="headerlink" href="#kornia.geometry.liegroup.Se3.translation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">translation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Vector3</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></em><a class="headerlink" href="#kornia.geometry.liegroup.Se3.translation" title="Permalink to this definition">#</a></dt>
 <dd><p>Return the underlying translation vector of shape <span class="math notranslate nohighlight">\((B,3)\)</span>.</p>
 </dd></dl>
 
@@ -1161,10 +1164,13 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Orth
 <dd><p>Performs a left-multiplication either rotation concatenation or point-transform.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>right</strong> – the other So2 transformation.</p>
+<dd class="field-odd"><p><strong>right</strong> (<a class="reference internal" href="#kornia.geometry.liegroup.So2" title="kornia.geometry.liegroup.So2"><em>So2</em></a><em> | </em><em>Tensor</em>) – the other So2 transformation.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting So2 transformation.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.geometry.liegroup.So2" title="kornia.geometry.liegroup.So2">So2</a> | Tensor</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting So2 transformation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1439,10 +1445,13 @@ See more:</p>
 <dd><p>Compose two Se2 transformations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>right</strong> – the other Se2 transformation.</p>
+<dd class="field-odd"><p><strong>right</strong> (<a class="reference internal" href="#kornia.geometry.liegroup.Se2" title="kornia.geometry.liegroup.Se2"><em>Se2</em></a><em> | </em><em>Tensor</em>) – the other Se2 transformation.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resulting Se2 transformation.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.geometry.liegroup.Se2" title="kornia.geometry.liegroup.Se2">Se2</a> | Tensor</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting Se2 transformation.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1508,7 +1517,10 @@ See more:</p>
 <dd><p>Converts elements from vector space to lie algebra. Returns matrix of shape <span class="math notranslate nohighlight">\((B, 3, 3)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>v</strong> – vector of shape:math:<cite>(B, 3)</cite>.</p>
+<dd class="field-odd"><p><strong>v</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – vector of shape:math:<cite>(B, 3)</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>

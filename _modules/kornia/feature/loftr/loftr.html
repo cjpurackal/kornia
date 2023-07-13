@@ -315,7 +315,9 @@
         </div>
         <article role="main">
           <h1>Source code for kornia.feature.loftr.loftr</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -329,7 +331,7 @@
 <span class="kn">from</span> <span class="nn">.utils.fine_matching</span> <span class="kn">import</span> <span class="n">FineMatching</span>
 <span class="kn">from</span> <span class="nn">.utils.position_encoding</span> <span class="kn">import</span> <span class="n">PositionEncodingSine</span>
 
-<span class="n">urls</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">urls</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">urls</span><span class="p">[</span><span class="s2">&quot;outdoor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;http://cmp.felk.cvut.cz/~mishkdmy/models/loftr_outdoor.ckpt&quot;</span>
 <span class="n">urls</span><span class="p">[</span><span class="s2">&quot;indoor_new&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;http://cmp.felk.cvut.cz/~mishkdmy/models/loftr_indoor_ds_new.ckpt&quot;</span>
 <span class="n">urls</span><span class="p">[</span><span class="s2">&quot;indoor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;http://cmp.felk.cvut.cz/~mishkdmy/models/loftr_indoor.ckpt&quot;</span>
@@ -391,7 +393,7 @@
 <span class="sd">        &gt;&gt;&gt; out = loftr(input)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;outdoor&#39;</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_cfg</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s1">&#39;outdoor&#39;</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_cfg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1"># Misc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
@@ -416,7 +418,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">pretrained_dict</span><span class="p">[</span><span class="s1">&#39;state_dict&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
-<div class="viewcode-block" id="LoFTR.forward"><a class="viewcode-back" href="../../../../feature.html#kornia.feature.LoFTR.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<div class="viewcode-block" id="LoFTR.forward"><a class="viewcode-back" href="../../../../feature.html#kornia.feature.LoFTR.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data: dictionary containing the input data in the following format:</span>
@@ -434,7 +436,7 @@
 <span class="sd">            - ``batch_indexes``, batch indexes for the keypoints and lafs :math:`(NC)`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># 1. Local Feature CNN</span>
-        <span class="n">_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;bs&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
             <span class="s1">&#39;hw0_i&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
             <span class="s1">&#39;hw1_i&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;image1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span>
@@ -486,13 +488,13 @@
         <span class="c1"># 5. match fine-level</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fine_matching</span><span class="p">(</span><span class="n">feat_f0_unfold</span><span class="p">,</span> <span class="n">feat_f1_unfold</span><span class="p">,</span> <span class="n">_data</span><span class="p">)</span>
 
-        <span class="n">rename_keys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">rename_keys</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;mkpts0_f&quot;</span><span class="p">:</span> <span class="s1">&#39;keypoints0&#39;</span><span class="p">,</span>
             <span class="s2">&quot;mkpts1_f&quot;</span><span class="p">:</span> <span class="s1">&#39;keypoints1&#39;</span><span class="p">,</span>
             <span class="s2">&quot;mconf&quot;</span><span class="p">:</span> <span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
             <span class="s2">&quot;b_ids&quot;</span><span class="p">:</span> <span class="s1">&#39;batch_indexes&#39;</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="n">out</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">out</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rename_keys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">_d</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_d</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -501,7 +503,7 @@
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected Tensor for item `</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">`. Gotcha </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">_d</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span></div>
 
-    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># type: ignore[override]</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;matcher.&#39;</span><span class="p">):</span>
                 <span class="n">state_dict</span><span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;matcher.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>

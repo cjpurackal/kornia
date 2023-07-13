@@ -1132,7 +1132,9 @@
     <span class="k">return</span> <span class="n">shear_mat</span></div>
 
 
-<span class="k">def</span> <span class="nf">_compute_shear_matrix_3d</span><span class="p">(</span><span class="n">sxy_tan</span><span class="p">,</span> <span class="n">sxz_tan</span><span class="p">,</span> <span class="n">syx_tan</span><span class="p">,</span> <span class="n">syz_tan</span><span class="p">,</span> <span class="n">szx_tan</span><span class="p">,</span> <span class="n">szy_tan</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_compute_shear_matrix_3d</span><span class="p">(</span>
+    <span class="n">sxy_tan</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">sxz_tan</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">syx_tan</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">syz_tan</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">szx_tan</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">szy_tan</span><span class="p">:</span> <span class="n">Tensor</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
     <span class="n">ones</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">sxy_tan</span><span class="p">)</span>
 
     <span class="n">m00</span><span class="p">,</span> <span class="n">m10</span><span class="p">,</span> <span class="n">m20</span> <span class="o">=</span> <span class="n">ones</span><span class="p">,</span> <span class="n">sxy_tan</span><span class="p">,</span> <span class="n">sxz_tan</span>
