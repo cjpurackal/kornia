@@ -198,6 +198,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="color.html">kornia.color</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filters.html">kornia.filters</a></li>
@@ -230,6 +231,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">kornia.morphology</a></li>
@@ -256,9 +258,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -473,23 +477,26 @@ translation vector with the shape of <span class="math notranslate nohighlight">
 <h2>Fundamental<a class="headerlink" href="#fundamental" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.geometry.epipolar.find_fundamental">
-<span class="sig-prename descclassname"><span class="pre">kornia.geometry.epipolar.</span></span><span class="sig-name descname"><span class="pre">find_fundamental</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/epipolar/fundamental.html#find_fundamental"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.epipolar.find_fundamental" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute the fundamental matrix using the DLT formulation.</p>
-<p>The linear system is solved by using the Weighted Least Squares Solution for the 8 Points algorithm.</p>
-<dl class="field-list simple">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.epipolar.</span></span><span class="sig-name descname"><span class="pre">find_fundamental</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'8POINT'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/epipolar/fundamental.html#find_fundamental"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.epipolar.find_fundamental" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>points1</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – A set of points in the first image with a tensor shape <span class="math notranslate nohighlight">\((B, N, 2), N&gt;=8\)</span>.</p></li>
 <li><p><strong>points2</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – A set of points in the second image with a tensor shape <span class="math notranslate nohighlight">\((B, N, 2), N&gt;=8\)</span>.</p></li>
 <li><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>], <em>optional</em>) – Tensor containing the weights per point correspondence with a shape of <span class="math notranslate nohighlight">\((B, N)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'8POINT'</span></code>, <code class="docutils literal notranslate"><span class="pre">'7POINT'</span></code>], <em>optional</em>) – The method to use for computing the fundamental matrix. Supported methods are “7POINT” and “8POINT”.
+Default:  <code class="code docutils literal notranslate"><span class="pre">'8POINT'</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the computed fundamental matrix with shape <span class="math notranslate nohighlight">\((B, 3, 3)\)</span>.</p>
+<dd class="field-odd"><p>the computed fundamental matrix with shape <span class="math notranslate nohighlight">\((B, 3*m, 3)\)</span>, where <cite>m</cite> number of fundamental matrix.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If an invalid method is provided.</p>
 </dd>
 </dl>
 </dd></dl>

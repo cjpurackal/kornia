@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="kornia.enhance" href="enhance.html" /><link rel="prev" title="kornia.color" href="color.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="kornia.core" href="core.html" /><link rel="prev" title="kornia.color" href="color.html" />
         <link rel="canonical" href="https://kornia.readthedocs.io/contrib.html" />
 
     <link rel="shortcut icon" href="_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
@@ -198,6 +198,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="color.html">kornia.color</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filters.html">kornia.filters</a></li>
@@ -230,6 +231,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">kornia.morphology</a></li>
@@ -256,9 +258,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -499,7 +503,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <h2>VisualPrompter<a class="headerlink" href="#visualprompter" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.contrib.visual_prompter.VisualPrompter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.visual_prompter.</span></span><span class="sig-name descname"><span class="pre">VisualPrompter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SamConfig(model_type='vit_h',</span> <span class="pre">checkpoint='https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/visual_prompter.html#VisualPrompter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.visual_prompter.VisualPrompter" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.visual_prompter.</span></span><span class="sig-name descname"><span class="pre">VisualPrompter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SamConfig(model_type='vit_h',</span> <span class="pre">pretrained=True)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/visual_prompter.html#VisualPrompter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.visual_prompter.VisualPrompter" title="Permalink to this definition">#</a></dt>
 <dd><p>This class allow the user to run multiple query with multiple prompts for a model.</p>
 <p>At the moment, we just support the SAM model. The model is loaded based on the given config.</p>
 <p>For default the images are transformed to have their long side with size of the <cite>image_encoder.img_size</cite>. This
@@ -511,7 +515,7 @@ default the image is normalized by the mean and standard deviation of the SAM da
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>config</strong> (<a class="reference internal" href="#kornia.contrib.models.sam.SamConfig" title="kornia.contrib.models.sam.SamConfig"><em>SamConfig</em></a><em>, </em><em>optional</em>) – A model config to generate the model. Now just the SAM model is supported.
-Default:  <code class="code docutils literal notranslate"><span class="pre">SamConfig(model_type='vit_h',</span> <span class="pre">checkpoint='https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth')</span></code></p></li>
+Default:  <code class="code docutils literal notranslate"><span class="pre">SamConfig(model_type='vit_h',</span> <span class="pre">pretrained=True)</span></code></p></li>
 <li><p><strong>device</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.0)"><em>torch.device</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – The desired device to use the model.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 <li><p><strong>dtype</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.dtype" title="(in PyTorch v2.0)"><em>torch.dtype</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – The desired dtype to use the model.
@@ -1194,16 +1198,6 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">100<
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.sam.</span></span><span class="sig-name descname"><span class="pre">SamModelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/sam/model.html#SamModelType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType" title="Permalink to this definition">#</a></dt>
 <dd><p>Map the SAM model types.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.mobile_sam">
-<span class="sig-name descname"><span class="pre">mobile_sam</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.mobile_sam" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.vit_b">
-<span class="sig-name descname"><span class="pre">vit_b</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.vit_b" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.vit_h">
 <span class="sig-name descname"><span class="pre">vit_h</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.vit_h" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1213,11 +1207,21 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">100<
 <span class="sig-name descname"><span class="pre">vit_l</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.vit_l" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.vit_b">
+<span class="sig-name descname"><span class="pre">vit_b</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.vit_b" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamModelType.mobile_sam">
+<span class="sig-name descname"><span class="pre">mobile_sam</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamModelType.mobile_sam" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.contrib.models.sam.SamConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.sam.</span></span><span class="sig-name descname"><span class="pre">SamConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_embed_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_num_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_global_attn_indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/sam/model.html#SamConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.sam.SamConfig" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.models.sam.</span></span><span class="sig-name descname"><span class="pre">SamConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_embed_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_num_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_global_attn_indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/sam/model.html#SamConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.sam.SamConfig" title="Permalink to this definition">#</a></dt>
 <dd><p>Encapsulate the Config to build a SAM model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1228,6 +1232,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <li><p>0, ‘vit_h’ or <code class="xref py py-func docutils literal notranslate"><span class="pre">kornia.contrib.sam.SamModelType.vit_h()</span></code></p></li>
 <li><p>1, ‘vit_l’ or <code class="xref py py-func docutils literal notranslate"><span class="pre">kornia.contrib.sam.SamModelType.vit_l()</span></code></p></li>
 <li><p>2, ‘vit_b’ or <code class="xref py py-func docutils literal notranslate"><span class="pre">kornia.contrib.sam.SamModelType.vit_b()</span></code></p></li>
+<li><p>3, ‘mobile_sam’, or <code class="xref py py-func docutils literal notranslate"><span class="pre">kornia.contrib.sam.SamModelType.mobile_sam()</span></code></p></li>
 </ul>
 </p></li>
 <li><p><strong>checkpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – URL or a path for a file with the weights of the model
@@ -1273,6 +1278,11 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <span class="sig-name descname"><span class="pre">model_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span> <span class="pre">|</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">SamModelType</span> <span class="pre">|</span> <span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamConfig.model_type" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kornia.contrib.models.sam.SamConfig.pretrained">
+<span class="sig-name descname"><span class="pre">pretrained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#kornia.contrib.models.sam.SamConfig.pretrained" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1285,7 +1295,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image_encoder</strong> (<em>ImageEncoderViT</em><em> | </em><em>TinyViT</em>) – The backbone used to encode the image into image embeddings that allow for efficient mask
+<li><p><strong>image_encoder</strong> (<em>ImageEncoderViT</em><em> | </em><a class="reference internal" href="#kornia.contrib.TinyViT" title="kornia.contrib.TinyViT"><em>TinyViT</em></a>) – The backbone used to encode the image into image embeddings that allow for efficient mask
 prediction.</p></li>
 <li><p><strong>prompt_encoder</strong> (<em>PromptEncoder</em>) – Encodes various types of input prompts.</p></li>
 <li><p><strong>mask_decoder</strong> (<em>MaskDecoder</em>) – Predicts masks from the image embeddings and encoded prompts.</p></li>
@@ -1734,6 +1744,84 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.0<
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="kornia.contrib.TinyViT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">TinyViT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">224</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_chans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embed_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[96,</span> <span class="pre">192,</span> <span class="pre">384,</span> <span class="pre">768]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">2,</span> <span class="pre">6,</span> <span class="pre">2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">6,</span> <span class="pre">12,</span> <span class="pre">24]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[7,</span> <span class="pre">7,</span> <span class="pre">14,</span> <span class="pre">7]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlp_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_path_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_checkpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mbconv_expand_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_conv_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nn.GELU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mobile_sam</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/tiny_vit.html#TinyViT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.TinyViT" title="Permalink to this definition">#</a></dt>
+<dd><p>TinyViT model, as described in <a class="reference external" href="https://arxiv.org/abs/2207.10666">https://arxiv.org/abs/2207.10666</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_size</strong> (<em>optional</em>) – Size of input image.
+Default:  <code class="code docutils literal notranslate"><span class="pre">224</span></code></p></li>
+<li><p><strong>in_chans</strong> (<em>optional</em>) – Number of input image’s channels.
+Default:  <code class="code docutils literal notranslate"><span class="pre">3</span></code></p></li>
+<li><p><strong>num_classes</strong> (<em>optional</em>) – Number of output classes.
+Default:  <code class="code docutils literal notranslate"><span class="pre">1000</span></code></p></li>
+<li><p><strong>embed_dims</strong> (<em>optional</em>) – List of embedding dimensions.
+Default:  <code class="code docutils literal notranslate"><span class="pre">[96,</span> <span class="pre">192,</span> <span class="pre">384,</span> <span class="pre">768]</span></code></p></li>
+<li><p><strong>depths</strong> (<em>optional</em>) – List of block count for each downsampling stage
+Default:  <code class="code docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">2,</span> <span class="pre">6,</span> <span class="pre">2]</span></code></p></li>
+<li><p><strong>num_heads</strong> (<em>optional</em>) – List of attention heads used in self-attention for each downsampling stage.
+Default:  <code class="code docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">6,</span> <span class="pre">12,</span> <span class="pre">24]</span></code></p></li>
+<li><p><strong>window_sizes</strong> (<em>optional</em>) – List of self-attention’s window size for each downsampling stage.
+Default:  <code class="code docutils literal notranslate"><span class="pre">[7,</span> <span class="pre">7,</span> <span class="pre">14,</span> <span class="pre">7]</span></code></p></li>
+<li><p><strong>mlp_ratio</strong> (<em>optional</em>) – Ratio of MLP dimension to embedding dimension in self-attention.
+Default:  <code class="code docutils literal notranslate"><span class="pre">4.0</span></code></p></li>
+<li><p><strong>drop_rate</strong> (<em>optional</em>) – Dropout rate.
+Default:  <code class="code docutils literal notranslate"><span class="pre">0.0</span></code></p></li>
+<li><p><strong>drop_path_rate</strong> (<em>optional</em>) – Stochastic depth rate.
+Default:  <code class="code docutils literal notranslate"><span class="pre">0.0</span></code></p></li>
+<li><p><strong>use_checkpoint</strong> (<em>optional</em>) – Whether to use activation checkpointing to trade compute for memory.
+Default:  <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>mbconv_expand_ratio</strong> (<em>optional</em>) – Expansion ratio used in MBConv block.
+Default:  <code class="code docutils literal notranslate"><span class="pre">4.0</span></code></p></li>
+<li><p><strong>local_conv_size</strong> (<em>optional</em>) – Kernel size of convolution used in TinyViTBlock
+Default:  <code class="code docutils literal notranslate"><span class="pre">3</span></code></p></li>
+<li><p><strong>activation</strong> (<em>optional</em>) – activation function.
+Default:  <code class="code docutils literal notranslate"><span class="pre">nn.GELU</span></code></p></li>
+<li><p><strong>mobile_same</strong> – Whether to use modifications for MobileSAM.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.TinyViT.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/tiny_vit.html#TinyViT.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.TinyViT.forward" title="Permalink to this definition">#</a></dt>
+<dd><p>Classify images if <code class="docutils literal notranslate"><span class="pre">mobile_sam=False</span></code>, produce feature maps if <code class="docutils literal notranslate"><span class="pre">mobile_sam=True</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kornia.contrib.TinyViT.from_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/tiny_vit.html#TinyViT.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.TinyViT.from_config" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a TinyViT model from pre-defined variants.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variant</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – TinyViT variant. Possible values: <code class="docutils literal notranslate"><span class="pre">'5m'</span></code>, <code class="docutils literal notranslate"><span class="pre">'11m'</span></code>, <code class="docutils literal notranslate"><span class="pre">'21m'</span></code>.</p></li>
+<li><p><strong>pretrained</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – whether to use pre-trained weights. Possible values: <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">'in22k'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'in1k'</span></code>. For TinyViT-21M (<code class="docutils literal notranslate"><span class="pre">variant='21m'</span></code>), <code class="docutils literal notranslate"><span class="pre">'in1k_384'</span></code>, <code class="docutils literal notranslate"><span class="pre">'in1k_512'</span></code> are also available.
+Default:  <code class="code docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – other keyword arguments that will be passed to <a class="reference internal" href="#kornia.contrib.TinyViT" title="kornia.contrib.TinyViT"><code class="xref py py-class docutils literal notranslate"><span class="pre">TinyViT</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.contrib.TinyViT" title="kornia.contrib.TinyViT">TinyViT</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">img_size</span></code> is different from the pre-trained size, bicubic interpolation will be performed on
+attention biases. When using <code class="docutils literal notranslate"><span class="pre">pretrained=True</span></code>, ImageNet-1k checkpoint (<code class="docutils literal notranslate"><span class="pre">'in1k'</span></code>) is used.
+For feature extraction or fine-tuning, ImageNet-22k checkpoint (<code class="docutils literal notranslate"><span class="pre">'in22k'</span></code>) is preferred.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="kornia.contrib.ClassificationHead">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.contrib.</span></span><span class="sig-name descname"><span class="pre">ClassificationHead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embed_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">768</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/classification.html#ClassificationHead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.ClassificationHead" title="Permalink to this definition">#</a></dt>
 <dd><p>Module to be used as a classification head.</p>
@@ -1907,12 +1995,12 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="enhance.html">
+          <a class="next-page" href="core.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">kornia.enhance</div>
+                <div class="title">kornia.core</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -2085,10 +2173,10 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
 <li><a class="reference internal" href="#kornia.contrib.connected_components"><code class="docutils literal notranslate"><span class="pre">connected_components()</span></code></a></li>
 <li><a class="reference internal" href="#segment-anything-sam">Segment Anything (SAM)</a><ul>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType"><code class="docutils literal notranslate"><span class="pre">SamModelType</span></code></a><ul>
-<li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.mobile_sam"><code class="docutils literal notranslate"><span class="pre">SamModelType.mobile_sam</span></code></a></li>
-<li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_b"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_b</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_h"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_h</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_l"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_l</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.vit_b"><code class="docutils literal notranslate"><span class="pre">SamModelType.vit_b</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.sam.SamModelType.mobile_sam"><code class="docutils literal notranslate"><span class="pre">SamModelType.mobile_sam</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamConfig"><code class="docutils literal notranslate"><span class="pre">SamConfig</span></code></a><ul>
@@ -2098,6 +2186,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamConfig.encoder_global_attn_indexes"><code class="docutils literal notranslate"><span class="pre">SamConfig.encoder_global_attn_indexes</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamConfig.encoder_num_heads"><code class="docutils literal notranslate"><span class="pre">SamConfig.encoder_num_heads</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.SamConfig.model_type"><code class="docutils literal notranslate"><span class="pre">SamConfig.model_type</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.models.sam.SamConfig.pretrained"><code class="docutils literal notranslate"><span class="pre">SamConfig.pretrained</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kornia.contrib.models.sam.Sam"><code class="docutils literal notranslate"><span class="pre">Sam</span></code></a><ul>
@@ -2122,6 +2211,11 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.35
 <li><a class="reference internal" href="#image-classification">Image Classification</a><ul>
 <li><a class="reference internal" href="#kornia.contrib.VisionTransformer"><code class="docutils literal notranslate"><span class="pre">VisionTransformer</span></code></a></li>
 <li><a class="reference internal" href="#kornia.contrib.MobileViT"><code class="docutils literal notranslate"><span class="pre">MobileViT</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.TinyViT"><code class="docutils literal notranslate"><span class="pre">TinyViT</span></code></a><ul>
+<li><a class="reference internal" href="#kornia.contrib.TinyViT.forward"><code class="docutils literal notranslate"><span class="pre">TinyViT.forward()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.contrib.TinyViT.from_config"><code class="docutils literal notranslate"><span class="pre">TinyViT.from_config()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kornia.contrib.ClassificationHead"><code class="docutils literal notranslate"><span class="pre">ClassificationHead</span></code></a></li>
 </ul>
 </li>

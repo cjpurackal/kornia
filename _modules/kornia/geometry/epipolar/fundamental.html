@@ -197,6 +197,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../color.html">kornia.color</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../filters.html">kornia.filters</a></li>
@@ -229,6 +230,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../morphology.html">kornia.morphology</a></li>
@@ -255,9 +257,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -317,7 +321,8 @@
           <h1>Source code for kornia.geometry.epipolar.fundamental</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Module containing the functionalities for computing the Fundamental Matrix.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -387,9 +392,269 @@
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">norm_val</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">,</span> <span class="n">M</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm_val</span> <span class="o">+</span> <span class="n">eps</span><span class="p">),</span> <span class="n">M</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="find_fundamental"><a class="viewcode-back" href="../../../../geometry.epipolar.html#kornia.geometry.epipolar.find_fundamental">[docs]</a><span class="k">def</span> <span class="nf">find_fundamental</span><span class="p">(</span>
-    <span class="n">points1</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">points2</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="c1"># Reference : https://github.com/opencv/opencv/blob/4.x/modules/calib3d/src/polynom_solver.cpp</span>
+<span class="k">def</span> <span class="nf">solve_quadratic</span><span class="p">(</span><span class="n">coeffs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Solve given quadratic equation.</span>
+
+<span class="sd">    The function takes the coefficients of quadratic equation and returns the solutions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        coeffs : The coefficients of quadratic equation :`(B, 3)`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tensor of shape `(B, 2)` containing the solutions to the quadratic equation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">KORNIA_CHECK_SHAPE</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Coefficients of quadratic equation</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># coefficient of x^2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># coefficient of x</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># constant term</span>
+
+    <span class="c1"># Calculate discriminant</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+
+    <span class="c1"># Create masks for negative and zero discriminant</span>
+    <span class="n">mask_negative</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="n">mask_zero</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate 1/(2*a) for efficient computation</span>
+    <span class="n">inv_2a</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="n">a</span>
+
+    <span class="c1"># Initialize solution tensor</span>
+    <span class="n">solution</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">coeffs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">coeffs</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">coeffs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="c1"># Handle cases with negative discriminant</span>
+    <span class="c1"># if torch.any(mask_negative):</span>
+    <span class="c1">#     solution[mask_negative, :] = torch.tensor(0, device=coeffs.device, dtype=coeffs.dtype)</span>
+
+    <span class="n">sqrt_delta</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+    <span class="c1"># Handle cases with non-negative discriminant</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="o">~</span><span class="n">mask_negative</span><span class="p">,</span> <span class="o">~</span><span class="n">mask_zero</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+        <span class="n">solution</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">sqrt_delta</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">inv_2a</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="n">solution</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="n">sqrt_delta</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">*</span> <span class="n">inv_2a</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">solution</span>
+
+
+<span class="k">def</span> <span class="nf">solve_cubic</span><span class="p">(</span><span class="n">coeffs</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Solve given cubic equation.</span>
+
+<span class="sd">    The function takes the coefficients of cubic equation and returns</span>
+<span class="sd">    the solutions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        coeffs : The coefficients cubic equation : `(B, 4)`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tensor of shape `(B, 3)` containing the solutions to the cubic equation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">KORNIA_CHECK_SHAPE</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">])</span>
+
+    <span class="n">_PI</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">coeffs</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">coeffs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="c1"># Coefficients of cubic equation</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># coefficient of x^3</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># coefficient of x^2</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># coefficient of x</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># constant term</span>
+
+    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">one_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">solutions</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">coeffs</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">mask_a_zero</span> <span class="o">=</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">mask_b_zero</span> <span class="o">=</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">mask_c_zero</span> <span class="o">=</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">mask_a_zero</span> <span class="o">&amp;</span> <span class="n">mask_b_zero</span> <span class="o">&amp;</span> <span class="n">mask_c_zero</span>
+    <span class="n">mask_first_order</span> <span class="o">=</span> <span class="n">mask_a_zero</span> <span class="o">&amp;</span> <span class="n">mask_b_zero</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">mask_c_zero</span>
+    <span class="n">mask_second_order</span> <span class="o">=</span> <span class="n">mask_a_zero</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">mask_b_zero</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">mask_c_zero</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_second_order</span><span class="p">):</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_second_order</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">solve_quadratic</span><span class="p">(</span><span class="n">coeffs</span><span class="p">[</span><span class="n">mask_second_order</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_first_order</span><span class="p">):</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_first_order</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">one_tensor</span>
+
+    <span class="c1"># if torch.any(mask_zero_order):</span>
+    <span class="c1">#     solutions[mask_zero_order, 0] = zero_tensor</span>
+
+    <span class="c1"># Normalized form x^3 + a2 * x^2 + a1 * x + a0 = 0</span>
+    <span class="n">inv_a</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">a</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span>
+    <span class="n">b_a</span> <span class="o">=</span> <span class="n">inv_a</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span>
+    <span class="n">b_a2</span> <span class="o">=</span> <span class="n">b_a</span> <span class="o">*</span> <span class="n">b_a</span>
+
+    <span class="n">c_a</span> <span class="o">=</span> <span class="n">inv_a</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span>
+    <span class="n">d_a</span> <span class="o">=</span> <span class="n">inv_a</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span>
+
+    <span class="c1"># Solve the cubic equation</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">c_a</span> <span class="o">-</span> <span class="n">b_a2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">9</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span> <span class="o">*</span> <span class="n">b_a</span> <span class="o">*</span> <span class="n">c_a</span> <span class="o">-</span> <span class="mi">27</span> <span class="o">*</span> <span class="n">d_a</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b_a</span> <span class="o">*</span> <span class="n">b_a2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">54</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Q</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">R</span> <span class="o">*</span> <span class="n">R</span>
+    <span class="n">b_a_3</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">b_a</span>
+
+    <span class="n">a_Q_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a_R_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a_D_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="n">a_Q_zero</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span>
+    <span class="n">a_R_zero</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span>
+    <span class="n">a_D_zero</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+
+    <span class="c1"># Q == 0</span>
+    <span class="n">mask_Q_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">R</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">mask_Q_zero_solutions</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_Q_zero</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a_R_zero</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_Q_zero</span><span class="p">):</span>
+        <span class="n">x0_Q_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">R</span><span class="p">[</span><span class="n">mask_Q_zero</span><span class="p">],</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_Q_zero</span><span class="p">]</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_Q_zero_solutions</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0_Q_zero</span>
+
+    <span class="n">mask_QR_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">Q</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">R</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">mask_QR_zero_solutions</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_Q_zero</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a_R_zero</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_QR_zero</span><span class="p">):</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_QR_zero_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+            <span class="p">[</span><span class="o">-</span><span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_QR_zero</span><span class="p">],</span> <span class="o">-</span><span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_QR_zero</span><span class="p">],</span> <span class="o">-</span><span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_QR_zero</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+
+    <span class="c1"># D &lt;= 0</span>
+    <span class="n">mask_D_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">D</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">Q</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">mask_D_zero_solutions</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_D_zero</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a_Q_zero</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_D_zero</span><span class="p">):</span>
+        <span class="n">theta_D_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">]</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">Q3</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">]))</span>
+        <span class="n">sqrt_Q_D_zero</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">Q</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">])</span>
+        <span class="n">x0_D_zero</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sqrt_Q_D_zero</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_D_zero</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">]</span>
+        <span class="n">x1_D_zero</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sqrt_Q_D_zero</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="n">theta_D_zero</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">_PI</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">]</span>
+        <span class="n">x2_D_zero</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sqrt_Q_D_zero</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="n">theta_D_zero</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">_PI</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_D_zero</span><span class="p">]</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_D_zero_solutions</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x0_D_zero</span><span class="p">,</span> <span class="n">x1_D_zero</span><span class="p">,</span> <span class="n">x2_D_zero</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">a_D_positive</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a_D_positive</span><span class="p">[</span><span class="o">~</span><span class="n">mask_a_zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">D</span>
+    <span class="c1"># D &gt; 0</span>
+    <span class="n">mask_D_positive_solution</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_D_positive</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a_Q_zero</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">mask_D_positive</span> <span class="o">=</span> <span class="p">(</span><span class="n">D</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">Q</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_D_positive</span><span class="p">):</span>
+        <span class="n">AD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+        <span class="n">BD</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+        <span class="n">R_abs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+        <span class="n">mask_R_positive</span> <span class="o">=</span> <span class="n">R_abs</span> <span class="o">&gt;</span> <span class="mf">1e-16</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_R_positive</span><span class="p">):</span>
+            <span class="n">AD</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">R_abs</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]),</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">mask_R_positive_</span> <span class="o">=</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask_R_positive_</span><span class="p">):</span>
+                <span class="n">AD</span><span class="p">[</span><span class="n">mask_R_positive_</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">AD</span><span class="p">[</span><span class="n">mask_R_positive_</span><span class="p">]</span>
+
+            <span class="n">BD</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">Q</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]</span> <span class="o">/</span> <span class="n">AD</span><span class="p">[</span><span class="n">mask_R_positive</span><span class="p">]</span>
+        <span class="n">x0_D_positive</span> <span class="o">=</span> <span class="n">AD</span><span class="p">[</span><span class="n">mask_D_positive</span><span class="p">]</span> <span class="o">+</span> <span class="n">BD</span><span class="p">[</span><span class="n">mask_D_positive</span><span class="p">]</span> <span class="o">-</span> <span class="n">b_a_3</span><span class="p">[</span><span class="n">mask_D_positive</span><span class="p">]</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">mask_D_positive_solution</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0_D_positive</span>
+
+    <span class="k">return</span> <span class="n">solutions</span>
+
+
+<span class="c1"># Reference: Adapted from the &#39;run_7point&#39; function in opencv</span>
+<span class="c1"># https://github.com/opencv/opencv/blob/4.x/modules/calib3d/src/fundam.cpp</span>
+<span class="k">def</span> <span class="nf">run_7point</span><span class="p">(</span><span class="n">points1</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">points2</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the fundamental matrix using the 7-point algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        points1: A set of points in the first image with a tensor shape :math:`(B, N, 2)`.</span>
+<span class="sd">        points2: A set of points in the second image with a tensor shape :math:`(B, N, 2)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the computed fundamental matrix with shape :math:`(B, 3*m, 3), Valid values of m are 1, 2 or 3`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">KORNIA_CHECK_SHAPE</span><span class="p">(</span><span class="n">points1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">])</span>
+    <span class="n">KORNIA_CHECK_SHAPE</span><span class="p">(</span><span class="n">points2</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">])</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">points1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">points1_norm</span><span class="p">,</span> <span class="n">transform1</span> <span class="o">=</span> <span class="n">normalize_points</span><span class="p">(</span><span class="n">points1</span><span class="p">)</span>
+    <span class="n">points2_norm</span><span class="p">,</span> <span class="n">transform2</span> <span class="o">=</span> <span class="n">normalize_points</span><span class="p">(</span><span class="n">points2</span><span class="p">)</span>
+
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">points1_norm</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Bx1xN</span>
+    <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">chunk</span><span class="p">(</span><span class="n">points2_norm</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Bx1xN</span>
+
+    <span class="n">ones</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+    <span class="c1"># form a linear system: which represents</span>
+    <span class="c1"># the equation (x2[i], 1)*F*(x1[i], 1) = 0</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">concatenate</span><span class="p">([</span><span class="n">x2</span> <span class="o">*</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">*</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">*</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">*</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">ones</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># BxNx9</span>
+
+    <span class="c1"># X * Fmat = 0 is singular (7 equations for 9 variables)</span>
+    <span class="c1"># solving for nullspace of X to get two F</span>
+    <span class="c1">####### unstable failing gradcheck</span>
+    <span class="c1"># _, _, v = torch.linalg.svd(X)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">_torch_svd_cast</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="c1"># last two singular vector as a basic of the space</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># lambda*f1 + mu*f2 is an arbitrary fundamental matrix</span>
+    <span class="c1"># f ~ lambda*f1 + (1 - lambda)*f2</span>
+    <span class="c1"># det(f) = det(lambda*f1 + (1-lambda)*f2), find lambda</span>
+    <span class="c1"># form a cubic equation</span>
+    <span class="c1"># finding the coefficients of cubic polynomial (coeffs)</span>
+
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">f1_det</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
+    <span class="n">f2_det</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
+    <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f1_det</span>
+    <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bii-&gt;b&#39;</span><span class="p">,</span> <span class="n">f2</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">f1</span><span class="p">))</span> <span class="o">*</span> <span class="n">f1_det</span>
+    <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bii-&gt;b&#39;</span><span class="p">,</span> <span class="n">f1</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">f2</span><span class="p">))</span> <span class="o">*</span> <span class="n">f2_det</span>
+    <span class="n">coeffs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">f2_det</span>
+
+    <span class="c1"># solve the cubic equation, there can be 1 to 3 roots</span>
+    <span class="c1"># roots = torch.tensor(np.roots(coeffs.numpy()))</span>
+    <span class="n">roots</span> <span class="o">=</span> <span class="n">solve_cubic</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+
+    <span class="n">fmatrix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">valid_root_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">roots</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">roots</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">_lambda</span> <span class="o">=</span> <span class="n">roots</span>
+    <span class="n">_mu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">_lambda</span><span class="p">)</span>
+
+    <span class="n">_s</span> <span class="o">=</span> <span class="n">f1</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">roots</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span> <span class="o">+</span> <span class="n">f2</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span>
+        <span class="n">dim</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="c1"># _s_non_zero_mask = torch.abs(_s ) &gt; 1e-16</span>
+    <span class="n">_s_non_zero_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">torch</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">_s</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="n">_mu</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">_s</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">]</span>
+    <span class="n">_lambda</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">_lambda</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">_mu</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">]</span>
+
+    <span class="n">f1_expanded</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">f2_expanded</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">fmatrix</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">f1_expanded</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">_lambda</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="o">+</span> <span class="n">f2_expanded</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span> <span class="o">*</span> <span class="n">_mu</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">mat_ind</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+    <span class="n">mat_ind</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">fmatrix</span><span class="p">[</span><span class="n">_s_non_zero_mask</span><span class="p">,</span> <span class="n">mat_ind</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">fmatrix</span><span class="p">[</span><span class="o">~</span><span class="n">_s_non_zero_mask</span><span class="p">,</span> <span class="n">mat_ind</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">trans1_exp</span> <span class="o">=</span> <span class="n">transform1</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmatrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">trans2_exp</span> <span class="o">=</span> <span class="n">transform2</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmatrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">fmatrix</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+        <span class="n">trans2_exp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">fmatrix</span><span class="p">[</span><span class="n">valid_root_mask</span><span class="p">],</span> <span class="n">trans1_exp</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">normalize_transformation</span><span class="p">(</span><span class="n">fmatrix</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">run_8point</span><span class="p">(</span><span class="n">points1</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">points2</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute the fundamental matrix using the DLT formulation.</span>
 
 <span class="sd">    The linear system is solved by using the Weighted Least Squares Solution for the 8 Points algorithm.</span>
@@ -442,7 +707,33 @@
     <span class="n">F_projected</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">diag_embed</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="n">rank_mask</span><span class="p">)</span> <span class="o">@</span> <span class="n">V</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">F_est</span> <span class="o">=</span> <span class="n">transform2</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">F_projected</span> <span class="o">@</span> <span class="n">transform1</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">normalize_transformation</span><span class="p">(</span><span class="n">F_est</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">normalize_transformation</span><span class="p">(</span><span class="n">F_est</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="find_fundamental"><a class="viewcode-back" href="../../../../geometry.epipolar.html#kornia.geometry.epipolar.find_fundamental">[docs]</a><span class="k">def</span> <span class="nf">find_fundamental</span><span class="p">(</span>
+    <span class="n">points1</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">points2</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;8POINT&#39;</span><span class="p">,</span> <span class="s1">&#39;7POINT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;8POINT&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        points1: A set of points in the first image with a tensor shape :math:`(B, N, 2), N&gt;=8`.</span>
+<span class="sd">        points2: A set of points in the second image with a tensor shape :math:`(B, N, 2), N&gt;=8`.</span>
+<span class="sd">        weights: Tensor containing the weights per point correspondence with a shape of :math:`(B, N)`.</span>
+<span class="sd">        method: The method to use for computing the fundamental matrix. Supported methods are &quot;7POINT&quot; and &quot;8POINT&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the computed fundamental matrix with shape :math:`(B, 3*m, 3)`, where `m` number of fundamental matrix.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If an invalid method is provided.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;7POINT&quot;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">run_7point</span><span class="p">(</span><span class="n">points1</span><span class="p">,</span> <span class="n">points2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;8POINT&quot;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">run_8point</span><span class="p">(</span><span class="n">points1</span><span class="p">,</span> <span class="n">points2</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">. Supported methods are &#39;7POINT&#39; and &#39;8POINT&#39;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="compute_correspond_epilines"><a class="viewcode-back" href="../../../../geometry.epipolar.html#kornia.geometry.epipolar.compute_correspond_epilines">[docs]</a><span class="k">def</span> <span class="nf">compute_correspond_epilines</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">F_mat</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>

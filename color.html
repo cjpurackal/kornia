@@ -198,6 +198,7 @@
 </li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">kornia.color</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filters.html">kornia.filters</a></li>
@@ -230,6 +231,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">kornia.morphology</a></li>
@@ -256,9 +258,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -338,14 +342,14 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – RGB image to be converted to grayscale with shape <span class="math notranslate nohighlight">\((*,3,H,W)\)</span>.</p></li>
-<li><p><strong>rgb_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>], <em>optional</em>) – Weights that will be applied on each channel (RGB).
+<li><p><strong>image</strong> (<em>Tensor</em>) – RGB image to be converted to grayscale with shape <span class="math notranslate nohighlight">\((*,3,H,W)\)</span>.</p></li>
+<li><p><strong>rgb_weights</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Weights that will be applied on each channel (RGB).
 The sum of the weights should add up to one.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+<dd class="field-even"><p>Tensor</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>grayscale version of the image with shape <span class="math notranslate nohighlight">\((*,1,H,W)\)</span>.</p>
@@ -393,7 +397,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <p>The image data is assumed to be in the range of (0, 1).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>image</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – grayscale image to be converted to RGB with shape <span class="math notranslate nohighlight">\((*,1,H,W)\)</span>.</p>
+<dd class="field-odd"><p><strong>image</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – grayscale image tensor to be converted to RGB with shape <span class="math notranslate nohighlight">\((*,1,H,W)\)</span>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>

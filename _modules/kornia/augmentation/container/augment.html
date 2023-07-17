@@ -197,6 +197,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../color.html">kornia.color</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../filters.html">kornia.filters</a></li>
@@ -229,6 +230,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../morphology.html">kornia.morphology</a></li>
@@ -255,9 +257,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -318,7 +322,8 @@
 <span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 
-<span class="kn">import</span> <span class="nn">kornia.augmentation</span> <span class="k">as</span> <span class="nn">K</span>
+<span class="kn">from</span> <span class="nn">kornia.augmentation._2d.base</span> <span class="kn">import</span> <span class="n">RigidAffineAugmentationBase2D</span>
+<span class="kn">from</span> <span class="nn">kornia.augmentation._3d.base</span> <span class="kn">import</span> <span class="n">AugmentationBase3D</span><span class="p">,</span> <span class="n">RigidAffineAugmentationBase3D</span>
 <span class="kn">from</span> <span class="nn">kornia.augmentation.base</span> <span class="kn">import</span> <span class="n">_AugmentationBase</span>
 <span class="kn">from</span> <span class="nn">kornia.constants</span> <span class="kn">import</span> <span class="n">DataKey</span><span class="p">,</span> <span class="n">Resample</span>
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Tensor</span>
@@ -326,6 +331,7 @@
 <span class="kn">from</span> <span class="nn">kornia.geometry.keypoints</span> <span class="kn">import</span> <span class="n">Keypoints</span><span class="p">,</span> <span class="n">VideoKeypoints</span>
 <span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">eye_like</span><span class="p">,</span> <span class="n">is_autocast_enabled</span>
 
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">TransformMatrixMinIn</span>
 <span class="kn">from</span> <span class="nn">.image</span> <span class="kn">import</span> <span class="n">ImageSequential</span>
 <span class="kn">from</span> <span class="nn">.ops</span> <span class="kn">import</span> <span class="n">AugmentationSequentialOps</span><span class="p">,</span> <span class="n">DataType</span>
 <span class="kn">from</span> <span class="nn">.params</span> <span class="kn">import</span> <span class="n">ParamItem</span>
@@ -339,7 +345,7 @@
 <span class="n">_IMG_MSK_OPTIONS</span> <span class="o">=</span> <span class="p">{</span><span class="n">DataKey</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span> <span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">}</span>
 
 
-<div class="viewcode-block" id="AugmentationSequential"><a class="viewcode-back" href="../../../../augmentation.container.html#kornia.augmentation.container.AugmentationSequential">[docs]</a><span class="k">class</span> <span class="nc">AugmentationSequential</span><span class="p">(</span><span class="n">ImageSequential</span><span class="p">):</span>
+<div class="viewcode-block" id="AugmentationSequential"><a class="viewcode-back" href="../../../../augmentation.container.html#kornia.augmentation.container.AugmentationSequential">[docs]</a><span class="k">class</span> <span class="nc">AugmentationSequential</span><span class="p">(</span><span class="n">TransformMatrixMinIn</span><span class="p">,</span> <span class="n">ImageSequential</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;AugmentationSequential for handling multiple input types like inputs, masks, keypoints at once.</span>
 
 <span class="sd">    .. image:: _static/img/AugmentationSequential.png</span>
@@ -363,13 +369,13 @@
 <span class="sd">                      If True, the whole list of args will be processed as a sequence in a random order.</span>
 <span class="sd">                      If False, the whole list of args will be processed as a sequence in original order.</span>
 
-<span class="sd">        transformation_matrix: computation mode for the chained transformation matrix, via `.transform_matrix`</span>
-<span class="sd">                               attribute.</span>
-<span class="sd">                               If `silence`, transformation matrix will be computed silently and the non-rigid modules</span>
-<span class="sd">                               will be ignored as identity transformations.</span>
-<span class="sd">                               If `rigid`, transformation matrix will be computed silently and the non-rigid modules</span>
-<span class="sd">                               will trigger errors.</span>
-<span class="sd">                               If `skip`, transformation matrix will be totally ignored.</span>
+<span class="sd">        transformation_matrix_mode: computation mode for the chained transformation matrix, via `.transform_matrix`</span>
+<span class="sd">                                    attribute.</span>
+<span class="sd">                                    If `silent`, transformation matrix will be computed silently and the non-rigid</span>
+<span class="sd">                                    modules will be ignored as identity transformations.</span>
+<span class="sd">                                    If `rigid`, transformation matrix will be computed silently and the non-rigid</span>
+<span class="sd">                                    modules will trigger errors.</span>
+<span class="sd">                                    If `skip`, transformation matrix will be totally ignored.</span>
 
 <span class="sd">        extra_args: to control the behaviour for each datakeys. By default, masks are handled by nearest interpolation</span>
 <span class="sd">                    strategies.</span>
@@ -472,13 +478,13 @@
         <span class="n">keepdim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">random_apply</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">random_apply_weights</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">transformation_matrix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;silence&quot;</span><span class="p">,</span>
+        <span class="n">transformation_matrix_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;silent&quot;</span><span class="p">,</span>
         <span class="n">extra_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">DataKey</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">DataKey</span><span class="o">.</span><span class="n">MASK</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;resample&quot;</span><span class="p">:</span> <span class="n">Resample</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">,</span> <span class="s2">&quot;align_corners&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
         <span class="p">},</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -486,6 +492,14 @@
             <span class="n">keepdim</span><span class="o">=</span><span class="n">keepdim</span><span class="p">,</span>
             <span class="n">random_apply</span><span class="o">=</span><span class="n">random_apply</span><span class="p">,</span>
             <span class="n">random_apply_weights</span><span class="o">=</span><span class="n">random_apply_weights</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_transformation_matrix_mode</span><span class="p">(</span><span class="n">transformation_matrix_mode</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_ops_for_transform_computation</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">RigidAffineAugmentationBase2D</span><span class="p">,</span>
+            <span class="n">RigidAffineAugmentationBase3D</span><span class="p">,</span>
+            <span class="n">AugmentationSequential</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataKey</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span> <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">data_keys</span><span class="p">]</span>
@@ -498,14 +512,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_op</span> <span class="o">=</span> <span class="n">AugmentationSequentialOps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_keys</span><span class="p">)</span>
 
-        <span class="n">_valid_transformation_matrix_args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;silence&quot;</span><span class="p">,</span> <span class="s2">&quot;rigid&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">transformation_matrix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_valid_transformation_matrix_args</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;`transformation_matrix` has to be one of </span><span class="si">{</span><span class="n">_valid_transformation_matrix_args</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">transformation_matrix</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transformation_matrix_arg</span> <span class="o">=</span> <span class="n">transformation_matrix</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">contains_video_sequential</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">contains_3d_augmentation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
@@ -514,45 +520,17 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">VideoSequential</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">contains_video_sequential</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="c1"># NOTE: only for images are supported for 3D.</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">AugmentationBase3D</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">AugmentationBase3D</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">contains_3d_augmentation</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extra_args</span> <span class="o">=</span> <span class="n">extra_args</span>
 
     <span class="k">def</span> <span class="nf">clear_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_transform_matrix_state</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clear_state</span><span class="p">()</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">transform_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="c1"># In AugmentationSequential, the parent class is accessed first.</span>
-        <span class="c1"># So that it was None in the beginning. We hereby use lazy computation here.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_update_transform_matrix</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span>
-
-    <span class="k">def</span> <span class="nf">_update_transform_matrix_by_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformation_matrix_arg</span> <span class="o">==</span> <span class="s2">&quot;skip&quot;</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">module</span><span class="p">,</span> <span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">RigidAffineAugmentationBase2D</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">RigidAffineAugmentationBase3D</span><span class="p">,</span> <span class="n">AugmentationSequential</span><span class="p">)</span>
-        <span class="p">):</span>
-            <span class="c1"># Passed in pointer, allows lazy transformation matrix computation</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">transform_matrix</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformation_matrix_arg</span> <span class="o">==</span> <span class="s2">&quot;rigid&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Non-rigid module `</span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">` is not supported under `rigid` computation mode. &quot;</span>
-                <span class="s2">&quot;Please either update the module or change the `transformation_matrix` argument.&quot;</span>
-            <span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_update_transform_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="n">transform_matrix</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span> <span class="o">=</span> <span class="n">transform_matrix</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrix</span>
+    <span class="k">def</span> <span class="nf">_update_transform_matrix_for_valid_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transform_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">transform_matrix</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 
     <span class="k">def</span> <span class="nf">identity_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return identity matrix.&quot;&quot;&quot;</span>

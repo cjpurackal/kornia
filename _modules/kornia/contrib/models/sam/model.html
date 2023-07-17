@@ -197,6 +197,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../color.html">kornia.color</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../contrib.html">kornia.contrib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../core.html">kornia.core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../enhance.html">kornia.enhance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../feature.html">kornia.feature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../filters.html">kornia.filters</a></li>
@@ -229,6 +230,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../io.html">kornia.io</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../image.html">kornia.image</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../losses.html">kornia.losses</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../metrics.html">kornia.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../morphology.html">kornia.morphology</a></li>
@@ -255,9 +257,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/rt_detr.html">Real-Time Detection Transformer (RT-DETR)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/segment_anything.html">Segment Anything (SAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/mobile_sam.html">Faster Segment Anything (MobileSAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/yunet.html">YuNet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit.html">Vision Transformer (ViT)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/vit_mobile.html">MobileViT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../models/tiny_vit.html">TinyViT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/loftr.html">LoFTR (matching)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/defmo.html">DeFMO (video)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../models/hardnet.html">Hardnet (descriptor)</a></li>
@@ -325,6 +329,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
@@ -337,8 +342,8 @@
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.image_encoder</span> <span class="kn">import</span> <span class="n">ImageEncoderViT</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.mask_decoder</span> <span class="kn">import</span> <span class="n">MaskDecoder</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.prompt_encoder</span> <span class="kn">import</span> <span class="n">PromptEncoder</span>
-<span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.tiny_vit</span> <span class="kn">import</span> <span class="n">TinyViT</span><span class="p">,</span> <span class="n">tiny_vit_5m</span>
 <span class="kn">from</span> <span class="nn">kornia.contrib.models.sam.architecture.transformer</span> <span class="kn">import</span> <span class="n">TwoWayTransformer</span>
+<span class="kn">from</span> <span class="nn">kornia.contrib.models.tiny_vit</span> <span class="kn">import</span> <span class="n">TinyViT</span>
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SHAPE</span>
 
@@ -362,6 +367,7 @@
 <span class="sd">            - 0, &#39;vit_h&#39; or :func:`kornia.contrib.sam.SamModelType.vit_h`</span>
 <span class="sd">            - 1, &#39;vit_l&#39; or :func:`kornia.contrib.sam.SamModelType.vit_l`</span>
 <span class="sd">            - 2, &#39;vit_b&#39; or :func:`kornia.contrib.sam.SamModelType.vit_b`</span>
+<span class="sd">            - 3, &#39;mobile_sam&#39;, or :func:`kornia.contrib.sam.SamModelType.mobile_sam`</span>
 
 <span class="sd">        checkpoint: URL or a path for a file with the weights of the model</span>
 <span class="sd">        encoder_embed_dim: Patch embedding dimension.</span>
@@ -372,6 +378,7 @@
 
     <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">SamModelType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">checkpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pretrained</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">encoder_embed_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">encoder_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -455,7 +462,7 @@
             <span class="n">image_embedding_size</span> <span class="o">=</span> <span class="n">image_size</span> <span class="o">//</span> <span class="n">vit_patch_size</span>
 
             <span class="n">model</span> <span class="o">=</span> <span class="n">Sam</span><span class="p">(</span>
-                <span class="n">image_encoder</span><span class="o">=</span><span class="n">tiny_vit_5m</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mobile_sam</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="n">image_encoder</span><span class="o">=</span><span class="n">TinyViT</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="s2">&quot;5m&quot;</span><span class="p">,</span> <span class="n">img_size</span><span class="o">=</span><span class="n">image_size</span><span class="p">,</span> <span class="n">mobile_sam</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                 <span class="n">prompt_encoder</span><span class="o">=</span><span class="n">PromptEncoder</span><span class="p">(</span>
                     <span class="n">embed_dim</span><span class="o">=</span><span class="n">prompt_embed_dim</span><span class="p">,</span>
                     <span class="n">image_embedding_size</span><span class="o">=</span><span class="p">(</span><span class="n">image_embedding_size</span><span class="p">,</span> <span class="n">image_embedding_size</span><span class="p">),</span>
@@ -489,8 +496,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Unexpected config. The model_type should be provide or the encoder configs.&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">:</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">load_checkpoint</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">)</span>
+        <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">checkpoint</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">pretrained</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">checkpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">checkpoint</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_b</span><span class="p">:</span> <span class="s2">&quot;https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth&quot;</span><span class="p">,</span>
+                    <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_l</span><span class="p">:</span> <span class="s2">&quot;https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth&quot;</span><span class="p">,</span>
+                    <span class="n">SamModelType</span><span class="o">.</span><span class="n">vit_h</span><span class="p">:</span> <span class="s2">&quot;https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth&quot;</span><span class="p">,</span>
+                    <span class="n">SamModelType</span><span class="o">.</span><span class="n">mobile_sam</span><span class="p">:</span> <span class="s2">&quot;https://github.com/ChaoningZhang/MobileSAM/raw/a509aac54fdd7af59f843135f2f7cee307283c88/weights/mobile_sam.pt&quot;</span><span class="p">,</span>
+                <span class="p">}[</span><span class="n">model_type</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;checkpoint is not None. pretrained=True is ignored&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">checkpoint</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">load_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">model</span></div>
 
