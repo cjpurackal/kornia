@@ -769,9 +769,9 @@ normalized. <span class="math notranslate nohighlight">\((B, 4, 4)\)</span></p><
 <section id="quaternion">
 <h2>Quaternion<a class="headerlink" href="#quaternion" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="kornia.geometry.conversions.quaternion_to_angle_axis">
-<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_angle_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#quaternion_to_angle_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.quaternion_to_angle_axis" title="Permalink to this definition">#</a></dt>
-<dd><p>Convert quaternion vector to angle axis of rotation in radians.</p>
+<dt class="sig sig-object py" id="kornia.geometry.conversions.quaternion_to_axis_angle">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">quaternion_to_axis_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#quaternion_to_axis_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.quaternion_to_axis_angle" title="Permalink to this definition">#</a></dt>
+<dd><p>Convert quaternion vector to axis angle of rotation in radians.</p>
 <p>The quaternion should be in (w, x, y, z) format.</p>
 <p>Adapted from ceres C++ library: ceres-solver/include/ceres/rotation.h</p>
 <dl class="field-list simple">
@@ -782,7 +782,7 @@ normalized. <span class="math notranslate nohighlight">\((B, 4, 4)\)</span></p><
 <dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tensor with angle axis of rotation.</p>
+<dd class="field-odd"><p>tensor with axis angle of rotation.</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -794,7 +794,7 @@ normalized. <span class="math notranslate nohighlight">\((B, 4, 4)\)</span></p><
 </dl>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quaternion</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">((</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quaternion_to_axis_angle</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span>
 <span class="go">tensor([0., 0., 0.])</span>
 </pre></div>
 </div>
@@ -918,8 +918,8 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1.0e
 <section id="rotation-matrix">
 <h2>Rotation Matrix<a class="headerlink" href="#rotation-matrix" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="kornia.geometry.conversions.rotation_matrix_to_angle_axis">
-<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">rotation_matrix_to_angle_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotation_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#rotation_matrix_to_angle_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.rotation_matrix_to_angle_axis" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="kornia.geometry.conversions.rotation_matrix_to_axis_angle">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">rotation_matrix_to_axis_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotation_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#rotation_matrix_to_axis_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.rotation_matrix_to_axis_angle" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert 3x3 rotation matrix to Rodrigues vector in radians.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -936,14 +936,14 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1.0e
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rotation_matrix_to_angle_axis</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rotation_matrix_to_axis_angle</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="go">tensor([0., 0., 0.])</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">rotation_matrix_to_angle_axis</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rotation_matrix_to_axis_angle</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="go">tensor([1.5708, 0.0000, 0.0000])</span>
 </pre></div>
 </div>
@@ -980,17 +980,17 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1.0e
 </dd></dl>
 
 </section>
-<section id="angle-axis">
-<h2>Angle Axis<a class="headerlink" href="#angle-axis" title="Permalink to this heading">#</a></h2>
+<section id="axis-angle">
+<h2>Axis Angle<a class="headerlink" href="#axis-angle" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="kornia.geometry.conversions.angle_axis_to_quaternion">
-<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">angle_axis_to_quaternion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle_axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#angle_axis_to_quaternion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.angle_axis_to_quaternion" title="Permalink to this definition">#</a></dt>
-<dd><p>Convert an angle axis to a quaternion.</p>
+<dt class="sig sig-object py" id="kornia.geometry.conversions.axis_angle_to_quaternion">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">axis_angle_to_quaternion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#axis_angle_to_quaternion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.axis_angle_to_quaternion" title="Permalink to this definition">#</a></dt>
+<dd><p>Convert an axis angle to a quaternion.</p>
 <p>The quaternion vector has components in (w, x, y, z) format.</p>
 <p>Adapted from ceres C++ library: ceres-solver/include/ceres/rotation.h</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>angle_axis</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor with angle axis in radians.</p>
+<dd class="field-odd"><p><strong>axis_angle</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor with axis angle in radians.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
@@ -1007,20 +1007,20 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1.0e
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angle_axis</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">((</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">angle_axis_to_quaternion</span><span class="p">(</span><span class="n">angle_axis</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis_angle</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">((</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_angle_to_quaternion</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">)</span>
 <span class="go">tensor([0.8776, 0.0000, 0.4794, 0.0000])</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="kornia.geometry.conversions.angle_axis_to_rotation_matrix">
-<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">angle_axis_to_rotation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle_axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#angle_axis_to_rotation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.angle_axis_to_rotation_matrix" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="kornia.geometry.conversions.axis_angle_to_rotation_matrix">
+<span class="sig-prename descclassname"><span class="pre">kornia.geometry.conversions.</span></span><span class="sig-name descname"><span class="pre">axis_angle_to_rotation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/conversions.html#axis_angle_to_rotation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.conversions.axis_angle_to_rotation_matrix" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert 3d vector of axis-angle rotation to 3x3 rotation matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>angle_axis</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor of 3d vector of axis-angle rotations in radians with shape <span class="math notranslate nohighlight">\((N, 3)\)</span>.</p>
+<dd class="field-odd"><p><strong>axis_angle</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor of 3d vector of axis-angle rotations in radians with shape <span class="math notranslate nohighlight">\((N, 3)\)</span>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
@@ -1031,14 +1031,14 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1.0e
 </dl>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">angle_axis_to_rotation_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="go">tensor([[[1., 0., 0.],</span>
 <span class="go">         [0., 1., 0.],</span>
 <span class="go">         [0., 0., 1.]]])</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([[</span><span class="mf">1.5708</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">angle_axis_to_rotation_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="go">tensor([[[ 1.0000e+00,  0.0000e+00,  0.0000e+00],</span>
 <span class="go">         [ 0.0000e+00, -3.6200e-06, -1.0000e+00],</span>
 <span class="go">         [ 0.0000e+00,  1.0000e+00, -3.6200e-06]]])</span>
@@ -1452,7 +1452,7 @@ tvec: translation vector <span class="math notranslate nohighlight">\((B, 3, 1)\
 </ul>
 </li>
 <li><a class="reference internal" href="#quaternion">Quaternion</a><ul>
-<li><a class="reference internal" href="#kornia.geometry.conversions.quaternion_to_angle_axis"><code class="docutils literal notranslate"><span class="pre">quaternion_to_angle_axis()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.conversions.quaternion_to_axis_angle"><code class="docutils literal notranslate"><span class="pre">quaternion_to_axis_angle()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.conversions.quaternion_to_rotation_matrix"><code class="docutils literal notranslate"><span class="pre">quaternion_to_rotation_matrix()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.conversions.quaternion_log_to_exp"><code class="docutils literal notranslate"><span class="pre">quaternion_log_to_exp()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.conversions.quaternion_exp_to_log"><code class="docutils literal notranslate"><span class="pre">quaternion_exp_to_log()</span></code></a></li>
@@ -1460,13 +1460,13 @@ tvec: translation vector <span class="math notranslate nohighlight">\((B, 3, 1)\
 </ul>
 </li>
 <li><a class="reference internal" href="#rotation-matrix">Rotation Matrix</a><ul>
-<li><a class="reference internal" href="#kornia.geometry.conversions.rotation_matrix_to_angle_axis"><code class="docutils literal notranslate"><span class="pre">rotation_matrix_to_angle_axis()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.conversions.rotation_matrix_to_axis_angle"><code class="docutils literal notranslate"><span class="pre">rotation_matrix_to_axis_angle()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.conversions.rotation_matrix_to_quaternion"><code class="docutils literal notranslate"><span class="pre">rotation_matrix_to_quaternion()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#angle-axis">Angle Axis</a><ul>
-<li><a class="reference internal" href="#kornia.geometry.conversions.angle_axis_to_quaternion"><code class="docutils literal notranslate"><span class="pre">angle_axis_to_quaternion()</span></code></a></li>
-<li><a class="reference internal" href="#kornia.geometry.conversions.angle_axis_to_rotation_matrix"><code class="docutils literal notranslate"><span class="pre">angle_axis_to_rotation_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#axis-angle">Axis Angle</a><ul>
+<li><a class="reference internal" href="#kornia.geometry.conversions.axis_angle_to_quaternion"><code class="docutils literal notranslate"><span class="pre">axis_angle_to_quaternion()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.conversions.axis_angle_to_rotation_matrix"><code class="docutils literal notranslate"><span class="pre">axis_angle_to_rotation_matrix()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#euler-angles">Euler Angles</a><ul>

@@ -1393,7 +1393,7 @@ the destination image with shape <span class="math notranslate nohighlight">\((B
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>center</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – center of the rotation (x,y,z) in the source with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>.</p></li>
-<li><p><strong>angles</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – angle axis vector containing the rotation angles in degrees in the form
+<li><p><strong>angles</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – axis angle vector containing the rotation angles in degrees in the form
 of (rx, ry, rz) with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>. Internally it calls Rodrigues to compute
 the rotation matrix from axis-angle.</p></li>
 <li><p><strong>scales</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – scale factor for x-y-z-directions with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>.</p></li>
@@ -1613,7 +1613,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <li><p><strong>translations</strong> (<em>Tensor</em>) – tensor containing the translation vector (dx,dy,dz) with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>.</p></li>
 <li><p><strong>center</strong> (<em>Tensor</em>) – tensor containing the center vector (x,y,z) with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>.</p></li>
 <li><p><strong>scale</strong> (<em>Tensor</em>) – tensor containing the scale factor with shape <span class="math notranslate nohighlight">\((B)\)</span>.</p></li>
-<li><p><strong>angle</strong> – angle axis vector containing the rotation angles in degrees in the form
+<li><p><strong>angle</strong> – axis angle vector containing the rotation angles in degrees in the form
 of (rx, ry, rz) with shape <span class="math notranslate nohighlight">\((B, 3)\)</span>. Internally it calls Rodrigues to compute
 the rotation matrix from axis-angle.</p></li>
 <li><p><strong>sxy</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – tensor containing the shear factor in the xy-direction with shape <span class="math notranslate nohighlight">\((B)\)</span>.

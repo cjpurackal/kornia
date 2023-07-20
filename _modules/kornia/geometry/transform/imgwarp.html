@@ -328,8 +328,8 @@
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">concatenate</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">zeros</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SHAPE</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.conversions</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">angle_axis_to_rotation_matrix</span><span class="p">,</span>
     <span class="n">angle_to_rotation_matrix</span><span class="p">,</span>
+    <span class="n">axis_angle_to_rotation_matrix</span><span class="p">,</span>
     <span class="n">convert_affinematrix_to_homography</span><span class="p">,</span>
     <span class="n">convert_affinematrix_to_homography3d</span><span class="p">,</span>
     <span class="n">deg2rad</span><span class="p">,</span>
@@ -615,7 +615,7 @@
 <span class="sd">    The function calculates the matrix of a perspective transform that maps from</span>
 <span class="sd">    the source to destination points:</span>
 
-<span class="sd">    .. math ::</span>
+<span class="sd">    .. math::</span>
 
 <span class="sd">        \begin{bmatrix}</span>
 <span class="sd">        x^{&#39;} \\</span>
@@ -1014,7 +1014,7 @@
 <span class="sd">        translations: tensor containing the translation vector (dx,dy,dz) with shape :math:`(B, 3)`.</span>
 <span class="sd">        center: tensor containing the center vector (x,y,z) with shape :math:`(B, 3)`.</span>
 <span class="sd">        scale: tensor containing the scale factor with shape :math:`(B)`.</span>
-<span class="sd">        angle: angle axis vector containing the rotation angles in degrees in the form</span>
+<span class="sd">        angle: axis angle vector containing the rotation angles in degrees in the form</span>
 <span class="sd">            of (rx, ry, rz) with shape :math:`(B, 3)`. Internally it calls Rodrigues to compute</span>
 <span class="sd">            the rotation matrix from axis-angle.</span>
 <span class="sd">        sxy: tensor containing the shear factor in the xy-direction with shape :math:`(B)`.</span>
@@ -1236,7 +1236,7 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        center: center of the rotation (x,y,z) in the source with shape :math:`(B, 3)`.</span>
-<span class="sd">        angles: angle axis vector containing the rotation angles in degrees in the form</span>
+<span class="sd">        angles: axis angle vector containing the rotation angles in degrees in the form</span>
 <span class="sd">            of (rx, ry, rz) with shape :math:`(B, 3)`. Internally it calls Rodrigues to compute</span>
 <span class="sd">            the rotation matrix from axis-angle.</span>
 <span class="sd">        scales: scale factor for x-y-z-directions with shape :math:`(B, 3)`.</span>
@@ -1257,8 +1257,8 @@
         <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">center</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="c1"># create rotation matrix</span>
-    <span class="n">angle_axis_rad</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
-    <span class="n">rmat</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">angle_axis_to_rotation_matrix</span><span class="p">(</span><span class="n">angle_axis_rad</span><span class="p">)</span>  <span class="c1"># Bx3x3</span>
+    <span class="n">axis_angle_rad</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">deg2rad</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+    <span class="n">rmat</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="n">axis_angle_rad</span><span class="p">)</span>  <span class="c1"># Bx3x3</span>
     <span class="n">scaling_matrix</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">eye_like</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">rmat</span><span class="p">)</span>
     <span class="n">scaling_matrix</span> <span class="o">=</span> <span class="n">scaling_matrix</span> <span class="o">*</span> <span class="n">scales</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">rmat</span> <span class="o">=</span> <span class="n">rmat</span> <span class="o">@</span> <span class="n">scaling_matrix</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">rmat</span><span class="p">)</span>
@@ -1285,7 +1285,7 @@
 
 <span class="sd">    The function calculates the matrix of a perspective transform so that:</span>
 
-<span class="sd">    .. math ::</span>
+<span class="sd">    .. math::</span>
 
 <span class="sd">        \begin{bmatrix}</span>
 <span class="sd">        t_{i}x_{i}^{&#39;} \\</span>
@@ -1304,12 +1304,12 @@
 
 <span class="sd">    where</span>
 
-<span class="sd">    .. math ::</span>
+<span class="sd">    .. math::</span>
 <span class="sd">        dst(i) = (x_{i}^{&#39;},y_{i}^{&#39;},z_{i}^{&#39;}), src(i) = (x_{i}, y_{i}, z_{i}), i = 0,1,2,5,7</span>
 
 <span class="sd">    Concrete math is as below:</span>
 
-<span class="sd">    .. math ::</span>
+<span class="sd">    .. math::</span>
 
 <span class="sd">        \[ u_i =\frac{c_{00} * x_i + c_{01} * y_i + c_{02} * z_i + c_{03}}</span>
 <span class="sd">            {c_{30} * x_i + c_{31} * y_i + c_{32} * z_i + c_{33}} \]</span>
@@ -1318,7 +1318,7 @@
 <span class="sd">        \[ w_i =\frac{c_{20} * x_i + c_{21} * y_i + c_{22} * z_i + c_{23}}</span>
 <span class="sd">            {c_{30} * x_i + c_{31} * y_i + c_{32} * z_i + c_{33}} \]</span>
 
-<span class="sd">    .. math ::</span>
+<span class="sd">    .. math::</span>
 
 <span class="sd">        \begin{pmatrix}</span>
 <span class="sd">        x_0 &amp; y_0 &amp; z_0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -x_0*u_0 &amp; -y_0*u_0 &amp; -z_0 * u_0 \\</span>

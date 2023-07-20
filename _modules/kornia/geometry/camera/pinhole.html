@@ -897,7 +897,7 @@
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
     <span class="c1"># TODO: We have rtvec_to_pose in torchgeometry</span>
     <span class="c1"># https://github.com/whh14/torchgeometry/blob/master/torchgeometry/conversions.py#L240</span>
-    <span class="c1"># But it relies on angle_axis_to_rotation_matrix</span>
+    <span class="c1"># But it relies on axis_angle_to_rotation_matrix</span>
     <span class="c1"># And since then, it was changed from returning Nx4x4 matrix to Nx3x3</span>
     <span class="c1"># return rtvec_to_pose(optical_pose_parent)   type: ignore</span>
 

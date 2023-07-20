@@ -348,7 +348,8 @@
 
 <span class="sd">        Shape will be the same of logits :math:`(B, C, H, W)` where :math:`C` is the number masks predicted.</span>
 
-<span class="sd">        .. note: If you run `original_res_logits`, this will generate the masks based on the original resolution logits.</span>
+<span class="sd">        .. note:: If you run `original_res_logits`, this will generate the masks</span>
+<span class="sd">           based on the original resolution logits.</span>
 <span class="sd">           Otherwise, this will use the low resolution logits (self.logits).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_res_logits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -365,7 +366,7 @@
 
 <span class="sd">        Resize to image encoder input -&gt; remove padding (bottom and right) -&gt; Resize to original size</span>
 
-<span class="sd">        .. note: This method set a internal `original_res_logits` which will be used if available for the binary masks.</span>
+<span class="sd">        .. note:: This method set a internal `original_res_logits` which will be used if available for the binary masks.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_size: The size of the image input to the model, in (H, W) format. Used to remove padding.</span>

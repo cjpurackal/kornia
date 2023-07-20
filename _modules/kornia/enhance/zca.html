@@ -534,9 +534,7 @@
 
     <span class="k">if</span> <span class="n">dim</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
-            <span class="s2">&quot;Dimension out of range (expected to be in range of [</span><span class="si">{}</span><span class="s2">,</span><span class="si">{}</span><span class="s2">], but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dim</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Dimension out of range (expected to be in range of [</span><span class="si">{</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">], but got </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -666,9 +664,7 @@
 
     <span class="k">if</span> <span class="n">dim</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
-            <span class="s2">&quot;Dimension out of range (expected to be in range of [</span><span class="si">{}</span><span class="s2">,</span><span class="si">{}</span><span class="s2">], but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dim</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Dimension out of range (expected to be in range of [</span><span class="si">{</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inp_size</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">], but got </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">dim</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>

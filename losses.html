@@ -541,10 +541,12 @@ Thus, <cite>reduction=’mean’</cite> was added as an optional reduction metho
 [3] <a class="reference external" href="https://hal.inria.fr/inria-00074015/document">https://hal.inria.fr/inria-00074015/document</a>
 [4] <a class="reference external" href="https://arxiv.org/pdf/1712.05927.pdf">https://arxiv.org/pdf/1712.05927.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This implementation follows the formulation by Barron [1]. Other works utilize
-a slightly different implementation (see [4]).</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This implementation follows the formulation by Barron [1]. Other works utilize
+a slightly different implementation (see [4]).</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -970,10 +972,12 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">'mea
 [3] <a class="reference external" href="https://hal.inria.fr/inria-00074015/document">https://hal.inria.fr/inria-00074015/document</a>
 [4] <a class="reference external" href="https://arxiv.org/pdf/1712.05927.pdf">https://arxiv.org/pdf/1712.05927.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This implementation follows the formulation by Barron [1]. Other works utilize
-a slightly different implementation (see [4]).</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This implementation follows the formulation by Barron [1]. Other works utilize
+a slightly different implementation (see [4]).</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>reduction</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <em>optional</em>) – Specifies the reduction to apply to the
@@ -1174,10 +1178,10 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 It is possible to trade off recall and precision by adding weights to positive examples.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
-<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1229,7 +1233,7 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1389,10 +1393,12 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">1e-8
 <dt>Reference:</dt><dd><p>[1] <a class="reference external" href="http://proceedings.mlr.press/v37/yub15.pdf">http://proceedings.mlr.press/v37/yub15.pdf</a>
 [2] <a class="reference external" href="https://arxiv.org/pdf/1705.08790.pdf">https://arxiv.org/pdf/1705.08790.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This loss function only supports binary labels. For multi-class labels please
-use the Lovasz-Softmax loss.</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This loss function only supports binary labels. For multi-class labels please
+use the Lovasz-Softmax loss.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1442,10 +1448,12 @@ use the Lovasz-Softmax loss.</p>
 <dl class="simple">
 <dt>Reference:</dt><dd><p>[1] <a class="reference external" href="https://arxiv.org/pdf/1705.08790.pdf">https://arxiv.org/pdf/1705.08790.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This loss function only supports multi-class (C &gt; 1) labels. For binary
-labels please use the Lovasz-Hinge loss.</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This loss function only supports multi-class (C &gt; 1) labels. For binary
+labels please use the Lovasz-Hinge loss.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1498,10 +1506,10 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>pos_weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – a weight of positive examples with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 It is possible to trade off recall and precision by adding weights to positive examples.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
-<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1665,7 +1673,7 @@ will be applied, <code class="docutils literal notranslate"><span class="pre">'m
 the number of elements in the output, <code class="docutils literal notranslate"><span class="pre">'sum'</span></code>: the output will be
 summed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">'none'</span></code></p></li>
-<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num_of_classes,)\)</span>.
+<li><p><strong>weight</strong> (<em>Tensor</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – weights for classes with shape <span class="math notranslate nohighlight">\((num\_of\_classes,)\)</span>.
 Default:  <code class="code docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
@@ -1716,10 +1724,12 @@ representing correct classification <span class="math notranslate nohighlight">\
 <dt>Reference:</dt><dd><p>[1] <a class="reference external" href="http://proceedings.mlr.press/v37/yub15.pdf">http://proceedings.mlr.press/v37/yub15.pdf</a>
 [2] <a class="reference external" href="https://arxiv.org/pdf/1705.08790.pdf">https://arxiv.org/pdf/1705.08790.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This loss function only supports binary labels. For multi-class labels please
-use the Lovasz-Softmax loss.</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This loss function only supports binary labels. For multi-class labels please
+use the Lovasz-Softmax loss.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1767,10 +1777,12 @@ use the Lovasz-Softmax loss.</p>
 <dl class="simple">
 <dt>Reference:</dt><dd><p>[1] <a class="reference external" href="https://arxiv.org/pdf/1705.08790.pdf">https://arxiv.org/pdf/1705.08790.pdf</a></p>
 </dd>
-<dt>. note::</dt><dd><p>This loss function only supports multi-class (C &gt; 1) labels. For binary
-labels please use the Lovasz-Hinge loss.</p>
-</dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This loss function only supports multi-class (C &gt; 1) labels. For binary
+labels please use the Lovasz-Hinge loss.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

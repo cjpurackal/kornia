@@ -401,6 +401,12 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.0<
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binary_masks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><span class="pre">Tensor</span></a></em><a class="headerlink" href="#kornia.contrib.models.SegmentationResults.binary_masks" title="Permalink to this definition">#</a></dt>
 <dd><p>Binary mask generated from logits considering the mask_threshold.</p>
 <p>Shape will be the same of logits <span class="math notranslate nohighlight">\((B, C, H, W)\)</span> where <span class="math notranslate nohighlight">\(C\)</span> is the number masks predicted.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you run <cite>original_res_logits</cite>, this will generate the masks
+based on the original resolution logits.
+Otherwise, this will use the low resolution logits (self.logits).</p>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -418,6 +424,10 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">0.0<
 <span class="sig-name descname"><span class="pre">original_res_logits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size_encoder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/contrib/models/structures.html#SegmentationResults.original_res_logits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.contrib.models.SegmentationResults.original_res_logits" title="Permalink to this definition">#</a></dt>
 <dd><p>Remove padding and upscale the logits to the original image size.</p>
 <p>Resize to image encoder input -&gt; remove padding (bottom and right) -&gt; Resize to original size</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method set a internal <cite>original_res_logits</cite> which will be used if available for the binary masks.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1310,6 +1320,14 @@ prediction.</p></li>
 <dd><p>Predicts masks end-to-end from provided images and prompts.</p>
 <p>This method expects that the images have already been pre-processed, at least been normalized, resized and
 padded to be compatible with the <cite>self.image_encoder</cite>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For each image <span class="math notranslate nohighlight">\((3, H, W)\)</span>, it is possible to input a batch (<span class="math notranslate nohighlight">\(K\)</span>) of <span class="math notranslate nohighlight">\(N\)</span> prompts,
+the results are batched by the number of prompts batch. So given a prompt with <span class="math notranslate nohighlight">\(K=5\)</span>, and
+<span class="math notranslate nohighlight">\(N=10\)</span>, the results will look like <span class="math notranslate nohighlight">\(5xCxHxW\)</span> where <span class="math notranslate nohighlight">\(C\)</span> is determined by
+multimask_output. And within each of these masks <span class="math notranslate nohighlight">\((5xC)\)</span>, it should be possible to find
+<span class="math notranslate nohighlight">\(N\)</span> instances if the model succeed.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
