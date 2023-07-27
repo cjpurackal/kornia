@@ -804,6 +804,30 @@ See more: <a class="reference external" href="https://ingmec.ual.es/~jlblanco/pa
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kornia.geometry.liegroup.Se3.from_matrix">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/liegroup/se3.html#Se3.from_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.liegroup.Se3.from_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a Se3 group from a matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor of shape <span class="math notranslate nohighlight">\((B, 4, 4)\)</span>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.geometry.liegroup.Se3" title="kornia.geometry.liegroup.se3.Se3"><code class="xref py py-class docutils literal notranslate"><span class="pre">Se3</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se3</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Parameter containing:</span>
+<span class="go">tensor([1., 0., 0., 0.], requires_grad=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">t</span>
+<span class="go">Parameter containing:</span>
+<span class="go">tensor([0., 0., 0.], requires_grad=True)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kornia.geometry.liegroup.Se3.from_qxyz">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_qxyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qxyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/liegroup/se3.html#Se3.from_qxyz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.liegroup.Se3.from_qxyz" title="Permalink to this definition">#</a></dt>
 <dd><p>Create a Se3 group a quaternion and translation vector.</p>
@@ -1516,6 +1540,31 @@ See more:</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kornia.geometry.liegroup.Se2.from_matrix">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/liegroup/se2.html#Se2.from_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.liegroup.Se2.from_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>Create an Se2 group from a matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – tensor of shape <span class="math notranslate nohighlight">\((B, 3, 3)\)</span>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kornia.geometry.liegroup.Se2" title="kornia.geometry.liegroup.se2.Se2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Se2</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Se2</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Parameter containing:</span>
+<span class="go">tensor([1.+0.j, 1.+0.j], requires_grad=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">t</span>
+<span class="go">Parameter containing:</span>
+<span class="go">tensor([[0., 0.],</span>
+<span class="go">        [0., 0.]], requires_grad=True)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kornia.geometry.liegroup.Se2.hat">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/geometry/liegroup/se2.html#Se2.hat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.geometry.liegroup.Se2.hat" title="Permalink to this definition">#</a></dt>
 <dd><p>Converts elements from vector space to lie algebra. Returns matrix of shape <span class="math notranslate nohighlight">\((B, 3, 3)\)</span>.</p>
@@ -1826,6 +1875,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.__repr__"><code class="docutils literal notranslate"><span class="pre">Se3.__repr__()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.adjoint"><code class="docutils literal notranslate"><span class="pre">Se3.adjoint()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.exp"><code class="docutils literal notranslate"><span class="pre">Se3.exp()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.from_matrix"><code class="docutils literal notranslate"><span class="pre">Se3.from_matrix()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.from_qxyz"><code class="docutils literal notranslate"><span class="pre">Se3.from_qxyz()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.hat"><code class="docutils literal notranslate"><span class="pre">Se3.hat()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se3.identity"><code class="docutils literal notranslate"><span class="pre">Se3.identity()</span></code></a></li>
@@ -1872,6 +1922,7 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">None
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.__repr__"><code class="docutils literal notranslate"><span class="pre">Se2.__repr__()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.adjoint"><code class="docutils literal notranslate"><span class="pre">Se2.adjoint()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.exp"><code class="docutils literal notranslate"><span class="pre">Se2.exp()</span></code></a></li>
+<li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.from_matrix"><code class="docutils literal notranslate"><span class="pre">Se2.from_matrix()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.hat"><code class="docutils literal notranslate"><span class="pre">Se2.hat()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.identity"><code class="docutils literal notranslate"><span class="pre">Se2.identity()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.geometry.liegroup.Se2.inverse"><code class="docutils literal notranslate"><span class="pre">Se2.inverse()</span></code></a></li>

@@ -1589,10 +1589,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span> <span class="o">==</span> <span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s2">&quot;Patch and homography must be on the same device. </span><span class="se">\</span>
-<span class="s2">                         Got patch.device: </span><span class="si">{}</span><span class="s2"> src_H_dst.device: </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Patch and homography must be on the same device. Got patch.device: </span><span class="si">{</span><span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;src_H_dst.device: </span><span class="si">{</span><span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">.&quot;</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="n">normalized_homography</span><span class="p">:</span>
         <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">dsize</span>
@@ -1654,10 +1652,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span> <span class="o">==</span> <span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s2">&quot;Patch and homography must be on the same device. </span><span class="se">\</span>
-<span class="s2">                         Got patch.device: </span><span class="si">{}</span><span class="s2"> src_H_dst.device: </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Patch and homography must be on the same device. Got patch.device: </span><span class="si">{</span><span class="n">patch_src</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;src_H_dst.device: </span><span class="si">{</span><span class="n">src_homo_dst</span><span class="o">.</span><span class="n">device</span><span class="si">}</span><span class="s2">.&quot;</span>
         <span class="p">)</span>
 
     <span class="n">depth</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">dsize</span>

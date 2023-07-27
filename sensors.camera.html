@@ -322,97 +322,35 @@
         <article role="main">
           <section id="kornia-sensors-camera">
 <h1>kornia.sensors.camera<a class="headerlink" href="#kornia-sensors-camera" title="Permalink to this heading">#</a></h1>
-<p>Camera models available in Kornia are as follows:</p>
-<ol class="arabic simple">
-<li><p>Pinhole.</p></li>
-<li><p>Brown Conrady.</p></li>
-<li><p>Kannala Brandt K3.</p></li>
-<li><p>Orthographic.</p></li>
-</ol>
-<dl class="py class">
-<dt class="sig sig-object py" id="kornia.sensors.camera.CameraModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.sensors.camera.</span></span><span class="sig-name descname"><span class="pre">CameraModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#CameraModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.CameraModel" title="Permalink to this definition">#</a></dt>
-<dd><p>Class to represent camera models.</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Pinhole Camera Model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Brown Conrady Camera Model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">BROWN_CONRADY</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
-<span class="gp">... </span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Kannala Brandt K3 Camera Model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">KANNALA_BRANDT_K3</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
-<span class="gp">... </span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Orthographic Camera Model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">ORTHOGRAPHIC</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span><span class="o">.</span><span class="n">params</span>
-<span class="go">tensor([328., 328., 320., 240.])</span>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">kornia.sensors.camera</span></code> is an experimental API and is subject to change. Once finished, it will subsume <code class="xref py py-mod docutils literal notranslate"><span class="pre">kornia.geometry.camera</span></code></p>
+</div>
+<p>The objective of <code class="xref py py-mod docutils literal notranslate"><span class="pre">kornia.sensors.camera</span></code> is to express well-known camera models such as Pinhole, Kannala Brandt, and others in terms of distortion and projection types while ensuring differentiability.
+We also aim to equip the user with tools to define custom camera models.
+As of now, only the Pinhole model is supported.</p>
+<p>Defining a <cite>Pinhole</cite> camera model is as simple as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kornia.image</span> <span class="kn">import</span> <span class="n">ImageSize</span>
+<span class="kn">from</span> <span class="nn">kornia.sensors.camera</span> <span class="kn">import</span> <span class="n">CameraModel</span><span class="p">,</span> <span class="n">CameraModelType</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">])</span> <span class="c1"># fx, fy, cx, cy</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
-</dd></dl>
+<p>To define a custom camera model based on distortion and projection types, one can use the <a class="reference internal" href="#kornia.sensors.camera.CameraModelBase" title="kornia.sensors.camera.CameraModelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CameraModelBase</span></code></a> api:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kornia.image</span> <span class="kn">import</span> <span class="n">ImageSize</span>
+<span class="kn">from</span> <span class="nn">kornia.sensors.camera</span> <span class="kn">import</span> <span class="n">CameraModelBase</span>
+<span class="kn">from</span> <span class="nn">kornia.sensors.camera.distortion_model</span> <span class="kn">import</span> <span class="n">AffineTransform</span>
+<span class="kn">from</span> <span class="nn">kornia.sensors.camera.projection_model</span> <span class="kn">import</span> <span class="n">Z1Projection</span>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="kornia.sensors.camera.PinholeModel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.sensors.camera.</span></span><span class="sig-name descname"><span class="pre">PinholeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#PinholeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.PinholeModel" title="Permalink to this definition">#</a></dt>
-<dd><p>Class to represent Pinhole Camera Model.</p>
-<p>The pinhole camera model describes the mathematical relationship between
-the coordinates of a point in three-dimensional space and its projection
-onto the image plane of an ideal pinhole camera,
-where the camera aperture is described as a point and no lenses are used to focus light.
-See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Pinhole_camera_model">https://en.wikipedia.org/wiki/Pinhole_camera_model</a></p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span>
-<span class="go">CameraModel(ImageSize(height=480, width=640), PinholeModel, tensor([328., 328., 320., 240.]))</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">])</span>
+<span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModelBase</span><span class="p">(</span><span class="n">AffineTransform</span><span class="p">(),</span> <span class="n">Z1Projection</span><span class="p">(),</span> <span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py method">
-<dt class="sig sig-object py" id="kornia.sensors.camera.PinholeModel.matrix">
-<span class="sig-name descname"><span class="pre">matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#PinholeModel.matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.PinholeModel.matrix" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns the camera matrix.</p>
-<p>The matrix is of the form:
-:rtype: <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{bmatrix} fx &amp; 0 &amp; cx \\
-0 &amp; fy &amp; cy \\
-0 &amp; 0 &amp; 1\end{bmatrix}\end{split}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment, the only supported model is Pinhole. However, we plan to add Kannala Brandt, Orthographic, and other models in the near future.</p>
 </div>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span><span class="o">.</span><span class="n">matrix</span><span class="p">()</span>
-<span class="go">tensor([[1., 0., 3.],</span>
-<span class="go">        [0., 2., 4.],</span>
-<span class="go">        [0., 0., 1.]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="kornia.sensors.camera.PinholeModel.scale">
-<span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#PinholeModel.scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.PinholeModel.scale" title="Permalink to this definition">#</a></dt>
-<dd><p>Scales the camera model by a scale factor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>scale_factor</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Scale factor to scale the camera model.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#kornia.sensors.camera.PinholeModel" title="kornia.sensors.camera.camera_model.PinholeModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PinholeModel</span></code></a></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Scaled camera model.</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam_scaled</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cam_scaled</span><span class="o">.</span><span class="n">params</span>
-<span class="go">tensor([656., 656., 640., 480.])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.sensors.camera.CameraModelBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.sensors.camera.</span></span><span class="sig-name descname"><span class="pre">CameraModelBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distortion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#CameraModelBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.CameraModelBase" title="Permalink to this definition">#</a></dt>
@@ -563,6 +501,27 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Pinh
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="kornia.sensors.camera.CameraModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.sensors.camera.</span></span><span class="sig-name descname"><span class="pre">CameraModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/sensors/camera/camera_model.html#CameraModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.sensors.camera.CameraModel" title="Permalink to this definition">#</a></dt>
+<dd><p>Class to represent camera models.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Pinhole Camera Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">PINHOLE</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Brown Conrady Camera Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">BROWN_CONRADY</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="gp">... </span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Kannala Brandt K3 Camera Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">KANNALA_BRANDT_K3</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="gp">... </span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Orthographic Camera Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span> <span class="o">=</span> <span class="n">CameraModel</span><span class="p">(</span><span class="n">ImageSize</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="mi">640</span><span class="p">),</span> <span class="n">CameraModelType</span><span class="o">.</span><span class="n">ORTHOGRAPHIC</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">328.</span><span class="p">,</span> <span class="mf">328.</span><span class="p">,</span> <span class="mf">320.</span><span class="p">,</span> <span class="mf">240.</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cam</span><span class="o">.</span><span class="n">params</span>
+<span class="go">tensor([328., 328., 320., 240.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
         </article>
@@ -621,12 +580,6 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Pinh
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">kornia.sensors.camera</a><ul>
-<li><a class="reference internal" href="#kornia.sensors.camera.CameraModel"><code class="docutils literal notranslate"><span class="pre">CameraModel</span></code></a></li>
-<li><a class="reference internal" href="#kornia.sensors.camera.PinholeModel"><code class="docutils literal notranslate"><span class="pre">PinholeModel</span></code></a><ul>
-<li><a class="reference internal" href="#kornia.sensors.camera.PinholeModel.matrix"><code class="docutils literal notranslate"><span class="pre">PinholeModel.matrix()</span></code></a></li>
-<li><a class="reference internal" href="#kornia.sensors.camera.PinholeModel.scale"><code class="docutils literal notranslate"><span class="pre">PinholeModel.scale()</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#kornia.sensors.camera.CameraModelBase"><code class="docutils literal notranslate"><span class="pre">CameraModelBase</span></code></a><ul>
 <li><a class="reference internal" href="#kornia.sensors.camera.CameraModelBase.K"><code class="docutils literal notranslate"><span class="pre">CameraModelBase.K()</span></code></a></li>
 <li><a class="reference internal" href="#kornia.sensors.camera.CameraModelBase.cx"><code class="docutils literal notranslate"><span class="pre">CameraModelBase.cx</span></code></a></li>
@@ -642,6 +595,7 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Pinh
 <li><a class="reference internal" href="#kornia.sensors.camera.CameraModelBase.width"><code class="docutils literal notranslate"><span class="pre">CameraModelBase.width</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kornia.sensors.camera.CameraModel"><code class="docutils literal notranslate"><span class="pre">CameraModel</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -661,7 +615,6 @@ See more: <a class="reference external" href="https://en.wikipedia.org/wiki/Pinh
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script src="_static/design-tabs.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/custom.js"></script>
     
     <!-- DocsQA integration start -->

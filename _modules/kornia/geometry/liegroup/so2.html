@@ -328,6 +328,7 @@
 <span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Device</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">,</span> <span class="n">Module</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="n">rand</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">zeros_like</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_IS_TENSOR</span>
 <span class="kn">from</span> <span class="nn">kornia.geometry.liegroup._utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_so2_matrix</span><span class="p">,</span>
     <span class="n">check_so2_matrix_shape</span><span class="p">,</span>
     <span class="n">check_so2_t_shape</span><span class="p">,</span>
     <span class="n">check_so2_theta_shape</span><span class="p">,</span>
@@ -517,6 +518,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO change to KORNIA_CHECK_SHAPE once there is multiple shape support</span>
         <span class="n">check_so2_matrix_shape</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">check_so2_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
         <span class="n">z</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></div>
 

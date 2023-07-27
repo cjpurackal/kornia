@@ -597,6 +597,28 @@
         <span class="n">rt_3x3</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="k">return</span> <span class="n">rt_3x3</span></div>
 
+<div class="viewcode-block" id="Se2.from_matrix"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se2.from_matrix">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_matrix</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Se2</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an Se2 group from a matrix.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            matrix: tensor of shape :math:`(B, 3, 3)`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; s = Se2.from_matrix(torch.eye(3).repeat(2, 1, 1))</span>
+<span class="sd">            &gt;&gt;&gt; s.r</span>
+<span class="sd">            Parameter containing:</span>
+<span class="sd">            tensor([1.+0.j, 1.+0.j], requires_grad=True)</span>
+<span class="sd">            &gt;&gt;&gt; s.t</span>
+<span class="sd">            Parameter containing:</span>
+<span class="sd">            tensor([[0., 0.],</span>
+<span class="sd">                    [0., 0.]], requires_grad=True)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># KORNIA_CHECK_SHAPE(matrix, [&quot;B&quot;, &quot;3&quot;, &quot;3&quot;])  # FIXME: resolve shape bugs. @edgarriba</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">So2</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Se2.inverse"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se2.inverse">[docs]</a>    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Se2</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the inverse transformation.</span>
 

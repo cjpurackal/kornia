@@ -597,6 +597,27 @@
         <span class="n">rt_4x4</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="k">return</span> <span class="n">rt_4x4</span></div>
 
+<div class="viewcode-block" id="Se3.from_matrix"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se3.from_matrix">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_matrix</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Se3</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Se3 group from a matrix.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            matrix: tensor of shape :math:`(B, 4, 4)`.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; s = Se3.from_matrix(torch.eye(4))</span>
+<span class="sd">            &gt;&gt;&gt; s.r</span>
+<span class="sd">            Parameter containing:</span>
+<span class="sd">            tensor([1., 0., 0., 0.], requires_grad=True)</span>
+<span class="sd">            &gt;&gt;&gt; s.t</span>
+<span class="sd">            Parameter containing:</span>
+<span class="sd">            tensor([0., 0., 0.], requires_grad=True)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># KORNIA_CHECK_SHAPE(matrix, [&quot;B&quot;, &quot;4&quot;, &quot;4&quot;])  # FIXME: resolve shape bugs. @edgarriba</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">So3</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Se3.from_qxyz"><a class="viewcode-back" href="../../../../geometry.liegroup.html#kornia.geometry.liegroup.Se3.from_qxyz">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_qxyz</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">qxyz</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Se3</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Se3 group a quaternion and translation vector.</span>
