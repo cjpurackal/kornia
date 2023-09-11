@@ -1,18 +1,18 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
         <link rel="canonical" href="https://kornia.readthedocs.io/_modules/kornia/utils/image_print.html" />
 
-    <link rel="shortcut icon" href="../../../_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+    <link rel="shortcut icon" href="../../../_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.09.10 -->
         <title>kornia.utils.image_print - Kornia</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/main.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/main.css?v=9b880210" />
     
     
 
@@ -181,7 +181,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/highlights.html">Highlighted Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/about.html">About</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://kornia-tutorials.readthedocs.io/en/latest/">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://kornia.github.io/tutorials/">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/training.html">Training API (experimental)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://docs.luxonis.com/en/latest/pages/tutorials/creating-custom-nn-models/#kornia">OpenCV AI Kit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/governance.html">Kornia AI Organization</a></li>
@@ -217,9 +217,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.epipolar.html">kornia.geometry.epipolar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.homography.html">kornia.geometry.homography</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html">kornia.geometry.liegroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html#lie-algebra">lie algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html#lie-group-and-lie-algebra">lie group and lie algebra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.linalg.html">kornia.geometry.linalg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.line.html">kornia.geometry.line</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.quaternion.html">kornia.geometry.quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.solvers.html">kornia.geometry.solvers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.subpix.html">kornia.geometry.subpix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.transform.html">kornia.geometry.transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.ransac.html">kornia.geometry.ransac</a></li>
@@ -659,7 +662,9 @@
     <span class="k">return</span> <span class="n">equiv</span><span class="p">,</span> <span class="n">_res</span>
 
 
-<div class="viewcode-block" id="image_to_string"><a class="viewcode-back" href="../../../utils.html#kornia.utils.image_to_string">[docs]</a><span class="k">def</span> <span class="nf">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">max_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">256</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="image_to_string">
+<a class="viewcode-back" href="../../../utils.html#kornia.utils.image_to_string">[docs]</a>
+<span class="k">def</span> <span class="nf">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">max_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">256</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtain the closest xterm-256 approximation string from an image tensor.</span>
 
 <span class="sd">    The tensor shall be either 0~1 float type or 0~255 long type.</span>
@@ -690,8 +695,13 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="print_image"><a class="viewcode-back" href="../../../utils.html#kornia.utils.print_image">[docs]</a><span class="k">def</span> <span class="nf">print_image</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">max_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">96</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="print_image">
+<a class="viewcode-back" href="../../../utils.html#kornia.utils.print_image">[docs]</a>
+<span class="k">def</span> <span class="nf">print_image</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span> <span class="n">max_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">96</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Print an image to the terminal.</span>
+
+<span class="sd">    .. image:: https://github.com/kornia/data/blob/main/print_image.png?raw=true</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        image: path to a valid image file or a tensor.</span>
@@ -707,6 +717,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expect image type to be either Tensor or str. Got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">max_width</span><span class="p">))</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -740,14 +751,14 @@
     </aside>
   </div>
 </div>
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/design-tabs.js"></script>
-    <script src="../../../_static/js/custom.js"></script>
+    <script src="../../../_static/documentation_options.js?v=b9678aa1"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../../_static/js/custom.js?v=50ca88b5"></script>
     
     <!-- DocsQA integration start -->
     <script src="https://jina-docqa-ui.netlify.app/dist/qabot.js"></script>

@@ -1,19 +1,19 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="kornia.image" href="image.html" /><link rel="prev" title="kornia.sensors.camera" href="sensors.camera.html" />
         <link rel="canonical" href="https://kornia.readthedocs.io/io.html" />
 
-    <link rel="shortcut icon" href="_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+    <link rel="shortcut icon" href="_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.09.10 -->
         <title>kornia.io - Kornia</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=9b880210" />
     
     
 
@@ -182,7 +182,7 @@
 <li class="toctree-l1"><a class="reference internal" href="get-started/highlights.html">Highlighted Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get-started/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get-started/about.html">About</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://kornia-tutorials.readthedocs.io/en/latest/">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://kornia.github.io/tutorials/">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get-started/training.html">Training API (experimental)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://docs.luxonis.com/en/latest/pages/tutorials/creating-custom-nn-models/#kornia">OpenCV AI Kit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get-started/governance.html">Kornia AI Organization</a></li>
@@ -218,9 +218,12 @@
 <li class="toctree-l2"><a class="reference internal" href="geometry.epipolar.html">kornia.geometry.epipolar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.homography.html">kornia.geometry.homography</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.liegroup.html">kornia.geometry.liegroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.liegroup.html#lie-algebra">lie algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.liegroup.html#lie-group-and-lie-algebra">lie group and lie algebra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.linalg.html">kornia.geometry.linalg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.line.html">kornia.geometry.line</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.quaternion.html">kornia.geometry.quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.solvers.html">kornia.geometry.solvers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.subpix.html">kornia.geometry.subpix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.transform.html">kornia.geometry.transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="geometry.ransac.html">kornia.geometry.ransac</a></li>
@@ -321,7 +324,7 @@
         </div>
         <article role="main">
           <section id="kornia-io">
-<h1>kornia.io<a class="headerlink" href="#kornia-io" title="Permalink to this heading">#</a></h1>
+<h1>kornia.io<a class="headerlink" href="#kornia-io" title="Link to this heading">#</a></h1>
 <p>Package to load and save image data.</p>
 <p>The package internally implements <a class="reference external" href="https://github.com/kornia/kornia-rs">kornia_rs</a> which contains a low level implementation
 for Computer Vision in the <a class="reference external" href="https://www.rust-lang.org/">Rust</a> language. In addition, we implement the <a class="reference external" href="https://github.com/dmlc/dlpack">DLPack</a> protocol
@@ -358,19 +361,19 @@ Contact us or sponsor the project for more support (mac, win, rust, c++, video a
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.io.load_image">
-<span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">load_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#load_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.load_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">load_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desired_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#load_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.load_image" title="Link to this definition">#</a></dt>
 <dd><p>Read an image file and decode using the Kornia Rust backend.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><em>Path</em>) – Path to a valid image file.</p></li>
-<li><p><strong>desired_type</strong> (<a class="reference internal" href="#kornia.io.ImageLoadType" title="kornia.io.ImageLoadType"><em>ImageLoadType</em></a>) – the desired image type, defined by color space and dtype.</p></li>
-<li><p><strong>device</strong> (<em>Device</em><em>, </em><em>optional</em>) – the device where you want to get your image placed.
+<li><p><strong>path_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>) – Path to a valid image file.</p></li>
+<li><p><strong>desired_type</strong> (<a class="reference internal" href="#kornia.io.ImageLoadType" title="kornia.io.io.ImageLoadType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageLoadType</span></code></a>) – the desired image type, defined by color space and dtype.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.device" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">device</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>], <em>optional</em>) – the device where you want to get your image placed.
 Default:  <code class="code docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tensor</p>
+<dd class="field-even"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Image tensor with shape <span class="math notranslate nohighlight">\((3,H,W)\)</span>.</p>
@@ -380,18 +383,18 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kornia.io.write_image">
-<span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">write_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#write_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.write_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">write_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#write_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.write_image" title="Link to this definition">#</a></dt>
 <dd><p>Save an image file using the Kornia Rust backend.</p>
 <p>For now, we only support the writing of JPEG of the following types: RGB8.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> | </em><em>Path</em>) – Path to a valid image file.</p></li>
-<li><p><strong>image</strong> (<em>Tensor</em>) – Image tensor with shape <span class="math notranslate nohighlight">\((3,H,W)\)</span>.</p></li>
+<li><p><strong>path_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>) – Path to a valid image file.</p></li>
+<li><p><strong>image</strong> (<a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – Image tensor with shape <span class="math notranslate nohighlight">\((3,H,W)\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None.</p>
@@ -401,36 +404,36 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
 
 <dl class="py class">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">ImageLoadType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#ImageLoadType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.ImageLoadType" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kornia.io.</span></span><span class="sig-name descname"><span class="pre">ImageLoadType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kornia/io/io.html#ImageLoadType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kornia.io.ImageLoadType" title="Link to this definition">#</a></dt>
 <dd><p>Enum to specify the desired image type.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.GRAY32">
-<span class="sig-name descname"><span class="pre">GRAY32</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.GRAY32" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">GRAY32</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.GRAY32" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.GRAY8">
-<span class="sig-name descname"><span class="pre">GRAY8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.GRAY8" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">GRAY8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.GRAY8" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.RGB32">
-<span class="sig-name descname"><span class="pre">RGB32</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGB32" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RGB32</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGB32" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.RGB8">
-<span class="sig-name descname"><span class="pre">RGB8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGB8" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RGB8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGB8" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.RGBA8">
-<span class="sig-name descname"><span class="pre">RGBA8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGBA8" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">RGBA8</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.RGBA8" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kornia.io.ImageLoadType.UNCHANGED">
-<span class="sig-name descname"><span class="pre">UNCHANGED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.UNCHANGED" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">UNCHANGED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#kornia.io.ImageLoadType.UNCHANGED" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -516,15 +519,15 @@ Default:  <code class="code docutils literal notranslate"><span class="pre">&quo
     </aside>
   </div>
 </div>
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="_static/documentation_options.js?v=b9678aa1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="_static/js/custom.js"></script>
+    <script src="_static/js/custom.js?v=50ca88b5"></script>
     
     <!-- DocsQA integration start -->
     <script src="https://jina-docqa-ui.netlify.app/dist/qabot.js"></script>

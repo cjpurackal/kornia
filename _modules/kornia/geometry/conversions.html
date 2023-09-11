@@ -1,18 +1,18 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
         <link rel="canonical" href="https://kornia.readthedocs.io/_modules/kornia/geometry/conversions.html" />
 
-    <link rel="shortcut icon" href="../../../_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+    <link rel="shortcut icon" href="../../../_static/kornia_logo_favicon.png"/><!-- Generated with Sphinx 7.2.5 and Furo 2023.09.10 -->
         <title>kornia.geometry.conversions - Kornia</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/main.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/main.css?v=9b880210" />
     
     
 
@@ -181,7 +181,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/highlights.html">Highlighted Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/about.html">About</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://kornia-tutorials.readthedocs.io/en/latest/">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://kornia.github.io/tutorials/">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/training.html">Training API (experimental)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://docs.luxonis.com/en/latest/pages/tutorials/creating-custom-nn-models/#kornia">OpenCV AI Kit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../get-started/governance.html">Kornia AI Organization</a></li>
@@ -217,9 +217,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.epipolar.html">kornia.geometry.epipolar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.homography.html">kornia.geometry.homography</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html">kornia.geometry.liegroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html#lie-algebra">lie algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.liegroup.html#lie-group-and-lie-algebra">lie group and lie algebra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.linalg.html">kornia.geometry.linalg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.line.html">kornia.geometry.line</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.quaternion.html">kornia.geometry.quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../geometry.solvers.html">kornia.geometry.solvers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.subpix.html">kornia.geometry.subpix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.transform.html">kornia.geometry.transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../geometry.ransac.html">kornia.geometry.ransac</a></li>
@@ -325,7 +328,7 @@
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
 
 <span class="kn">from</span> <span class="nn">kornia.constants</span> <span class="kn">import</span> <span class="n">pi</span>
-<span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">concatenate</span><span class="p">,</span> <span class="n">pad</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">where</span>
+<span class="kn">from</span> <span class="nn">kornia.core</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">concatenate</span><span class="p">,</span> <span class="n">pad</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">where</span><span class="p">,</span> <span class="n">zeros_like</span>
 <span class="kn">from</span> <span class="nn">kornia.core.check</span> <span class="kn">import</span> <span class="n">KORNIA_CHECK</span><span class="p">,</span> <span class="n">KORNIA_CHECK_SHAPE</span>
 <span class="kn">from</span> <span class="nn">kornia.utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
 <span class="kn">from</span> <span class="nn">kornia.utils.helpers</span> <span class="kn">import</span> <span class="n">_torch_inverse_cast</span>
@@ -375,10 +378,13 @@
     <span class="s2">&quot;camtoworld_graphics_to_vision_Rt&quot;</span><span class="p">,</span>
     <span class="s2">&quot;camtoworld_vision_to_graphics_Rt&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ARKitQTVecs_to_ColmapQTVecs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vector_to_skew_symmetric_matrix&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="rad2deg"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rad2deg">[docs]</a><span class="k">def</span> <span class="nf">rad2deg</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="rad2deg">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rad2deg">[docs]</a>
+<span class="k">def</span> <span class="nf">rad2deg</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts angles from radians to degrees.</span>
 
 <span class="sd">    Args:</span>
@@ -398,7 +404,10 @@
     <span class="k">return</span> <span class="mf">180.0</span> <span class="o">*</span> <span class="n">tensor</span> <span class="o">/</span> <span class="n">pi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="deg2rad"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.deg2rad">[docs]</a><span class="k">def</span> <span class="nf">deg2rad</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="deg2rad">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.deg2rad">[docs]</a>
+<span class="k">def</span> <span class="nf">deg2rad</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts angles from degrees to radians.</span>
 
 <span class="sd">    Args:</span>
@@ -418,7 +427,10 @@
     <span class="k">return</span> <span class="n">tensor</span> <span class="o">*</span> <span class="n">pi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">/</span> <span class="mf">180.0</span></div>
 
 
-<div class="viewcode-block" id="pol2cart"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.pol2cart">[docs]</a><span class="k">def</span> <span class="nf">pol2cart</span><span class="p">(</span><span class="n">rho</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="pol2cart">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.pol2cart">[docs]</a>
+<span class="k">def</span> <span class="nf">pol2cart</span><span class="p">(</span><span class="n">rho</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts polar coordinates to cartesian coordinates.</span>
 
 <span class="sd">    Args:</span>
@@ -442,7 +454,10 @@
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
 
 
-<div class="viewcode-block" id="cart2pol"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.cart2pol">[docs]</a><span class="k">def</span> <span class="nf">cart2pol</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="cart2pol">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.cart2pol">[docs]</a>
+<span class="k">def</span> <span class="nf">cart2pol</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Function that converts cartesian coordinates to polar coordinates.</span>
 
 <span class="sd">    Args:</span>
@@ -467,7 +482,10 @@
     <span class="k">return</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span></div>
 
 
-<div class="viewcode-block" id="convert_points_from_homogeneous"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_points_from_homogeneous">[docs]</a><span class="k">def</span> <span class="nf">convert_points_from_homogeneous</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="convert_points_from_homogeneous">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_points_from_homogeneous">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_points_from_homogeneous</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts points from homogeneous to Euclidean space.</span>
 
 <span class="sd">    Args:</span>
@@ -500,7 +518,10 @@
     <span class="k">return</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">points</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="convert_points_to_homogeneous"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_points_to_homogeneous">[docs]</a><span class="k">def</span> <span class="nf">convert_points_to_homogeneous</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="convert_points_to_homogeneous">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_points_to_homogeneous">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_points_to_homogeneous</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts points from Euclidean to homogeneous space.</span>
 
 <span class="sd">    Args:</span>
@@ -522,13 +543,16 @@
     <span class="k">return</span> <span class="n">pad</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_convert_affinematrix_to_homography_impl</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="n">H</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">pad</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
     <span class="n">H</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span>
     <span class="k">return</span> <span class="n">H</span>
 
 
-<div class="viewcode-block" id="convert_affinematrix_to_homography"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_affinematrix_to_homography">[docs]</a><span class="k">def</span> <span class="nf">convert_affinematrix_to_homography</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="convert_affinematrix_to_homography">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.convert_affinematrix_to_homography">[docs]</a>
+<span class="k">def</span> <span class="nf">convert_affinematrix_to_homography</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Function that converts batch of affine matrices.</span>
 
 <span class="sd">    Args:</span>
@@ -552,6 +576,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input matrix must be a Bx2x3 tensor. Got </span><span class="si">{</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">_convert_affinematrix_to_homography_impl</span><span class="p">(</span><span class="n">A</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">convert_affinematrix_to_homography3d</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -582,7 +607,9 @@
     <span class="k">return</span> <span class="n">_convert_affinematrix_to_homography_impl</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="axis_angle_to_rotation_matrix"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.axis_angle_to_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="axis_angle_to_rotation_matrix">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.axis_angle_to_rotation_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert 3d vector of axis-angle rotation to 3x3 rotation matrix.</span>
 
 <span class="sd">    Args:</span>
@@ -660,12 +687,15 @@
     <span class="k">return</span> <span class="n">rotation_matrix</span>  <span class="c1"># Nx3x3</span></div>
 
 
+
 <span class="nd">@deprecated</span><span class="p">(</span><span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;axis_angle_to_rotation_matrix&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.7.0&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">angle_axis_to_rotation_matrix</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">axis_angle_to_rotation_matrix</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="rotation_matrix_to_axis_angle"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_axis_angle">[docs]</a><span class="k">def</span> <span class="nf">rotation_matrix_to_axis_angle</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="rotation_matrix_to_axis_angle">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_axis_angle">[docs]</a>
+<span class="k">def</span> <span class="nf">rotation_matrix_to_axis_angle</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert 3x3 rotation matrix to Rodrigues vector in radians.</span>
 
 <span class="sd">    Args:</span>
@@ -696,12 +726,15 @@
     <span class="k">return</span> <span class="n">quaternion_to_axis_angle</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span></div>
 
 
+
 <span class="nd">@deprecated</span><span class="p">(</span><span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;rotation_matrix_to_axis_angle&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.7.0&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">rotation_matrix_to_angle_axis</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">rotation_matrix_to_axis_angle</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="rotation_matrix_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="rotation_matrix_to_quaternion">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.rotation_matrix_to_quaternion">[docs]</a>
+<span class="k">def</span> <span class="nf">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert 3x3 rotation matrix to 4d quaternion vector.</span>
 
 <span class="sd">    The quaternion vector has components in (w, x, y, z) format.</span>
@@ -775,7 +808,10 @@
     <span class="k">return</span> <span class="n">quaternion</span></div>
 
 
-<div class="viewcode-block" id="normalize_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_quaternion">[docs]</a><span class="k">def</span> <span class="nf">normalize_quaternion</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="normalize_quaternion">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_quaternion">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_quaternion</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalize a quaternion.</span>
 
 <span class="sd">    The quaternion should be in (x, y, z, w) or (w, x, y, z) format.</span>
@@ -801,12 +837,15 @@
     <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">quaternion</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">)</span></div>
 
 
+
 <span class="c1"># based on:</span>
 <span class="c1"># https://github.com/matthew-brett/transforms3d/blob/8965c48401d9e8e66b6a8c37c65f2fc200a076fa/transforms3d/quaternions.py#L101</span>
 <span class="c1"># https://github.com/tensorflow/graphics/blob/master/tensorflow_graphics/geometry/transformation/rotation_matrix_3d.py#L247</span>
 
 
-<div class="viewcode-block" id="quaternion_to_rotation_matrix"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_rotation_matrix</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_to_rotation_matrix">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_rotation_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">quaternion_to_rotation_matrix</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert a quaternion to a rotation matrix.</span>
 
 <span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
@@ -877,7 +916,10 @@
     <span class="k">return</span> <span class="n">matrix</span></div>
 
 
-<div class="viewcode-block" id="quaternion_to_axis_angle"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_axis_angle">[docs]</a><span class="k">def</span> <span class="nf">quaternion_to_axis_angle</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="quaternion_to_axis_angle">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_to_axis_angle">[docs]</a>
+<span class="k">def</span> <span class="nf">quaternion_to_axis_angle</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert quaternion vector to axis angle of rotation in radians.</span>
 
 <span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
@@ -934,12 +976,15 @@
     <span class="k">return</span> <span class="n">axis_angle</span></div>
 
 
+
 <span class="nd">@deprecated</span><span class="p">(</span><span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;quaternion_to_axis_angle&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.7.0&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">quaternion_to_angle_axis</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">quaternion_to_axis_angle</span><span class="p">(</span><span class="n">quaternion</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="quaternion_log_to_exp"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_log_to_exp">[docs]</a><span class="k">def</span> <span class="nf">quaternion_log_to_exp</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="quaternion_log_to_exp">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_log_to_exp">[docs]</a>
+<span class="k">def</span> <span class="nf">quaternion_log_to_exp</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Apply exponential map to log quaternion.</span>
 
 <span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
@@ -977,7 +1022,10 @@
     <span class="k">return</span> <span class="n">quaternion_exp</span></div>
 
 
-<div class="viewcode-block" id="quaternion_exp_to_log"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_exp_to_log">[docs]</a><span class="k">def</span> <span class="nf">quaternion_exp_to_log</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="quaternion_exp_to_log">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_exp_to_log">[docs]</a>
+<span class="k">def</span> <span class="nf">quaternion_exp_to_log</span><span class="p">(</span><span class="n">quaternion</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Apply the log map to a quaternion.</span>
 
 <span class="sd">    The quaternion should be in (w, x, y, z) format.</span>
@@ -1017,11 +1065,14 @@
     <span class="k">return</span> <span class="n">quaternion_log</span></div>
 
 
+
 <span class="c1"># based on:</span>
 <span class="c1"># https://github.com/facebookresearch/QuaterNet/blob/master/common/quaternion.py#L138</span>
 
 
-<div class="viewcode-block" id="axis_angle_to_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.axis_angle_to_quaternion">[docs]</a><span class="k">def</span> <span class="nf">axis_angle_to_quaternion</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="axis_angle_to_quaternion">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.axis_angle_to_quaternion">[docs]</a>
+<span class="k">def</span> <span class="nf">axis_angle_to_quaternion</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert an axis angle to a quaternion.</span>
 
 <span class="sd">    The quaternion vector has components in (w, x, y, z) format.</span>
@@ -1074,6 +1125,7 @@
     <span class="k">return</span> <span class="n">quaternion</span></div>
 
 
+
 <span class="nd">@deprecated</span><span class="p">(</span><span class="n">replace_with</span><span class="o">=</span><span class="s1">&#39;axis_angle_to_quaternion&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.7.0&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">angle_axis_to_quaternion</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">axis_angle_to_quaternion</span><span class="p">(</span><span class="n">axis_angle</span><span class="p">)</span>
@@ -1082,7 +1134,9 @@
 <span class="c1"># inspired by: https://stackoverflow.com/questions/56207448/efficient-quaternions-to-euler-transformation</span>
 
 
-<div class="viewcode-block" id="euler_from_quaternion"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.euler_from_quaternion">[docs]</a><span class="k">def</span> <span class="nf">euler_from_quaternion</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<div class="viewcode-block" id="euler_from_quaternion">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.euler_from_quaternion">[docs]</a>
+<span class="k">def</span> <span class="nf">euler_from_quaternion</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a quaternion coefficients to Euler angles.</span>
 
 <span class="sd">    Returned angles are in radians in XYZ convention.</span>
@@ -1117,7 +1171,10 @@
     <span class="k">return</span> <span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span></div>
 
 
-<div class="viewcode-block" id="quaternion_from_euler"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_from_euler">[docs]</a><span class="k">def</span> <span class="nf">quaternion_from_euler</span><span class="p">(</span><span class="n">roll</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pitch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">yaw</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="quaternion_from_euler">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.quaternion_from_euler">[docs]</a>
+<span class="k">def</span> <span class="nf">quaternion_from_euler</span><span class="p">(</span><span class="n">roll</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pitch</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">yaw</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert Euler angles to quaternion coefficients.</span>
 
 <span class="sd">    Euler angles are assumed to be in radians in XYZ convention.</span>
@@ -1152,11 +1209,14 @@
     <span class="k">return</span> <span class="n">qw</span><span class="p">,</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">qz</span></div>
 
 
+
 <span class="c1"># based on:</span>
 <span class="c1"># https://github.com/ClementPinard/SfmLearner-Pytorch/blob/master/inverse_warp.py#L65-L71</span>
 
 
-<div class="viewcode-block" id="normalize_pixel_coordinates"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_pixel_coordinates">[docs]</a><span class="k">def</span> <span class="nf">normalize_pixel_coordinates</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="normalize_pixel_coordinates">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_pixel_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_pixel_coordinates</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalize pixel coordinates between -1 and 1.</span>
 
 <span class="sd">    Normalized, -1 if on extreme left, 1 if on extreme right (x = w-1).</span>
@@ -1176,7 +1236,7 @@
 <span class="sd">        tensor([[1.0408, 1.0202]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 2). &quot;</span> <span class="s2">&quot;Got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 2). Got </span><span class="si">{</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># compute normalization factor</span>
     <span class="n">hw</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">stack</span><span class="p">(</span>
@@ -1191,7 +1251,10 @@
     <span class="k">return</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">pixel_coordinates</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 
-<div class="viewcode-block" id="denormalize_pixel_coordinates"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_pixel_coordinates">[docs]</a><span class="k">def</span> <span class="nf">denormalize_pixel_coordinates</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="denormalize_pixel_coordinates">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_pixel_coordinates">[docs]</a>
+<span class="k">def</span> <span class="nf">denormalize_pixel_coordinates</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Denormalize pixel coordinates.</span>
 
 <span class="sd">    The input is assumed to be -1 if on extreme left, 1 if on extreme right (x = w-1).</span>
@@ -1211,7 +1274,7 @@
 <span class="sd">        tensor([[0., 0.]])</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 2). &quot;</span> <span class="s2">&quot;Got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 2). Got </span><span class="si">{</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># compute normalization factor</span>
     <span class="n">hw</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">stack</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">width</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">height</span><span class="p">)])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
@@ -1220,7 +1283,10 @@
     <span class="k">return</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">factor</span> <span class="o">*</span> <span class="p">(</span><span class="n">pixel_coordinates</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="normalize_pixel_coordinates3d"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_pixel_coordinates3d">[docs]</a><span class="k">def</span> <span class="nf">normalize_pixel_coordinates3d</span><span class="p">(</span>
+
+<div class="viewcode-block" id="normalize_pixel_coordinates3d">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_pixel_coordinates3d">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_pixel_coordinates3d</span><span class="p">(</span>
     <span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalize pixel coordinates between -1 and 1.</span>
@@ -1238,7 +1304,7 @@
 <span class="sd">        the normalized pixel coordinates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 3). &quot;</span> <span class="s2">&quot;Got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 3). Got </span><span class="si">{</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># compute normalization factor</span>
     <span class="n">dhw</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">stack</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">depth</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">width</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">height</span><span class="p">)])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -1249,7 +1315,10 @@
     <span class="k">return</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">pixel_coordinates</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 
-<div class="viewcode-block" id="denormalize_pixel_coordinates3d"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_pixel_coordinates3d">[docs]</a><span class="k">def</span> <span class="nf">denormalize_pixel_coordinates3d</span><span class="p">(</span>
+
+<div class="viewcode-block" id="denormalize_pixel_coordinates3d">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_pixel_coordinates3d">[docs]</a>
+<span class="k">def</span> <span class="nf">denormalize_pixel_coordinates3d</span><span class="p">(</span>
     <span class="n">pixel_coordinates</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Denormalize pixel coordinates.</span>
@@ -1267,7 +1336,7 @@
 <span class="sd">        the denormalized pixel coordinates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 3). &quot;</span> <span class="s2">&quot;Got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input pixel_coordinates must be of shape (*, 3). Got </span><span class="si">{</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># compute normalization factor</span>
     <span class="n">dhw</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">stack</span><span class="p">([</span><span class="n">tensor</span><span class="p">(</span><span class="n">depth</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">width</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">height</span><span class="p">)])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">pixel_coordinates</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -1278,7 +1347,10 @@
     <span class="k">return</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">factor</span> <span class="o">*</span> <span class="p">(</span><span class="n">pixel_coordinates</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="angle_to_rotation_matrix"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.angle_to_rotation_matrix">[docs]</a><span class="k">def</span> <span class="nf">angle_to_rotation_matrix</span><span class="p">(</span><span class="n">angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="angle_to_rotation_matrix">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.angle_to_rotation_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">angle_to_rotation_matrix</span><span class="p">(</span><span class="n">angle</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Create a rotation matrix out of angles in degrees.</span>
 
 <span class="sd">    Args:</span>
@@ -1297,7 +1369,10 @@
     <span class="k">return</span> <span class="n">stack</span><span class="p">([</span><span class="n">cos_a</span><span class="p">,</span> <span class="n">sin_a</span><span class="p">,</span> <span class="o">-</span><span class="n">sin_a</span><span class="p">,</span> <span class="n">cos_a</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">*</span><span class="n">angle</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="normalize_homography"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_homography">[docs]</a><span class="k">def</span> <span class="nf">normalize_homography</span><span class="p">(</span>
+
+<div class="viewcode-block" id="normalize_homography">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_homography">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_homography</span><span class="p">(</span>
     <span class="n">dst_pix_trans_src_pix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dsize_src</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dsize_dst</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalize a given homography in pixels to [-1, 1].</span>
@@ -1330,6 +1405,7 @@
     <span class="c1"># compute chain transformations</span>
     <span class="n">dst_norm_trans_src_norm</span><span class="p">:</span> <span class="n">Tensor</span> <span class="o">=</span> <span class="n">dst_norm_trans_dst_pix</span> <span class="o">@</span> <span class="p">(</span><span class="n">dst_pix_trans_src_pix</span> <span class="o">@</span> <span class="n">src_pix_trans_src_norm</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dst_norm_trans_src_norm</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">normal_transform_pixel</span><span class="p">(</span>
@@ -1394,7 +1470,9 @@
     <span class="k">return</span> <span class="n">tr_mat</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 1x4x4</span>
 
 
-<div class="viewcode-block" id="denormalize_homography"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_homography">[docs]</a><span class="k">def</span> <span class="nf">denormalize_homography</span><span class="p">(</span>
+<div class="viewcode-block" id="denormalize_homography">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_homography">[docs]</a>
+<span class="k">def</span> <span class="nf">denormalize_homography</span><span class="p">(</span>
     <span class="n">dst_pix_trans_src_pix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dsize_src</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dsize_dst</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;De-normalize a given homography in pixels from [-1, 1] to actual height and width.</span>
@@ -1428,7 +1506,10 @@
     <span class="k">return</span> <span class="n">dst_norm_trans_src_norm</span></div>
 
 
-<div class="viewcode-block" id="normalize_homography3d"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_homography3d">[docs]</a><span class="k">def</span> <span class="nf">normalize_homography3d</span><span class="p">(</span>
+
+<div class="viewcode-block" id="normalize_homography3d">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_homography3d">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_homography3d</span><span class="p">(</span>
     <span class="n">dst_pix_trans_src_pix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dsize_src</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">dsize_dst</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Normalize a given homography in pixels to [-1, 1].</span>
@@ -1464,7 +1545,10 @@
     <span class="k">return</span> <span class="n">dst_norm_trans_src_norm</span></div>
 
 
-<div class="viewcode-block" id="normalize_points_with_intrinsics"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_points_with_intrinsics">[docs]</a><span class="k">def</span> <span class="nf">normalize_points_with_intrinsics</span><span class="p">(</span><span class="n">point_2d</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="normalize_points_with_intrinsics">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.normalize_points_with_intrinsics">[docs]</a>
+<span class="k">def</span> <span class="nf">normalize_points_with_intrinsics</span><span class="p">(</span><span class="n">point_2d</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalizes points with intrinsics. Useful for conversion of keypoints to be used with essential matrix.</span>
 
 <span class="sd">    Args:</span>
@@ -1506,7 +1590,10 @@
     <span class="k">return</span> <span class="n">xy</span></div>
 
 
-<div class="viewcode-block" id="denormalize_points_with_intrinsics"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_points_with_intrinsics">[docs]</a><span class="k">def</span> <span class="nf">denormalize_points_with_intrinsics</span><span class="p">(</span><span class="n">point_2d_norm</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="denormalize_points_with_intrinsics">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.denormalize_points_with_intrinsics">[docs]</a>
+<span class="k">def</span> <span class="nf">denormalize_points_with_intrinsics</span><span class="p">(</span><span class="n">point_2d_norm</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">camera_matrix</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalizes points with intrinsics. Useful for conversion of keypoints to be used with essential matrix.</span>
 
 <span class="sd">    Args:</span>
@@ -1547,7 +1634,10 @@
     <span class="k">return</span> <span class="n">stack</span><span class="p">([</span><span class="n">u_coord</span><span class="p">,</span> <span class="n">v_coord</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Rt_to_matrix4x4"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.Rt_to_matrix4x4">[docs]</a><span class="k">def</span> <span class="nf">Rt_to_matrix4x4</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Rt_to_matrix4x4">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.Rt_to_matrix4x4">[docs]</a>
+<span class="k">def</span> <span class="nf">Rt_to_matrix4x4</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Combines 3x3 rotation matrix R and 1x3 translation vector t into 4x4 extrinsics.</span>
 
 <span class="sd">    Args:</span>
@@ -1571,7 +1661,10 @@
     <span class="k">return</span> <span class="n">convert_affinematrix_to_homography3d</span><span class="p">(</span><span class="n">Rt</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="matrix4x4_to_Rt"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.matrix4x4_to_Rt">[docs]</a><span class="k">def</span> <span class="nf">matrix4x4_to_Rt</span><span class="p">(</span><span class="n">extrinsics</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="matrix4x4_to_Rt">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.matrix4x4_to_Rt">[docs]</a>
+<span class="k">def</span> <span class="nf">matrix4x4_to_Rt</span><span class="p">(</span><span class="n">extrinsics</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts 4x4 extrinsics into 3x3 rotation matrix R and 1x3 translation vector ts.</span>
 
 <span class="sd">    Args:</span>
@@ -1595,7 +1688,10 @@
     <span class="k">return</span> <span class="n">R</span><span class="p">,</span> <span class="n">t</span></div>
 
 
-<div class="viewcode-block" id="camtoworld_graphics_to_vision_4x4"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_graphics_to_vision_4x4">[docs]</a><span class="k">def</span> <span class="nf">camtoworld_graphics_to_vision_4x4</span><span class="p">(</span><span class="n">extrinsics_graphics</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="camtoworld_graphics_to_vision_4x4">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_graphics_to_vision_4x4">[docs]</a>
+<span class="k">def</span> <span class="nf">camtoworld_graphics_to_vision_4x4</span><span class="p">(</span><span class="n">extrinsics_graphics</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts graphics coordinate frame (e.g. OpenGL) to vision coordinate frame (e.g. OpenCV.), , i.e. flips y</span>
 <span class="sd">    and z axis. Graphics convention: [+x, +y, +z] == [right, up, backwards]. Vision convention: [+x, +y, +z] ==</span>
 
@@ -1624,7 +1720,10 @@
     <span class="k">return</span> <span class="n">extrinsics_graphics</span> <span class="o">@</span> <span class="n">invert_yz</span></div>
 
 
-<div class="viewcode-block" id="camtoworld_graphics_to_vision_Rt"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_graphics_to_vision_Rt">[docs]</a><span class="k">def</span> <span class="nf">camtoworld_graphics_to_vision_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="camtoworld_graphics_to_vision_Rt">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_graphics_to_vision_Rt">[docs]</a>
+<span class="k">def</span> <span class="nf">camtoworld_graphics_to_vision_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts graphics coordinate frame (e.g. OpenGL) to vision coordinate frame (e.g. OpenCV.), , i.e. flips y</span>
 <span class="sd">    and z axis. Graphics convention: [+x, +y, +z] == [right, up, backwards]. Vision convention: [+x, +y, +z] ==</span>
 
@@ -1653,7 +1752,10 @@
     <span class="k">return</span> <span class="n">matrix4x4_to_Rt</span><span class="p">(</span><span class="n">mat4x4</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="camtoworld_vision_to_graphics_4x4"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_vision_to_graphics_4x4">[docs]</a><span class="k">def</span> <span class="nf">camtoworld_vision_to_graphics_4x4</span><span class="p">(</span><span class="n">extrinsics_vision</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+
+<div class="viewcode-block" id="camtoworld_vision_to_graphics_4x4">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_vision_to_graphics_4x4">[docs]</a>
+<span class="k">def</span> <span class="nf">camtoworld_vision_to_graphics_4x4</span><span class="p">(</span><span class="n">extrinsics_vision</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts vision coordinate frame (e.g. OpenCV) to graphics coordinate frame (e.g. OpenGK.), i.e. flips y and</span>
 <span class="sd">    z axis Graphics convention: [+x, +y, +z] == [right, up, backwards]. Vision convention: [+x, +y, +z] == [right,</span>
 <span class="sd">    down, forwards]</span>
@@ -1681,7 +1783,10 @@
     <span class="k">return</span> <span class="n">extrinsics_vision</span> <span class="o">@</span> <span class="n">invert_yz</span></div>
 
 
-<div class="viewcode-block" id="camtoworld_vision_to_graphics_Rt"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_vision_to_graphics_Rt">[docs]</a><span class="k">def</span> <span class="nf">camtoworld_vision_to_graphics_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="camtoworld_vision_to_graphics_Rt">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_vision_to_graphics_Rt">[docs]</a>
+<span class="k">def</span> <span class="nf">camtoworld_vision_to_graphics_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts graphics coordinate frame (e.g. OpenGL) to vision coordinate frame (e.g. OpenCV.), , i.e. flips y</span>
 <span class="sd">    and z axis. Graphics convention: [+x, +y, +z] == [right, up, backwards]. Vision convention: [+x, +y, +z] ==</span>
 
@@ -1710,7 +1815,10 @@
     <span class="k">return</span> <span class="n">matrix4x4_to_Rt</span><span class="p">(</span><span class="n">mat4x4</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="camtoworld_to_worldtocam_Rt"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_to_worldtocam_Rt">[docs]</a><span class="k">def</span> <span class="nf">camtoworld_to_worldtocam_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="camtoworld_to_worldtocam_Rt">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.camtoworld_to_worldtocam_Rt">[docs]</a>
+<span class="k">def</span> <span class="nf">camtoworld_to_worldtocam_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts camtoworld, i.e. projection from camera coordinate system to world coordinate system, to worldtocam</span>
 <span class="sd">    frame i.e. projection from world to the camera coordinate system (used in Colmap).</span>
 <span class="sd">    See</span>
@@ -1742,7 +1850,10 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">R_inv</span><span class="p">,</span> <span class="n">new_t</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="worldtocam_to_camtoworld_Rt"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.worldtocam_to_camtoworld_Rt">[docs]</a><span class="k">def</span> <span class="nf">worldtocam_to_camtoworld_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="worldtocam_to_camtoworld_Rt">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.worldtocam_to_camtoworld_Rt">[docs]</a>
+<span class="k">def</span> <span class="nf">worldtocam_to_camtoworld_Rt</span><span class="p">(</span><span class="n">R</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts worldtocam frame i.e. projection from world to the camera coordinate system (used in Colmap) to</span>
 <span class="sd">    camtoworld, i.e. projection from camera coordinate system to world coordinate system.</span>
 
@@ -1772,7 +1883,10 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">R_inv</span><span class="p">,</span> <span class="n">new_t</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ARKitQTVecs_to_ColmapQTVecs"><a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.ARKitQTVecs_to_ColmapQTVecs">[docs]</a><span class="k">def</span> <span class="nf">ARKitQTVecs_to_ColmapQTVecs</span><span class="p">(</span><span class="n">qvec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">tvec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="ARKitQTVecs_to_ColmapQTVecs">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.ARKitQTVecs_to_ColmapQTVecs">[docs]</a>
+<span class="k">def</span> <span class="nf">ARKitQTVecs_to_ColmapQTVecs</span><span class="p">(</span><span class="n">qvec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">tvec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts output of Apple ARKit screen pose (in quaternion representation) to the camera-to-world</span>
 <span class="sd">    transformation, expected by Colmap, also in quaternion representation.</span>
 
@@ -1799,6 +1913,44 @@
     <span class="n">t_colmap</span> <span class="o">=</span> <span class="n">t_colmap</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">q_colmap</span> <span class="o">=</span> <span class="n">rotation_matrix_to_quaternion</span><span class="p">(</span><span class="n">R_colmap</span><span class="o">.</span><span class="n">contiguous</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">q_colmap</span><span class="p">,</span> <span class="n">t_colmap</span></div>
+
+
+
+<div class="viewcode-block" id="vector_to_skew_symmetric_matrix">
+<a class="viewcode-back" href="../../../geometry.conversions.html#kornia.geometry.conversions.vector_to_skew_symmetric_matrix">[docs]</a>
+<span class="k">def</span> <span class="nf">vector_to_skew_symmetric_matrix</span><span class="p">(</span><span class="n">vec</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts a vector to a skew symmetric matrix.</span>
+
+<span class="sd">    A vector :math:`(v1, v2, v3)` has a corresponding skew-symmetric matrix, which is of the form:</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \begin{bmatrix} 0 &amp; -v3 &amp; v2 \\</span>
+<span class="sd">        v3 &amp; 0 &amp; -v1 \\</span>
+<span class="sd">        -v2 &amp; v1 &amp; 0\end{bmatrix}</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: tensor of shape :math:`(B, 3)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tensor of shape :math:`(B, 3, 3)`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; vec = torch.tensor([1.0, 2.0, 3.0])</span>
+<span class="sd">        &gt;&gt;&gt; vector_to_skew_symmetric_matrix(vec)</span>
+<span class="sd">        tensor([[ 0., -3.,  2.],</span>
+<span class="sd">                [ 3.,  0., -1.],</span>
+<span class="sd">                [-2.,  1.,  0.]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># KORNIA_CHECK_SHAPE(vec, [&quot;B&quot;, &quot;3&quot;])</span>
+    <span class="k">if</span> <span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input vector must be of shape (B, 3) or (3,). Got </span><span class="si">{</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">zeros</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+    <span class="n">skew_symmetric_matrix</span> <span class="o">=</span> <span class="n">stack</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">stack</span><span class="p">([</span><span class="n">zeros</span><span class="p">,</span> <span class="o">-</span><span class="n">v3</span><span class="p">,</span> <span class="n">v2</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">stack</span><span class="p">([</span><span class="n">v3</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="o">-</span><span class="n">v1</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">stack</span><span class="p">([</span><span class="o">-</span><span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">zeros</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">skew_symmetric_matrix</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -1832,14 +1984,14 @@
     </aside>
   </div>
 </div>
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/scripts/furo.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/design-tabs.js"></script>
-    <script src="../../../_static/js/custom.js"></script>
+    <script src="../../../_static/documentation_options.js?v=b9678aa1"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../../_static/js/custom.js?v=50ca88b5"></script>
     
     <!-- DocsQA integration start -->
     <script src="https://jina-docqa-ui.netlify.app/dist/qabot.js"></script>
